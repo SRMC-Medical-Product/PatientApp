@@ -147,4 +147,7 @@ class SinglePromotionBox extends StatelessWidget {
   }
 }
 
-
+/* -------------------Text Highlighter----------------------------*/
+Widget titleText({required BuildContext context,required String text,required Color color}) {
+  return Text(text,style:mediumTextStyle(context).copyWith(fontSize: isMobile(context) ? 18.0 : 21.0,color:color));                  
+}
