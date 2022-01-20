@@ -37,6 +37,22 @@ screenPads(context) {
 }
 
 /* -------------- Text Style --------------*/
+ultraProLargeTextStyle(context) {
+  return TextStyle(
+    color: kBlackTextColor,
+    fontFamily: kMuktaBold,
+    fontSize: isMobile(context) ? 26.0 : 29.0,
+  );
+}
+
+ultraLargeTextStyle(context) {
+  return TextStyle(
+    color: kBlackTextColor,
+    fontFamily: kMuktaBold,
+    fontSize: isMobile(context) ? 24.0 : 27.0,
+  );
+}
+
 largeTextStyle(context) {
   return TextStyle(
     color: kBlackTextColor,
@@ -50,6 +66,7 @@ mediumTextStyle(context) {
     fontFamily: kMuktaRegular,
     fontSize: isMobile(context) ? 15.0 : 17.0,
     color: kBlackTextColor,
+    
   );
 }
 
@@ -107,3 +124,28 @@ isEmptyOrNull(var x) {
     return false;
   }
 }
+
+
+/* ---------------Single Promotions Box-------------------------------*/
+class SinglePromotionBox extends StatelessWidget {
+  final String imgUrl;
+  const SinglePromotionBox({Key? key,required this.imgUrl}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var size = sizeMedia(context);
+    return Container(
+      width: size.width,
+      height: isMobile(context) ? size.height / 4 : size.height / 3.5,
+      margin: EdgeInsets.symmetric(
+          horizontal: kDefaultScreenPaddingHorizontal(context),
+          vertical: kDefaultScreenPaddingVertical(context)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(imgUrl))),
+              
+    );
+  }
+}
+
+

@@ -94,14 +94,14 @@ Widget profileTiles({required String title, required IconData icon,required Func
                   onTap: onTap,
                   leading: CircleAvatar(
                     maxRadius: isMobile(context) ? 16 : 18,
-                    backgroundColor: kPrimaryColor,
-                    child: Center(child: Icon(icon,color: Colors.white,size: 16,))),
+                    backgroundColor: kSecondaryColor,
+                    child: Center(child: Icon(icon,color: kPrimaryColor,size: 16,))),
                   title: Text(title,
                   style: const TextStyle(
                     fontFamily: kMuktaRegular,
                   ),
                   ),
-                  trailing: const Icon(Icons.arrow_right,color: kPrimaryColor,),
+                  trailing: const Icon(Icons.arrow_right_rounded,color: kPrimaryColor,),
                 ),
                 smallCustomSizedBox(context),
               ],
