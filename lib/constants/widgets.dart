@@ -66,7 +66,6 @@ mediumTextStyle(context) {
     fontFamily: kMuktaRegular,
     fontSize: isMobile(context) ? 15.0 : 17.0,
     color: kBlackTextColor,
-    
   );
 }
 

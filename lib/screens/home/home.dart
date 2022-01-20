@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isAppointment = true;
   @override
   Widget build(BuildContext context) {
     var size = sizeMedia(context);
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Text("Hello",style : largeTextStyle(context).copyWith(fontFamily:kMuktaRegular)),
                           Text("Loga Subramani",
-                          style : ultraLargeTextStyle(context),
+                          style : ultraLargeTextStyle(context).copyWith(color:Colors.black.withOpacity(0.7)),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                 icon: Icons.add,
                 circleClr: kSecondaryColor,
                 title: "Book Now", 
-                subTitle: "Make an appointment", 
+                subTitle: "Make appointments", 
                 bgColor: Colors.white, 
                 onTap: (){})
             ),
@@ -129,18 +130,21 @@ class _HomePageState extends State<HomePage> {
            ],
         ),
 
+        mediumCustomSizedBox(context),
         //Appointments Today
         Container(
-           margin: EdgeInsets.only(left:kScreenMarginHorizontal(context),right:kScreenMarginHorizontal(context),top:10,bottom:10),
+          margin: EdgeInsets.symmetric(
+          horizontal: kDefaultScreenPaddingHorizontal(context),
+          vertical: kDefaultScreenPaddingVertical(context)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text("Appointment Today",style:largeTextStyle(context)),
+              Text("Today's appointment",style:largeTextStyle(context).copyWith(color:Colors.black.withOpacity(0.7))),
               mediumCustomSizedBox(context),
 
               ///If no appointments are available,then use this
-              Container(
+             isAppointment == false ? Container(
                 height: 110,
                 width: size.width,
                 padding: EdgeInsets.all(20),
@@ -167,13 +171,10 @@ class _HomePageState extends State<HomePage> {
                     
                   ],
                 ),
-              ),
-              mediumCustomSizedBox(context),
+              )
               ///If appointments are available,then use this
-              
-              //TODO : Change to tablet screens size
-                Container(
-                height: 180,
+              :  Container(
+                height: isMobile(context) ? 140 : 180,
                 width: size.width,
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -185,13 +186,13 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: 65,
+                      height: isMobile(context) ? 50 : 70,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            width: 65,
+                            width: isMobile(context) ? 50 : 70,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU"))
@@ -208,21 +209,20 @@ class _HomePageState extends State<HomePage> {
                                   Text("Dr . Testing Subba Raoss",
                                   maxLines: 1,
                                   overflow: TextOverflow.clip,
-                                  style:largeTextStyle(context).copyWith(color: kPrimaryColor)),
+                                  style: isMobile(context) ? mediumTextStyle(context).copyWith(color: kPrimaryColor,fontSize: 17.5) : largeTextStyle(context).copyWith(color: kPrimaryColor)),
                                   Text("ENT",
                                   maxLines: 1,
                                   overflow: TextOverflow.clip,
-                                  style:mediumTextStyle(context).copyWith(color: kDimGray,fontFamily:kMuktaRegular)),
-                          
-                                ],
+                                  style: isMobile(context) ? smallTextStyle(context).copyWith(color: kDimGray,fontFamily:kMuktaRegular) : mediumTextStyle(context).copyWith(color: kDimGray,fontFamily:kMuktaRegular)),
+                                  ],
                               ),
                               ),
                           ),
                            Container(
-                      height: 40,
-                      width: 40,
+                      height: isMobile(context) ? 40 : 55,
+                      width:  isMobile(context) ? 40 : 55,
                       decoration: BoxDecoration(
-                        color:  kWhiteSmoke,
+                        color:  kSecondaryColor,
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Icon(Icons.arrow_right_alt_outlined,color:kPrimaryColor),
@@ -233,32 +233,25 @@ class _HomePageState extends State<HomePage> {
                     mediumCustomSizedBox(context),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.all(14),
+                        padding: EdgeInsets.symmetric(horizontal: isMobile(context) ? 6 : 14,vertical:4),
                         decoration : BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(7),
                           color: kSecondaryColor,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                             Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Icon(Icons.calendar_today_sharp,color:kPrimaryColor),
-                           Text(" Monday,Aug 29",style:mediumTextStyle(context).copyWith(fontWeight:FontWeight.w600,color: kIndigocolor,fontFamily:kMuktaRegular)),
-                          ],
-                        ),
+                             iconText(
+                               icon: Icons.calendar_today_sharp,
+                               text: "Monday, Aug 19"
+                             ),
                            RotatedBox(quarterTurns: 1,child:mediumCustomSizedBox(context)),
-                           Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Icon(Icons.access_time,color:kPrimaryColor),
-                           Text(" 11:00-12:00 pm",style:mediumTextStyle(context).copyWith(fontWeight:FontWeight.w600,color: kIndigocolor,fontFamily:kMuktaRegular)),
-                          ],
-                        ),
+                           iconText(
+                               icon: Icons.access_time,
+                               text: "11:00 am"
+                             ),
+                           
                          ],
                         ),
                       ),
@@ -266,8 +259,10 @@ class _HomePageState extends State<HomePage> {
                     
                   ],
                 ),
-              )
-
+              ),
+              
+              mediumCustomSizedBox(context),
+              
             ],
           ),
         )
@@ -287,7 +282,7 @@ Widget displayHomeBoxGrid({required Color txtColor,required IconData icon,requir
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.0),
-          border: Border.all(color: kSecondaryColor),
+          border: Border.all(color: circleClr),
           color: bgColor
           ),
           child: Column(
@@ -296,7 +291,7 @@ Widget displayHomeBoxGrid({required Color txtColor,required IconData icon,requir
             children: [
               Expanded(
                 child: CircleAvatar(
-                  maxRadius: isMobile(context) ? 28 : 32,
+                  maxRadius: isMobile(context) ? 26 : 32,
                   backgroundColor: circleClr,
                   child: Center(
                     child: Icon(icon,color:kPrimaryColor,size: isMobile(context) ? 32 : 38),
@@ -309,8 +304,14 @@ Widget displayHomeBoxGrid({required Color txtColor,required IconData icon,requir
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     smallCustomSizedBox(context),
-                Text(title,style: largeTextStyle(context).copyWith(wordSpacing: 2.0,color:txtColor),),
-                Text(subTitle,style: mediumTextStyle(context).copyWith(wordSpacing: 1.0,color:txtColor))
+                Text(title,style: smallMobile(context) ? mediumTextStyle(context).copyWith(wordSpacing: 2.0,color:txtColor) : largeTextStyle(context).copyWith(wordSpacing: 2.0,color:txtColor),),
+                Text(subTitle,
+                maxLines: 2,
+                softWrap: true,
+                style: smallMobile(context) 
+                ? smallTextStyle(context).copyWith(wordSpacing: 1.0,color:txtColor)
+                : mediumTextStyle(context).copyWith(wordSpacing: 1.0,color:txtColor)
+                )
                   ],
                 ),
               )
@@ -319,5 +320,19 @@ Widget displayHomeBoxGrid({required Color txtColor,required IconData icon,requir
               );
 }
 
-
+Widget iconText({required IconData icon, required String text}){
+  return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                          Icon(icon,color:kPrimaryColor, size: smallMobile(context) ? 16.5 : 24),
+                          Container(
+                            margin: const EdgeInsets.only(left:7.0),
+                            child: Text(text,
+                            style:smallMobile(context) ? smallTextStyle(context).copyWith(color:kIndigocolor,fontFamily:kMuktaRegular)
+                              : mediumTextStyle(context).copyWith(color:kIndigocolor,fontFamily:kMuktaRegular)),
+                          ),
+                          ],
+                        );
+}
 }
