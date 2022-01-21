@@ -91,5 +91,14 @@ flutter:
     - family: QuickSandBold
       fonts:
         - asset: assets/fonts/quicksands/Quicksand-Medium.ttf 
+    
+    - family: LatoLight
+      fonts:
+        - asset: assets/fonts/lato/Lato-Light.ttf
+  
+    - family: LatoRegular
+      fonts:
+        - asset: assets/fonts/lato/Lato-Regular.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

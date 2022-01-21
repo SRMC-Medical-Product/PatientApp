@@ -2,6 +2,7 @@ import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/home/home.dart';
 import 'package:patientapp/screens/medical/medicalrecords.dart';
+import 'package:patientapp/screens/profile/appointmenthistory.dart';
 import 'package:patientapp/screens/profile/profilepage.dart';
 import 'package:patientapp/screens/search/searchpage.dart';
 
@@ -23,15 +24,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: const AppScreenController(indexScreen: 0,),
+      home: AppScreenController(indexScreen: 0,),
       routes: {
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller
 
+        //Main Nav screens
         HomePage.routeName : (context) => const HomePage(), // Path :  /homepage
         MedicalRecordsPage.routeName : (context) => const MedicalRecordsPage(), // Path :  /medicalrecords
         ProfilePage.routeName : (context) => const ProfilePage(), // Path :  /profilepage
         SearchPage.routeName : (context) => const SearchPage(), // Path :  /searchpage
+
+        //Appointments Screen
+        AppointmentHistoryPage.routeName : (context) => const AppointmentHistoryPage(), // Path :  /appointmenthistorypage
 
       },
     );

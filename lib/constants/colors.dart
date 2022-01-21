@@ -7,19 +7,23 @@ const kMuktaBold = 'MuktaBold';
 const kQuickSandRegular = 'QuickSandRegular';
 const kQuickSandBold = 'QuickSandBold';
 
+const kLatoRegular = 'LatoRegular';
+const kLatoLight = 'LatoLight';
+
 //Screen background color
 const kScreenBackground = Colors.white;
 // Color
-const kPrimaryColor = Color(0xff5E56BF);
-const kSecondaryColor = Color(0xffF3EFFD);
+const kPrimaryColor = Color(0xff242c78); // Color(0xff06919d); //pruple Color(0xff5E56BF);
+const kSecondaryColor =Color(0xffafcfed); //Color(0xffbbe2e5);//purple Color(0xffF3EFFD);
 const kTertiaryColor = Color(0xff4B257E);
+const kOrangeColor = Color(0xfffa8112);
 
 const kIndigocolor = Color(0xff431C77);
 const kBorderColor = Color(0xff585858);
 const kMenuColor = Color(0xff585858);
 const klightblue = Color(0xFFfafbff);
 const kYellowColor = Color(0xffFDC500);
-const kLavenderGrayColor = Color(0xffE9E9F4);
+const kLavenderGrayColor = Color(0xffe2e7f3);
 const kBlackTextColor = Color(0xff000000);
 const kAliceBlueColor = Color(0xfff3f6fb);
 const kGreenColor = Color(0xff03C04A);

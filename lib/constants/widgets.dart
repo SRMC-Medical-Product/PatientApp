@@ -63,7 +63,7 @@ largeTextStyle(context) {
 
 mediumTextStyle(context) {
   return TextStyle(
-    fontFamily: kMuktaRegular,
+    fontFamily:  kMuktaRegular,
     fontSize: isMobile(context) ? 15.0 : 17.0,
     color: kBlackTextColor,
   );
@@ -79,19 +79,19 @@ smallTextStyle(context) {
 /* ---------------Custom Divider Gray Box--------------------------------*/
 kLargeDivider(context) {
   return Container(
-      decoration: const BoxDecoration(color: kSlateGray),
+      decoration: const BoxDecoration(color: kLavenderGrayColor),
       height: isMobile(context) ? 11.0 : 13.0);
 }
 
 kMediumDivider(context) {
   return Container(
-      decoration: const BoxDecoration(color: kSlateGray),
+      decoration: const BoxDecoration(color: kLavenderGrayColor),
       height: isMobile(context) ? 6.0 : 9.0);
 }
 
 kSmallDivider(context, {Color? lineColor}) {
   return Container(
-      decoration: BoxDecoration(color: lineColor ?? kSlateGray),
+      decoration: BoxDecoration(color: lineColor ?? kLavenderGrayColor),
       height: isMobile(context) ? 1.5 : 3.0);
 }
 
@@ -124,11 +124,10 @@ isEmptyOrNull(var x) {
   }
 }
 
-
 /* ---------------Single Promotions Box-------------------------------*/
 class SinglePromotionBox extends StatelessWidget {
   final String imgUrl;
-  const SinglePromotionBox({Key? key,required this.imgUrl}) : super(key: key);
+  const SinglePromotionBox({Key? key, required this.imgUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -141,13 +140,36 @@ class SinglePromotionBox extends StatelessWidget {
           vertical: kDefaultScreenPaddingVertical(context)),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
-          image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(imgUrl))),
-              
+          image:
+              DecorationImage(fit: BoxFit.cover, image: NetworkImage(imgUrl))),
     );
   }
 }
 
 /* -------------------Text Highlighter----------------------------*/
-Widget titleText({required BuildContext context,required String text,required Color color}) {
-  return Text(text,style:mediumTextStyle(context).copyWith(fontSize: isMobile(context) ? 18.0 : 21.0,color:color));                  
+Widget titleText(
+    {required BuildContext context,
+    required String text,
+    required Color color}) {
+  return Text(text,
+      style: mediumTextStyle(context)
+          .copyWith(fontSize: isMobile(context) ? 18.0 : 21.0, color: color));
+}
+
+/*------------------Title Text with View all Btn-------------------*/
+Widget rowTitleText({required BuildContext context, required String text}) { 
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      titleText(
+          context: context,
+          text: text,
+          color: Colors.black.withOpacity(0.7)),
+      Text(
+        "View all",
+        style: mediumTextStyle(context).copyWith(color: kOrangeColor),
+      )
+    ],
+  );
 }
