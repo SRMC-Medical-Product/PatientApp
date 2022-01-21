@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:patientapp/helpers/headers.dart';
+import 'package:patientapp/screens/profile/appointmenthistory.dart';
 
 class ProfilePage extends StatefulWidget {
   static const routeName = profilepage;
@@ -57,7 +58,7 @@ return SingleChildScrollView(
           mediumCustomSizedBox(context),
           ///Profiles
           profileTiles(title: "Personal Data", icon: Icons.person,onTap: (){}),
-          profileTiles(title: "Appointments History",icon: Icons.history,onTap: () {}),
+          profileTiles(title: "Appointments History",icon: Icons.history,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: AppointmentHistoryPage(), routeName: appointmenthistory))),
           profileTiles(title: "Help & Support", icon:Icons.help,onTap: (){}),
           profileTiles(title: "Terms & Conditions", icon: Icons.rule_sharp,onTap: (){}),
           profileTiles(title: "Logout", icon:Icons.logout,onTap: (){}),
