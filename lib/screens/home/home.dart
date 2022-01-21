@@ -324,7 +324,6 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (BuildContext context, int i){
                      //Card
                     return Container( 
-                      
                 padding: EdgeInsets.only(left: i==0 ? kDefaultScreenPaddingHorizontal(context) : 8.0,right: i==3 ? kDefaultScreenPaddingHorizontal(context) : 0.0),
                       width: cardWidth,
                   margin: EdgeInsets.symmetric(vertical: isMobile(context) ? 8 : 12, horizontal: 5),
