@@ -468,8 +468,53 @@ class _HomePageState extends State<HomePage> {
           mediumCustomSizedBox(context),
           /*----------end second promoitons box --------------*/
 
+          /*----------start end details box --------------*/
+          ///End Details Box
+          Container(
+            width: size.width,
+            decoration: BoxDecoration(
+              color: kSecondaryColor,
+            ),
+            child: Container(
+
+            margin: EdgeInsets.symmetric(
+                horizontal: kDefaultScreenPaddingHorizontal(context),
+                vertical: kDefaultScreenPaddingVertical(context)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  mediumCustomSizedBox(context),
+                  mediumCustomSizedBox(context),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      verticialIconText(text: "1", icon: FontAwesomeIcons.hospitalAlt),
+                      verticialIconText(text: "50+", icon: FontAwesomeIcons.userMd),
+                      verticialIconText(text: "100+", icon: Icons.person),
+                    ],
+                  ),
+                  mediumCustomSizedBox(context),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                horizontal: kDefaultScreenPaddingHorizontal(context),
+                vertical: kDefaultScreenPaddingVertical(context)),
+                    child: Text("Our community of doctors and patients drive us to create technologies for better and afforable healthcare",
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+
+                    style: mediumTextStyle(context).copyWith(color:kPrimaryColor,wordSpacing : 0.5),),
+                  ),
+                ],
+              ),
+            ),
+          )
+          /*----------end end details box --------------*/
+
           /*----------start daily updates box --------------*/
           //Daily updates
+          /*
           Container(
               margin: EdgeInsets.symmetric(
                   horizontal: kDefaultScreenPaddingHorizontal(context),
@@ -541,10 +586,22 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               )),
-
+          */
           /*----------end daily updates box --------------*/
         ],
       ),
+    );
+  }
+
+  Widget verticialIconText({required String text, required IconData icon}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon,color: kPrimaryColor,),
+        smallCustomSizedBox(context),
+        Text(text,style: mediumTextStyle(context).copyWith(color:kPrimaryColor,fontWeight:FontWeight.bold),),
+      ],
     );
   }
 
