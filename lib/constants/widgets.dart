@@ -124,11 +124,10 @@ isEmptyOrNull(var x) {
   }
 }
 
-
 /* ---------------Single Promotions Box-------------------------------*/
 class SinglePromotionBox extends StatelessWidget {
   final String imgUrl;
-  const SinglePromotionBox({Key? key,required this.imgUrl}) : super(key: key);
+  const SinglePromotionBox({Key? key, required this.imgUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -141,13 +140,36 @@ class SinglePromotionBox extends StatelessWidget {
           vertical: kDefaultScreenPaddingVertical(context)),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
-          image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(imgUrl))),
-              
+          image:
+              DecorationImage(fit: BoxFit.cover, image: NetworkImage(imgUrl))),
     );
   }
 }
 
 /* -------------------Text Highlighter----------------------------*/
-Widget titleText({required BuildContext context,required String text,required Color color}) {
-  return Text(text,style:mediumTextStyle(context).copyWith(fontSize: isMobile(context) ? 18.0 : 21.0,color:color));                  
+Widget titleText(
+    {required BuildContext context,
+    required String text,
+    required Color color}) {
+  return Text(text,
+      style: mediumTextStyle(context)
+          .copyWith(fontSize: isMobile(context) ? 18.0 : 21.0, color: color));
+}
+
+/*------------------Title Text with View all Btn-------------------*/
+Widget rowTitleText({required BuildContext context, required String text}) { 
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      titleText(
+          context: context,
+          text: text,
+          color: Colors.black.withOpacity(0.7)),
+      Text(
+        "View all",
+        style: mediumTextStyle(context).copyWith(color: kPrimaryColor),
+      )
+    ],
+  );
 }
