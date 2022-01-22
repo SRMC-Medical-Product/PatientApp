@@ -35,7 +35,7 @@ class _AppointmentHistoryPageState extends State<AppointmentHistoryPage> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   addAutomaticKeepAlives: true,
-                  itemCount: 7,
+                  itemCount: 1,
                   itemBuilder: (BuildContext context, int i) {
                     return Column(
                       children: [
