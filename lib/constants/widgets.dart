@@ -63,7 +63,7 @@ largeTextStyle(context) {
 
 mediumTextStyle(context) {
   return TextStyle(
-    fontFamily: kMuktaRegular,
+    fontFamily:  kMuktaRegular,
     fontSize: isMobile(context) ? 15.0 : 17.0,
     color: kBlackTextColor,
   );
@@ -79,19 +79,19 @@ smallTextStyle(context) {
 /* ---------------Custom Divider Gray Box--------------------------------*/
 kLargeDivider(context) {
   return Container(
-      decoration: const BoxDecoration(color: kSlateGray),
+      decoration: const BoxDecoration(color: kLavenderGrayColor),
       height: isMobile(context) ? 11.0 : 13.0);
 }
 
 kMediumDivider(context) {
   return Container(
-      decoration: const BoxDecoration(color: kSlateGray),
+      decoration: const BoxDecoration(color: kLavenderGrayColor),
       height: isMobile(context) ? 6.0 : 9.0);
 }
 
 kSmallDivider(context, {Color? lineColor}) {
   return Container(
-      decoration: BoxDecoration(color: lineColor ?? kSlateGray),
+      decoration: BoxDecoration(color: lineColor ?? kLavenderGrayColor),
       height: isMobile(context) ? 1.5 : 3.0);
 }
 
@@ -168,7 +168,7 @@ Widget rowTitleText({required BuildContext context, required String text}) {
           color: Colors.black.withOpacity(0.7)),
       Text(
         "View all",
-        style: mediumTextStyle(context).copyWith(color: kPrimaryColor),
+        style: mediumTextStyle(context).copyWith(color: kOrangeColor),
       )
     ],
   );

@@ -1,6 +1,7 @@
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/home/home.dart';
+import 'package:patientapp/screens/home/notification.dart';
 import 'package:patientapp/screens/medical/medicalrecords.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
 import 'package:patientapp/screens/profile/profilepage.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
 
         //Appointments Screen
         AppointmentHistoryPage.routeName : (context) => const AppointmentHistoryPage(), // Path :  /appointmenthistorypage
+        NotificationPage.routeName : (context) => const NotificationPage(), // Path :  /notificationpage
 
       },
     );

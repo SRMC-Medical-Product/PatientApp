@@ -3,7 +3,7 @@ import 'package:patientapp/screens/components/customcards.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 
 class AppointmentHistoryPage extends StatefulWidget {
-  static const routeName = appointmenthistory;
+  static const routeName = appointmenthistorypage;
   const AppointmentHistoryPage({Key? key}) : super(key: key);
 
   @override
@@ -49,6 +49,7 @@ class _AppointmentHistoryPageState extends State<AppointmentHistoryPage> {
             ),
           ),
         ),
+      
       ),
     );
   }

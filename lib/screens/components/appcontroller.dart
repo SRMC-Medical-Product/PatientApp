@@ -82,7 +82,7 @@ void onNavigateIndex(){
             selectedFontSize: sizeIcon,
             unselectedFontSize: sizeIcon,
             unselectedItemColor: kLightGrayColor,
-            selectedItemColor: kPrimaryColor,
+            selectedItemColor: kOrangeColor, // kPrimaryColor,
             selectedLabelStyle: const TextStyle(color: kPrimaryColor,fontFamily: kMuktaBold),
             unselectedLabelStyle: const TextStyle(color: kPrimaryColor,fontFamily: kMuktaBold),
             showSelectedLabels: true,

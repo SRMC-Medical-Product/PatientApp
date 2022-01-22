@@ -3,4 +3,5 @@ const String homepage = '/homepage';
 const String searchpage = '/searchpage';
 const String medicalrecordspage = '/medicalrecordspage';
 const String profilepage = '/profilepage';
-const String appointmenthistory = '/appointmenthistory';
+const String appointmenthistorypage = '/appointmenthistorypage';
+const String notificationpage = '/notificationpage';

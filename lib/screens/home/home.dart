@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/customcards.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
+import 'package:patientapp/screens/home/notification.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = homepage;
@@ -109,15 +110,19 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Container(
+            child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+         children: [
           //Top Bar with name and notification icon
           Container(
-            height: isMobile(context) ? 100 : 130,
+            height: isMobile(context) ? 90 : 120,
             width: size.width,
             padding: EdgeInsets.only(
                 left: kScreenMarginHorizontal(context),
                 right: kScreenMarginHorizontal(context),
-                top: 10,
-                bottom: 10),
+                top: 15),
             child: Column(
               children: [
                 Row(
@@ -131,12 +136,10 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Hello",
-                              style: largeTextStyle(context)
-                                  .copyWith(fontFamily: kMuktaRegular)),
+                              style: mediumTextStyle(context)),
                           Text(
                             "Loga Subramani",
-                            style: ultraLargeTextStyle(context)
-                                .copyWith(color: Colors.black.withOpacity(0.7)),
+                            style: largeTextStyle(context),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             softWrap: true,
@@ -144,14 +147,17 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: kWhiteSmoke,
-                        borderRadius: BorderRadius.circular(6),
+                    GestureDetector(
+                      onTap: () => Navigator.push(context,CustomRightPageRoute(page: NotificationPage(), routeName: notificationpage)),
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: kWhiteSmoke,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Icon(Icons.notifications, color: kDimGray),
                       ),
-                      child: Icon(Icons.notifications, color: kDimGray),
                     )
                   ],
                 ),
@@ -163,13 +169,16 @@ class _HomePageState extends State<HomePage> {
           Container(
             padding: EdgeInsets.symmetric(
                 horizontal: isMobile(context) ? 14 : 17,
-                vertical: isMobile(context) ? 10 : 14),
+                ),
             child: const StaticSearch(
               radius: 5.0,
               searchHint: "Search here",
             ),
           ),
 
+         ],
+            ),
+          ),
           /*----------start promotional and ui box --------------*/
           //promotion Box
           mediumCustomSizedBox(context),

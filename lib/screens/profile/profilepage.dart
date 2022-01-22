@@ -58,7 +58,7 @@ return SingleChildScrollView(
           mediumCustomSizedBox(context),
           ///Profiles
           profileTiles(title: "Personal Data", icon: Icons.person,onTap: (){}),
-          profileTiles(title: "Appointments History",icon: Icons.history,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: AppointmentHistoryPage(), routeName: appointmenthistory))),
+          profileTiles(title: "Appointments History",icon: Icons.history,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: AppointmentHistoryPage(), routeName: appointmenthistorypage))),
           profileTiles(title: "Help & Support", icon:Icons.help,onTap: (){}),
           profileTiles(title: "Terms & Conditions", icon: Icons.rule_sharp,onTap: (){}),
           profileTiles(title: "Logout", icon:Icons.logout,onTap: (){}),
