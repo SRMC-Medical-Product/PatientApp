@@ -20,10 +20,11 @@ const kOrangeColor = Color(0xfffa8112);
 
 const kIndigocolor = Color(0xff431C77);
 const kBorderColor = Color(0xff585858);
-const kMenuColor = Color(0xff585858);
+const kMenuColor = Color(0xffF7F8FC);
 const klightblue = Color(0xFFfafbff);
 const kYellowColor = Color(0xffFDC500);
-const kLavenderGrayColor = Color(0xffE8E8E8);
+const kLavenderGrayColor = Color(0xffe2e7f3);
+const kLightLavengerGrayColor = Color(0xffF7F8FC);
 const kBlackTextColor = Color(0xff000000);
 const kAliceBlueColor = Color(0xfff3f6fb);
 const kGreenColor = Color(0xff03C04A);
@@ -44,6 +45,7 @@ const kDimGray = Color(0xff707070);
 const kGraycolor = Color(0xff807979);
 const kSlateGray = Color(0xffEDF0F4);
 const kWhiteSmoke = Color(0xfff2f2f8);
+
 
 //Rating Star
 const kStarColor = Color(0xffFDC903);

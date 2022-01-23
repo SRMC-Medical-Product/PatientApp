@@ -29,7 +29,6 @@ class _AppointmentHistoryPageState extends State<AppointmentHistoryPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 titleText(context: context, text: "Appointment History", color: Colors.black),
-                
                  mediumCustomSizedBox(context),
                 ListView.builder(
                   shrinkWrap: true,

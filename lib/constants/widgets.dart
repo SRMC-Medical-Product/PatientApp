@@ -62,6 +62,14 @@ largeTextStyle(context) {
   );
 }
 
+mediumLargeTextStyle(context) {
+  return TextStyle(
+    fontFamily: kMuktaRegular,
+    fontSize: isMobile(context) ? 17.0 : 19.0,
+    color: kBlackTextColor,
+  );
+}
+
 mediumTextStyle(context) {
   return TextStyle(
     fontFamily: kMuktaRegular,
@@ -78,15 +86,15 @@ smallTextStyle(context) {
 }
 
 /* ---------------Custom Divider Gray Box--------------------------------*/
-kLargeDivider(context) {
+kLargeDivider(context,{Color? dividerClr}) {
   return Container(
-      decoration: const BoxDecoration(color: kLavenderGrayColor),
+      decoration: BoxDecoration(color: dividerClr ?? kLavenderGrayColor),
       height: isMobile(context) ? 11.0 : 13.0);
 }
 
-kMediumDivider(context) {
+kMediumDivider(context,{Color? dividerClr}) {
   return Container(
-      decoration: const BoxDecoration(color: kLavenderGrayColor),
+      decoration: BoxDecoration(color: dividerClr ?? kLavenderGrayColor),
       height: isMobile(context) ? 6.0 : 9.0);
 }
 
