@@ -57,13 +57,14 @@ largeTextStyle(context) {
   return TextStyle(
     color: kBlackTextColor,
     fontFamily: kMuktaBold,
-    fontSize: isMobile(context) ? 21.0 : 24.0,
+    height: 1.2,
+    fontSize: isMobile(context) ? 23.0 : 25.0,
   );
 }
 
 mediumTextStyle(context) {
   return TextStyle(
-    fontFamily:  kMuktaRegular,
+    fontFamily: kMuktaRegular,
     fontSize: isMobile(context) ? 15.0 : 17.0,
     color: kBlackTextColor,
   );
@@ -152,23 +153,33 @@ Widget titleText(
     required String text,
     required Color color}) {
   return Text(text,
-      style: mediumTextStyle(context)
-          .copyWith(fontSize: isMobile(context) ? 18.0 : 21.0, color: color));
+      softWrap: true, style: largeTextStyle(context).copyWith(color: color));
+}
+
+Widget mediumTitleText({required BuildContext context, required String text, required Color color}) {
+  return Text(text,
+      softWrap: true, style: mediumTextStyle(context).copyWith(color: color,fontSize: isMobile(context) ? 18.0 : 21.0,));
 }
 
 /*------------------Title Text with View all Btn-------------------*/
-Widget rowTitleText({required BuildContext context, required String text}) { 
+Widget rowTitleText({required BuildContext context, required String text,required bool isViewAll}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      titleText(
-          context: context,
-          text: text,
-          color: Colors.black.withOpacity(0.7)),
-      Text(
-        "View all",
-        style: mediumTextStyle(context).copyWith(color: kOrangeColor),
+      Expanded(
+        flex: 3,
+        child: titleText(
+            context: context, text: text, color: Colors.black.withOpacity(0.7)),
+      ),
+      if(isViewAll==true) Expanded(
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            "View all",
+            style: mediumTextStyle(context).copyWith(color: kOrangeColor),
+          ),
+        ),
       )
     ],
   );

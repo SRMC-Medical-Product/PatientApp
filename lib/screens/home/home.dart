@@ -92,17 +92,7 @@ class _HomePageState extends State<HomePage> {
                             ? size.width - 420
                             : size.width - 580;
 
-    var imgDimension = smallMobile(context)
-        ? size.width / 8
-        : largeMobile(context)
-            ? size.width / 9
-            : isBetweenMT2(context)
-                ? size.width / 11
-                : isBetweenMT1(context)
-                    ? size.width / 13
-                    : isBetweenTD2(context)
-                        ? size.width / 15
-                        : size.width / 16;
+
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -172,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                 ),
             child: const StaticSearch(
               radius: 5.0,
-              searchHint: "Search here",
+              searchHint: "Search doctors and specialisation",
             ),
           ),
 
@@ -227,7 +217,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Container(
                     child: rowTitleText(
-                        context: context, text: "Appointments for today")),
+                        context: context, text: "Appointments for today",isViewAll: true)),
                 mediumCustomSizedBox(context),
 
                 ///If no appointments are available,then use this
@@ -271,8 +261,23 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           /*----------end appointments box --------------*/
+          /*----------start Our Categories Services UI Part --------------*/
+          Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: kDefaultScreenPaddingHorizontal(context),
+                  vertical: kDefaultScreenPaddingVertical(context)),
+              child: rowTitleText(context: context, text: "Our Doctors",isViewAll: true)),
+   
+          //Services
+          serviceSlider(isBorder: true),
+          smallCustomSizedBox(context),
+          serviceSlider(isBorder: true),
+          /*----------end Our Our Categories Services UI Part --------------*/
+
 
           /*----------start carousel box --------------*/
+          mediumCustomSizedBox(context),
+          smallCustomSizedBox(context),
           ///Carousel
           Container(
             width: size.width,
@@ -333,18 +338,11 @@ class _HomePageState extends State<HomePage> {
           ),
           /*----------end carousel box --------------*/
 
-          /*----------start Our Services UI Part --------------*/
-          mediumCustomSizedBox(context),
-          Container(
-              margin: EdgeInsets.symmetric(
-                  horizontal: kDefaultScreenPaddingHorizontal(context),
-                  vertical: kDefaultScreenPaddingVertical(context)),
-              child: rowTitleText(context: context, text: "Our services")),
-          //Services
-          serviceSlider(),
-          smallCustomSizedBox(context),
-          serviceSlider(),
-          /*----------end Our Services UI Part --------------*/
+
+          /*----------start Our Prokmotional Services UI Part --------------*/
+          scrollContentsTitle(title: "Doctors specially for your Children"),
+          scrollContentsTitle(title: "We care for your Women health"),
+          /*----------end Our Prokmotional Services UI Part --------------*/
 
           /*----------start second promoitons box --------------*/
           ///Second Promotions Box
@@ -502,7 +500,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget serviceSlider() {
+  Widget serviceSlider({required bool isBorder}) {
     var size = sizeMedia(context);
 
     double categoriesHeight = smallMobile(context)
@@ -556,7 +554,7 @@ class _HomePageState extends State<HomePage> {
                   width: 90,
                   padding: EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    border: Border.all(color: kSecondaryColor, width: 1),
+                    border: Border.all(color: isBorder ?kSecondaryColor : Colors.white, width: 1),
                     borderRadius: BorderRadius.circular(13),
                   ),
                   margin: EdgeInsets.symmetric(
@@ -639,6 +637,91 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
+    );
+  }
+
+  Widget scrollContentsTitle({required String title}){
+    var size = sizeMedia(context);
+        var imgDimension = smallMobile(context)
+        ? size.width / 8
+        : largeMobile(context)
+            ? size.width / 9
+            : isBetweenMT2(context)
+                ? size.width / 11
+                : isBetweenMT1(context)
+                    ? size.width / 13
+                    : isBetweenTD2(context)
+                        ? size.width / 15
+                        : size.width / 16;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+          mediumCustomSizedBox(context),
+          smallCustomSizedBox(context),
+          Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: kDefaultScreenPaddingHorizontal(context)),
+              child: rowTitleText(context: context, text: title,isViewAll: false)),
+              smallCustomSizedBox(context),
+          //Services
+           Container(
+             margin: EdgeInsets.symmetric(
+                    horizontal: kDefaultScreenPaddingHorizontal(context),),
+                
+             child: GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: smallMobile(context)
+                                  ? 0.8
+                                  : largeMobile(context)
+                                      ? 0.9
+                                      : 3.3 / 3,
+                              crossAxisCount: smallMobile(context)
+                                  ? 4
+                                  : largeMobile(context)
+                                      ? 4
+                                      : isBetweenMT2(context)
+                                          ? 4
+                                          : isBetweenMT1(context)
+                                              ? 5
+                                              : 6,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10),
+                          itemCount: 4,
+                          itemBuilder: (BuildContext context, int i) {
+                            return GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.network(
+                                      "https://image.flaticon.com/icons/png/512/387/387577.png",
+                                      fit: BoxFit.fill,
+                                      height: imgDimension,
+                                      width: imgDimension,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: isMobile(context) ? 4 : 7),
+                                      child: Text("Cardiologist",
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.clip,
+                                          style: smallTextStyle(context)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+           ),
+          //serviceSlider(isBorder: false),
+          smallCustomSizedBox(context),
+      ],
     );
   }
 
