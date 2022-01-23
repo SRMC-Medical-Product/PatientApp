@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:patientapp/helpers/headers.dart';
+import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/components/customcards.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
 import 'package:patientapp/screens/home/notification.dart';
@@ -176,8 +177,9 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.symmetric(
                     horizontal: isMobile(context) ? 14 : 17,
                   ),
-                  child: const StaticSearch(
+                  child: StaticSearch(
                     radius: 5.0,
+                    onTap: () => Navigator.push(context, CustomSimplePageRoute(page: AppScreenController(indexScreen: 1,),routeName: appcontroller)),
                     searchHint: "Search doctors and specialisation",
                   ),
                 ),

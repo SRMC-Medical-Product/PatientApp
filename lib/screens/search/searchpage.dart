@@ -1,6 +1,7 @@
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
+import 'package:patientapp/screens/search/dynamicsearchpage.dart';
 
 class SearchPage extends StatefulWidget {
   static const routeName = searchpage;
@@ -52,9 +53,10 @@ class _SearchPageState extends State<SearchPage> {
                 padding: EdgeInsets.symmetric(
                   horizontal: isMobile(context) ? 14 : 17,
                 ),
-                child: const StaticSearch(
+                child: StaticSearch(
                   radius: 5.0,
                   searchHint: "Search doctors and specialisation",
+                  onTap: () => Navigator.push(context, CustomSimplePageRoute(page: DynamicSearchPage(),routeName: dynamicsearch)),
                 ),
               ),
               mediumCustomSizedBox(context),

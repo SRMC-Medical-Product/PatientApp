@@ -6,3 +6,4 @@ const String profilepage = '/profilepage';
 const String appointmenthistorypage = '/appointmenthistorypage';
 const String notificationpage = '/notificationpage';
 const String personaldatapage = '/personaldatapage';
+const String dynamicsearch = '/dynamicsearch';
