@@ -13,8 +13,10 @@ const kLatoLight = 'LatoLight';
 //Screen background color
 const kScreenBackground = Colors.white;
 // Color
-const kPrimaryColor = Color(0xff242c78); // Color(0xff06919d); //pruple Color(0xff5E56BF);
-const kSecondaryColor =Color(0xffafcfed); //Color(0xffbbe2e5);//purple Color(0xffF3EFFD);
+const kPrimaryColor =
+    Color(0xff242c78); // Color(0xff06919d); //pruple Color(0xff5E56BF);
+const kSecondaryColor =
+    Color(0xffafcfed); //Color(0xffbbe2e5);//purple Color(0xffF3EFFD);
 const kTertiaryColor = Color(0xff4B257E);
 const kOrangeColor = Color(0xfffa8112);
 
@@ -46,18 +48,18 @@ const kGraycolor = Color(0xff807979);
 const kSlateGray = Color(0xffEDF0F4);
 const kWhiteSmoke = Color(0xfff2f2f8);
 
-
 //Rating Star
 const kStarColor = Color(0xffFDC903);
 
 //Red
-const kRedColor = Color(0xffF11010);
+const kPinkRedishColor = Color(0xffFF486A);
+const kLightRedColor = Color(0xffFEE9EC);
 
 ///Material Color
 MaterialColor kPrimaryMaterialColor = const MaterialColor(
   0xff00296B,
   <int, Color>{
-    50:  Color(0xff5E56BF),
+    50: Color(0xff5E56BF),
     100: Color(0xff5E56BF),
     200: Color(0xff5E56BF),
     300: Color(0xff5E56BF),
