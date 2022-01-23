@@ -53,9 +53,7 @@ class _DynamicSearchPageState extends State<DynamicSearchPage> {
               ),
               mediumCustomSizedBox(context),
               smallCustomSizedBox(context),
-              DynamicSearch(controller: _searchController, performSearch: (value){})
-
-
+              DynamicSearch(controller: _searchController, performSearch: (value){}),
             ],
           ),
         ),

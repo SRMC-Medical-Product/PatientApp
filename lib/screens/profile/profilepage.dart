@@ -46,7 +46,7 @@ return SingleChildScrollView(
                   Text("testing01@gmail.com",style: mediumTextStyle(context).copyWith(color:kDimGray),)
                     ]),
                 ),
-                IconButton(onPressed: (){}, 
+                IconButton(onPressed:() => Navigator.of(context).push(CustomRightPageRoute(page: PersonalDataPage(), routeName: personaldatapage)), 
                     icon: const FaIcon(FontAwesomeIcons.edit,color: kPrimaryColor,size: 18),),
                   ],
                 ),

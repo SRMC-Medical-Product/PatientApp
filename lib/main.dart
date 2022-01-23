@@ -6,6 +6,7 @@ import 'package:patientapp/screens/medical/medicalrecords.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
 import 'package:patientapp/screens/profile/personaldata.dart';
 import 'package:patientapp/screens/profile/profilepage.dart';
+import 'package:patientapp/screens/search/doctordisplay.dart';
 import 'package:patientapp/screens/search/dynamicsearchpage.dart';
 import 'package:patientapp/screens/search/searchpage.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: DynamicSearchPage(), // ,const AppScreenController(indexScreen: 0,),
+      home: DoctorsDisplayPage(), // ,const AppScreenController(indexScreen: 0,),
       routes: {
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
 
         //Search Page
         DynamicSearchPage.routeName : (context) => const DynamicSearchPage(), // Path :  /dynamicsearchpage
+      
+        //Doctors Display List
+        DoctorsDisplayPage.routeName : (context) => const DoctorsDisplayPage(), // Path :  /doctorsdisplaypage
       },
     );
   }
