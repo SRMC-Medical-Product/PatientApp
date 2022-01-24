@@ -4,7 +4,10 @@ import 'package:patientapp/screens/home/home.dart';
 import 'package:patientapp/screens/home/notification.dart';
 import 'package:patientapp/screens/medical/medicalrecords.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
+import 'package:patientapp/screens/profile/personaldata.dart';
 import 'package:patientapp/screens/profile/profilepage.dart';
+import 'package:patientapp/screens/search/doctordisplay.dart';
+import 'package:patientapp/screens/search/dynamicsearchpage.dart';
 import 'package:patientapp/screens/search/searchpage.dart';
 
 void main() {
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: const AppScreenController(indexScreen: 0,),
+      home: DoctorsDisplayPage(), // ,const AppScreenController(indexScreen: 0,),
       routes: {
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller
@@ -40,6 +43,14 @@ class MyApp extends StatelessWidget {
         AppointmentHistoryPage.routeName : (context) => const AppointmentHistoryPage(), // Path :  /appointmenthistorypage
         NotificationPage.routeName : (context) => const NotificationPage(), // Path :  /notificationpage
 
+        //Profile Page Screen
+        PersonalDataPage.routeName : (context) => const PersonalDataPage(), // Path :  /personaldata
+
+        //Search Page
+        DynamicSearchPage.routeName : (context) => const DynamicSearchPage(), // Path :  /dynamicsearchpage
+      
+        //Doctors Display List
+        DoctorsDisplayPage.routeName : (context) => const DoctorsDisplayPage(), // Path :  /doctorsdisplaypage
       },
     );
   }

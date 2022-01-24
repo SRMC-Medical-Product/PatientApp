@@ -57,13 +57,22 @@ largeTextStyle(context) {
   return TextStyle(
     color: kBlackTextColor,
     fontFamily: kMuktaBold,
-    fontSize: isMobile(context) ? 21.0 : 24.0,
+    height: 1.2,
+    fontSize: isMobile(context) ? 23.0 : 25.0,
+  );
+}
+
+mediumLargeTextStyle(context) {
+  return TextStyle(
+    fontFamily: kMuktaRegular,
+    fontSize: isMobile(context) ? 17.0 : 19.0,
+    color: kBlackTextColor,
   );
 }
 
 mediumTextStyle(context) {
   return TextStyle(
-    fontFamily:  kMuktaRegular,
+    fontFamily: kMuktaRegular,
     fontSize: isMobile(context) ? 15.0 : 17.0,
     color: kBlackTextColor,
   );
@@ -77,15 +86,15 @@ smallTextStyle(context) {
 }
 
 /* ---------------Custom Divider Gray Box--------------------------------*/
-kLargeDivider(context) {
+kLargeDivider(context,{Color? dividerClr}) {
   return Container(
-      decoration: const BoxDecoration(color: kLavenderGrayColor),
+      decoration: BoxDecoration(color: dividerClr ?? kLavenderGrayColor),
       height: isMobile(context) ? 11.0 : 13.0);
 }
 
-kMediumDivider(context) {
+kMediumDivider(context,{Color? dividerClr}) {
   return Container(
-      decoration: const BoxDecoration(color: kLavenderGrayColor),
+      decoration: BoxDecoration(color: dividerClr ?? kLavenderGrayColor),
       height: isMobile(context) ? 6.0 : 9.0);
 }
 
@@ -152,24 +161,95 @@ Widget titleText(
     required String text,
     required Color color}) {
   return Text(text,
-      style: mediumTextStyle(context)
-          .copyWith(fontSize: isMobile(context) ? 18.0 : 21.0, color: color));
+      softWrap: true, style: largeTextStyle(context).copyWith(color: color));
+}
+
+Widget mediumTitleText({required BuildContext context, required String text, required Color color}) {
+  return Text(text,
+      softWrap: true, style: mediumTextStyle(context).copyWith(color: color,fontSize: isMobile(context) ? 18.0 : 21.0,));
 }
 
 /*------------------Title Text with View all Btn-------------------*/
-Widget rowTitleText({required BuildContext context, required String text}) { 
+Widget rowTitleText({required BuildContext context, required String text,required bool isViewAll}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      titleText(
-          context: context,
-          text: text,
-          color: Colors.black.withOpacity(0.7)),
-      Text(
-        "View all",
-        style: mediumTextStyle(context).copyWith(color: kOrangeColor),
+      Expanded(
+        flex: 3,
+        child: titleText(
+            context: context, text: text, color: Colors.black.withOpacity(0.7)),
+      ),
+      if(isViewAll==true) Expanded(
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            "View all",
+            style: mediumTextStyle(context).copyWith(color: kOrangeColor),
+          ),
+        ),
       )
     ],
   );
+}
+
+/* ------------------ Bottom Dialog Pop Up --------------------------------*/
+/// This Widgets pops up from bottom with contents inside
+Future bottomDialog({required context,double? height,required Widget widget}){
+  var size = sizeMedia(context);
+  return showGeneralDialog(
+      barrierDismissible: false,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 100),
+      context: context,
+      pageBuilder: (context, anim1, anim2) {
+        return Scaffold(
+          backgroundColor:  Colors.black.withOpacity(0.1), 
+          body: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: height ?? 200,
+              width: size.width,
+              child: Stack(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 35,
+                                      padding:
+                                          const EdgeInsets.only(top: 8, right: 10),
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: GestureDetector(
+                                            onTap: () => Navigator.pop(context),
+                                            child: const Icon(
+                                              Icons.cancel,
+                                              color: kPrimaryColor,
+                                              size: 22,
+                                            )),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: widget
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (context, anim1, anim2, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim1),
+          child: child,
+        );
+      },
+    );
 }
