@@ -9,3 +9,5 @@ const String personaldatapage = '/personaldatapage';
 const String dynamicsearch = '/dynamicsearch';
 const String doctordisplay = '/doctordisplay';
 const String appointmentbookingpage = '/appointmentbookingpage';
+const String addnewmemberpage = '/addnewmemberpage';
+const String editfamilymemberspage = '/editfamilymemberspage';

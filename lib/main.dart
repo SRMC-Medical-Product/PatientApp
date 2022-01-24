@@ -3,9 +3,11 @@ import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/home/home.dart';
 import 'package:patientapp/screens/home/notification.dart';
 import 'package:patientapp/screens/medical/medicalrecords.dart';
+import 'package:patientapp/screens/profile/addnewmember.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
 import 'package:patientapp/screens/profile/personaldata.dart';
 import 'package:patientapp/screens/profile/profilepage.dart';
+import 'package:patientapp/screens/profile/updatemembers.dart';
 import 'package:patientapp/screens/search/appointmentbook.dart';
 import 'package:patientapp/screens/search/doctordisplay.dart';
 import 'package:patientapp/screens/search/dynamicsearchpage.dart';
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: AppointmentBookingPage(), //const AppScreenController(indexScreen: 0,),
+      home: EditFamilyMembersPage(), //const AppScreenController(indexScreen: 0,),
       routes: {
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller
@@ -55,6 +57,10 @@ class MyApp extends StatelessWidget {
 
         //Appointment Booking Screen
         AppointmentBookingPage.routeName : (context) => const AppointmentBookingPage(), // Path :  /appointmentbookingpage
+
+        //Add New Member Screen
+        AddNewMemberPage.routeName : (context) => const AddNewMemberPage(), // Path :  /addnewmemberpage
+        EditFamilyMembersPage.routeName : (context) => const EditFamilyMembersPage(), // Path :  /editfamilymemberspage
       },
     );
   }

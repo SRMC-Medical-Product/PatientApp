@@ -445,3 +445,46 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
            );
   }
 }
+
+
+/* --------------Editable Text Field Custom ------------*/
+  Widget personalInfoDynamicTitle(
+      {
+      required BuildContext context,  
+      required String title,
+      required String hintTextField,
+      required TextEditingController controller,
+      required TextInputType textInputType}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        mediumCustomSizedBox(context),
+        Text(
+          title,
+          style: mediumTextStyle(context).copyWith(letterSpacing: 0.2),
+        ),
+        smallCustomSizedBox(context),
+        Container(
+          height: 45,
+          decoration: BoxDecoration(
+                       color: kLightLavengerGrayColor,
+           // border: Border.all(color: kPrimaryColor, width: 1),
+            borderRadius: BorderRadius.circular(9),
+          ),
+          child: TextFormField(
+            controller: controller,
+            style: TextStyle(color: kBlackTextColor, fontSize: 17),
+            keyboardType: textInputType,
+            cursorColor: kPrimaryColor,
+            decoration: InputDecoration(
+              hintText: hintTextField,
+              hintStyle: mediumTextStyle(context).copyWith(color: kDarkGray),
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+            ),
+          ),
+        )
+      ],
+    );
+  }
