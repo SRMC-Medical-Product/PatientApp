@@ -110,6 +110,7 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          // top bar
           Container(
             child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
