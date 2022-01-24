@@ -375,6 +375,9 @@ void onTappedBar(int value) {
             SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Morning"),
             SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Afternoon"),
             SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Night"),
+            mediumCustomSizedBox(context),
+            smallCustomSizedBox(context),
+
           ],
         ),
     );
@@ -414,16 +417,17 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
           labelPadding: EdgeInsets.all(2.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4.0),
-            side: BorderSide(color: widget.defaultChoiceIndex == index ? kPrimaryColor : kSlateGray ,width: 1)
+            side: BorderSide(color:  kSlateGray ,width: 0.5)
           ),
           pressElevation: 0,
           label: Text(
             widget.choicesList[index],
-            style: smallTextStyle(context).copyWith(color : widget.defaultChoiceIndex == index ? Colors.white : kPrimaryColor)
+            style: smallTextStyle(context).copyWith(color : kDimGray, fontFamily: kMuktaRegular)
           ),
           selected: widget.defaultChoiceIndex == index,
-          selectedColor: widget.defaultChoiceIndex == index ? kPrimaryColor : Colors.white,
+          selectedColor:Colors.white,
           onSelected: (val) {
+            print(widget.choicesList[index]);
             setState(() {
               widget.defaultChoiceIndex = val ? index : widget.defaultChoiceIndex;
             });

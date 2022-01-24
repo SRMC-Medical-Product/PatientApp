@@ -10,6 +10,9 @@ class AppointmentBookingPage extends StatefulWidget {
 }
 
 class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
+
+  List<dynamic> _memberItem = ["Loga Subramani","Karthikeyan"];
+
   @override
   Widget build(BuildContext context) {
     var size = sizeMedia(context);
@@ -122,6 +125,110 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                              ],
                         ),
                       ),
+                      kMediumDivider(context, dividerClr: kWhiteSmoke),  
+                      Container(
+                  width: size.width,
+                  padding: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),),
+                  child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                       mediumCustomSizedBox(context),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Booking appointment for",
+                                    style: mediumTextStyle(context).copyWith(
+                                      color : Colors.black.withOpacity(0.7),
+                                    ),
+                                  ),
+                                  Text(
+                                    "Loga Subramani",
+                                    maxLines: 2,
+                                    overflow: TextOverflow.clip,
+                                    style: mediumTextStyle(context).copyWith(
+                                      color : Colors.black,
+                                      fontFamily: kMuktaBold,
+                                      letterSpacing:0.1
+                                    ),
+                                  ),
+                                  mediumCustomSizedBox(context),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child : GestureDetector(
+                              onTap: () =>  bottomDialog(
+                                        context: context,
+                                        height: 300,
+                                        widget: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                
+                                              },
+                                              child: Container(
+                                                height: 35, 
+                                                margin:EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context) * 2,vertical: 5),
+                                                decoration: BoxDecoration(
+                                                  color : kWhiteSmoke,
+                                                  //border: Border.all(color: kPrimaryColor),
+                                                  borderRadius: BorderRadius.circular(3),
+                                                ),
+                                                child: Center(
+                                                  child: Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Icon(Icons.add,color:Colors.black,size:15),
+                                                      Text("Add new member",style: mediumTextStyle(context))
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            ListView.builder(
+                                                shrinkWrap: true,
+                                                physics: ScrollPhysics(),
+                                                itemCount: _memberItem.length,
+                                                addAutomaticKeepAlives: true,
+                                                itemBuilder: (BuildContext context, int i) {
+                                                  return ListTile(
+                                                    onTap: () {
+                                                      },
+                                                    title: Text(_memberItem[i], style: mediumTextStyle(context)),
+                                                    trailing: Icon(Icons.arrow_right),
+                                                  );
+                                                }),
+                                          ],
+                                        ),
+                                      ),
+                              child: Align(
+                                alignment: Alignment.topCenter,
+                                child: Text("Change".toUpperCase(),style: mediumTextStyle(context).copyWith(letterSpacing: 0.2,fontFamily: kMuktaBold,color: kGreenColor)),
+                              ),
+                            )
+                          )
+                        ],
+                      ),
+                  smallCustomSizedBox(context),
+
+                    ],
+                  ),
+                ),
                       kLargeDivider(context, dividerClr: kWhiteSmoke),                
                     ],
                   ),
