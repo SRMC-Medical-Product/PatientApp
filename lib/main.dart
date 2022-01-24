@@ -5,6 +5,7 @@ import 'package:patientapp/screens/home/notification.dart';
 import 'package:patientapp/screens/medical/medicalrecords.dart';
 import 'package:patientapp/screens/profile/addnewmember.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
+import 'package:patientapp/screens/profile/familymembers.dart';
 import 'package:patientapp/screens/profile/personaldata.dart';
 import 'package:patientapp/screens/profile/profilepage.dart';
 import 'package:patientapp/screens/profile/updatemembers.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: EditFamilyMembersPage(), //const AppScreenController(indexScreen: 0,),
+      home:AllFamilyMembersPage(),//const AppScreenController(indexScreen: 0,),
       routes: {
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         //Add New Member Screen
         AddNewMemberPage.routeName : (context) => const AddNewMemberPage(), // Path :  /addnewmemberpage
         EditFamilyMembersPage.routeName : (context) => const EditFamilyMembersPage(), // Path :  /editfamilymemberspage
+        AllFamilyMembersPage.routeName : (context) => const AllFamilyMembersPage(), // Path :  /allfamilymemberspage
       },
     );
   }
