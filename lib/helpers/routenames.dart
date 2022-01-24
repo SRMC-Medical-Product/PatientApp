@@ -8,3 +8,4 @@ const String notificationpage = '/notificationpage';
 const String personaldatapage = '/personaldatapage';
 const String dynamicsearch = '/dynamicsearch';
 const String doctordisplay = '/doctordisplay';
+const String appointmentbookingpage = '/appointmentbookingpage';

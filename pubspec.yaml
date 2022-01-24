@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.0.0
   font_awesome_flutter: ^9.2.0
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -92,13 +92,6 @@ flutter:
       fonts:
         - asset: assets/fonts/quicksands/Quicksand-Medium.ttf 
     
-    - family: LatoLight
-      fonts:
-        - asset: assets/fonts/lato/Lato-Light.ttf
-  
-    - family: LatoRegular
-      fonts:
-        - asset: assets/fonts/lato/Lato-Regular.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -6,6 +6,7 @@ import 'package:patientapp/screens/medical/medicalrecords.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
 import 'package:patientapp/screens/profile/personaldata.dart';
 import 'package:patientapp/screens/profile/profilepage.dart';
+import 'package:patientapp/screens/search/appointmentbook.dart';
 import 'package:patientapp/screens/search/doctordisplay.dart';
 import 'package:patientapp/screens/search/dynamicsearchpage.dart';
 import 'package:patientapp/screens/search/searchpage.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: DoctorsDisplayPage(), // ,const AppScreenController(indexScreen: 0,),
+      home: AppointmentBookingPage(), //const AppScreenController(indexScreen: 0,),
       routes: {
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
       
         //Doctors Display List
         DoctorsDisplayPage.routeName : (context) => const DoctorsDisplayPage(), // Path :  /doctorsdisplaypage
+
+        //Appointment Booking Screen
+        AppointmentBookingPage.routeName : (context) => const AppointmentBookingPage(), // Path :  /appointmentbookingpage
       },
     );
   }

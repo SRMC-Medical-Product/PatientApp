@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isAppointment = true;
+  bool isAppointment = false;
 
   //Services
   final List<Map> servicesName = [
@@ -236,7 +236,8 @@ class _HomePageState extends State<HomePage> {
                 Container(
                     child: rowTitleText(
                         context: context,
-                        text: "Appointments for today",
+                        isCapitalFont: true,
+                        text: "Recent Appointments",
                         isViewAll: true)),
                 mediumCustomSizedBox(context),
 
@@ -245,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                     ? Container(
                         height: 110,
                         width: size.width,
-                        padding: EdgeInsets.all(20),
+                        padding: EdgeInsets.all(15),
                         decoration: const BoxDecoration(
                             color: kSecondaryColor,
                             border: Border(
@@ -258,11 +259,10 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text("No appointments for today",
-                                      style: largeTextStyle(context)
-                                          .copyWith(color: kPrimaryColor)),
+                                      style: mediumLargeTextStyle(context).copyWith(color: kPrimaryColor,fontSize: isMobile(context) ? 18.0 : 21.0,)),
                                   Text("Book an appointment now",
                                       style: mediumTextStyle(context).copyWith(
                                           color: kDimGray,
@@ -286,7 +286,7 @@ class _HomePageState extends State<HomePage> {
               margin: EdgeInsets.symmetric(
                   horizontal: kDefaultScreenPaddingHorizontal(context),
                   vertical: kDefaultScreenPaddingVertical(context)),
-              child: rowTitleText(
+              child: rowTitleText(isCapitalFont: true,
                   context: context, text: "Our Doctors", isViewAll: true)),
 
           //Services
@@ -315,10 +315,14 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.symmetric(
                       horizontal: kDefaultScreenPaddingHorizontal(context),
                       vertical: kDefaultScreenPaddingVertical(context)),
-                  child: titleText(
-                      context: context,
-                      text: "Best of us",
-                      color: Colors.white),
+                  child: Text(
+                      "Best of us".toUpperCase(),
+                      style: mediumLargeTextStyle(context).copyWith(
+                          letterSpacing: 0.15,
+                          fontWeight : FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: kMuktaBold),
+                    ),
                 ),
 
                 ///Carousel Scrolling Content
@@ -622,7 +626,7 @@ class _HomePageState extends State<HomePage> {
       width: size.width,
       height: isMobile(context) ? size.height / 4.0 : size.height / 3.2,
       margin: EdgeInsets.symmetric(
-          horizontal: kDefaultScreenPaddingHorizontal(context),
+          horizontal: 5,
           vertical: kDefaultScreenPaddingVertical(context)),
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -655,7 +659,7 @@ class _HomePageState extends State<HomePage> {
                       ? mediumTextStyle(context)
                           .copyWith(wordSpacing: 2.0, color: txtColor)
                       : largeTextStyle(context)
-                          .copyWith(wordSpacing: 2.0, color: txtColor),
+                          .copyWith(wordSpacing: 2.0, color: txtColor,fontSize: isMobile(context) ? 18.0 : 21.0,),
                 ),
                 Text(subTitle,
                     maxLines: 2,
@@ -696,7 +700,7 @@ class _HomePageState extends State<HomePage> {
             margin: EdgeInsets.symmetric(
                 horizontal: kDefaultScreenPaddingHorizontal(context)),
             child:
-                rowTitleText(context: context, text: title, isViewAll: false)),
+                rowTitleText(context: context, text: title, isViewAll: false,isCapitalFont:false)),
         smallCustomSizedBox(context),
         //Services
         Container(

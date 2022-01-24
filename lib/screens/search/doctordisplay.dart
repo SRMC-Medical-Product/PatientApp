@@ -172,6 +172,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                                             MainAxisAlignment.start,
                                         children: [
                                           doctorTileContent(
+                                              context: context,                                           
                                               icon: Icons.work_outline_outlined,
                                               title: "3 yrs",
                                               bgColor: kSecondaryColor,
@@ -187,6 +188,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                                                 mediumCustomSizedBox(context),
                                           ),
                                           doctorTileContent(
+                                              context: context,
                                               icon: Icons.person_rounded,
                                               title: "Male",
                                               bgColor: kLightRedColor,
@@ -202,7 +204,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                                                 BorderRadius.circular(25)),
                                         child: Center(
                                           child: Text(
-                                            "Make an appointment".toUpperCase(),
+                                            "Book Now".toUpperCase(),
                                             style: mediumTextStyle(context)
                                                 .copyWith(
                                                     fontFamily: kMuktaBold,
@@ -284,32 +286,4 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
     );
   }
 
-  Widget doctorTileContent(
-      {required IconData icon,
-      required String title,
-      required Color bgColor,
-      required Color iconColor}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          height: isMobile(context) ? 20 : 25,
-          width: isMobile(context) ? 20 : 25,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: bgColor),
-          child: Icon(
-            icon,
-            color: iconColor,
-            size: 14,
-          ),
-        ),
-        RotatedBox(
-          quarterTurns: 1,
-          child: smallCustomSizedBox(context),
-        ),
-        Text(title,
-            style: smallTextStyle(context).copyWith(fontFamily: kMuktaBold)),
-      ],
-    );
-  }
 }

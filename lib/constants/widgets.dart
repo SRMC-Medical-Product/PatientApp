@@ -161,7 +161,7 @@ Widget titleText(
     required String text,
     required Color color}) {
   return Text(text,
-      softWrap: true, style: largeTextStyle(context).copyWith(color: color));
+      softWrap: true, style: mediumLargeTextStyle(context).copyWith(color: color,fontSize: isMobile(context) ? 18.0 : 21.0,));
 }
 
 Widget mediumTitleText({required BuildContext context, required String text, required Color color}) {
@@ -170,15 +170,21 @@ Widget mediumTitleText({required BuildContext context, required String text, req
 }
 
 /*------------------Title Text with View all Btn-------------------*/
-Widget rowTitleText({required BuildContext context, required String text,required bool isViewAll}) {
+Widget rowTitleText({required BuildContext context, required String text,required bool isViewAll,required bool isCapitalFont }) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Expanded(
         flex: 3,
-        child: titleText(
-            context: context, text: text, color: Colors.black.withOpacity(0.7)),
+        child: isCapitalFont == true ? Text(
+                      text.toUpperCase(),
+                      style: mediumLargeTextStyle(context).copyWith(
+                          letterSpacing: 0.15,
+                          fontWeight : FontWeight.bold,
+                          color: Colors.black.withOpacity(0.9),
+                          fontFamily: kMuktaBold),
+                    ): titleText( context: context, text: text, color: Colors.black.withOpacity(0.7)),
       ),
       if(isViewAll==true) Expanded(
         child: Align(
@@ -252,4 +258,186 @@ Future bottomDialog({required context,double? height,required Widget widget}){
         );
       },
     );
+}
+
+
+/*-------------------------Doctor Tile Content------------------------------*/
+  Widget doctorTileContent(
+      {required BuildContext context,
+      required IconData icon,
+      required String title,
+      required Color bgColor,
+      required Color iconColor}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Container(
+          height: isMobile(context) ? 20 : 25,
+          width: isMobile(context) ? 20 : 25,
+          decoration: BoxDecoration(shape: BoxShape.circle, color: bgColor),
+          child: Icon(
+            icon,
+            color: iconColor,
+            size: 14,
+          ),
+        ),
+        RotatedBox(
+          quarterTurns: 1,
+          child: smallCustomSizedBox(context),
+        ),
+        Text(title,
+            style: smallTextStyle(context).copyWith(fontFamily: kMuktaBold)),
+      ],
+    );
+  }
+
+
+/* -------------- Horizontal Scroll -----------------------*/
+class FixedTabSwitcher extends StatefulWidget {
+
+final List<dynamic> dateSlots;
+final List<dynamic> services;
+
+///Expanded Necessary or Not
+final bool isExpanded;
+
+  const FixedTabSwitcher({Key? key,required this.isExpanded,required this.dateSlots,required this.services}) : super(key: key);
+
+  @override
+  _FixedTabSwitcherState createState() => _FixedTabSwitcherState();
+}
+
+class _FixedTabSwitcherState extends State<FixedTabSwitcher> {
+
+  int _currentIndex = 0;
+
+//This is invoked when user taps on names in bar 
+void onTappedBar(int value) {
+   setState(() {
+     _currentIndex = value;
+   });
+ }
+
+    int _morningChoiceIndex= 0;
+    List<String> morningList = ['01:00 A.M','02:00 A.M','03:00 A.M','09:00 A.M','10:00 A.M'];
+
+  @override
+  Widget build(BuildContext context) {
+    var size = sizeMedia(context);
+    return Container(
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [ 
+            Container(
+              height: 80.0,
+              width: size.width,
+               color: kWhiteSmoke,
+              padding: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),),
+              child: ListView.builder(
+                addAutomaticKeepAlives: true,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                itemCount: widget.dateSlots.length,
+                itemBuilder: (BuildContext context, int i){
+                    return   GestureDetector(
+                     onTap:  () {
+                      onTappedBar(i);
+                     },
+                     child: Container(
+                       width: 40,
+                       margin: EdgeInsets.all(7.0),
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.center,
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                           Text(widget.dateSlots[i],style: mediumTextStyle(context).copyWith(
+                             color: _currentIndex == i ? kPrimaryColor : kPrimaryColor),),
+                           Container(
+                             height: 35,
+                             width: 35,
+                             decoration: BoxDecoration(
+                               color: _currentIndex == i ? kPrimaryColor : Colors.white,
+                         borderRadius: BorderRadius.circular(6),
+                         border: Border.all(color:_currentIndex == i ? kPrimaryColor : kSlateGray),
+                       ),
+                             child: Center(child: Text("24",style: mediumTextStyle(context).copyWith(
+                               color : _currentIndex == i ? Colors.white : kPrimaryColor,
+                               fontFamily : kMuktaBold)))),
+                         ],
+                       ) 
+                     ));
+                }),
+            ),
+            kLargeDivider(context, dividerClr: kWhiteSmoke), 
+            SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Morning"),
+            SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Afternoon"),
+            SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Night"),
+          ],
+        ),
+    );
+    
+  }
+}
+
+/* ------------------ Choice Chips ------------------ */
+class SlotChoiceChips extends StatefulWidget {
+  int defaultChoiceIndex;
+  final List<dynamic> choicesList;
+  final String title;
+  SlotChoiceChips({ Key? key ,required this.defaultChoiceIndex,required this.choicesList,required this.title}) : super(key: key);
+
+  @override
+  _SlotChoiceChipsState createState() => _SlotChoiceChipsState();
+}
+
+class _SlotChoiceChipsState extends State<SlotChoiceChips> {
+  @override
+  Widget build(BuildContext context) {
+    return  Container(
+             padding: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),),
+             child: Column(
+               crossAxisAlignment: CrossAxisAlignment.start,
+               mainAxisAlignment: MainAxisAlignment.start,
+               children: [
+                    mediumCustomSizedBox(context),
+                    smallCustomSizedBox(context),
+                    Text(widget.title,style: mediumTextStyle(context)),
+                    mediumCustomSizedBox(context),
+          Wrap(
+            spacing:  8,
+            runSpacing: 10,
+      children: List.generate(widget.choicesList.length, (index) {
+        return ChoiceChip(
+          labelPadding: EdgeInsets.all(2.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+            side: BorderSide(color: widget.defaultChoiceIndex == index ? kPrimaryColor : kSlateGray ,width: 1)
+          ),
+          pressElevation: 0,
+          label: Text(
+            widget.choicesList[index],
+            style: smallTextStyle(context).copyWith(color : widget.defaultChoiceIndex == index ? Colors.white : kPrimaryColor)
+          ),
+          selected: widget.defaultChoiceIndex == index,
+          selectedColor: widget.defaultChoiceIndex == index ? kPrimaryColor : Colors.white,
+          onSelected: (val) {
+            setState(() {
+              widget.defaultChoiceIndex = val ? index : widget.defaultChoiceIndex;
+            });
+          },
+          backgroundColor: Colors.white, 
+          elevation: 0,
+          padding: EdgeInsets.symmetric(
+              horizontal: kDefaultScreenPaddingHorizontal(context)),
+        );
+      }),
+    )                
+
+               ],
+             ),
+           );
+  }
 }
