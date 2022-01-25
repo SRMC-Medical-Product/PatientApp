@@ -261,7 +261,6 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                   FixedTabSwitcher(
                     isExpanded: true,
                     dateSlots: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                    services:  ["cooking","cleaning","pest control"],
                ),
                mediumCustomSizedBox(context),
               ],

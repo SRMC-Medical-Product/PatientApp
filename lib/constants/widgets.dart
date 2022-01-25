@@ -1,6 +1,7 @@
 /*---------------- Custom Widgets which is common for whole app -------------------*/
 
 import 'package:patientapp/helpers/headers.dart';
+import 'package:patientapp/screens/search/appointmentconfirmation.dart';
 
 /* ------------------------ INR Symbols -------------------------*/
 // ignore: constant_identifier_names
@@ -80,6 +81,7 @@ mediumTextStyle(context) {
 
 smallTextStyle(context) {
   return TextStyle(
+
       fontFamily: kQuickSandRegular,
       fontSize: isMobile(context) ? 13.0 : 15.0,
       color: kGraycolor);
@@ -300,12 +302,11 @@ Future bottomDialog({required context,double? height,required Widget widget}){
 class FixedTabSwitcher extends StatefulWidget {
 
 final List<dynamic> dateSlots;
-final List<dynamic> services;
 
 ///Expanded Necessary or Not
 final bool isExpanded;
 
-  const FixedTabSwitcher({Key? key,required this.isExpanded,required this.dateSlots,required this.services}) : super(key: key);
+  const FixedTabSwitcher({Key? key,required this.isExpanded,required this.dateSlots}) : super(key: key);
 
   @override
   _FixedTabSwitcherState createState() => _FixedTabSwitcherState();
@@ -429,12 +430,13 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
           ),
           selected: widget.defaultChoiceIndex == index,
           selectedColor:Colors.white,
-          onSelected: (val) {
-            print(widget.choicesList[index]);
-            setState(() {
-              widget.defaultChoiceIndex = val ? index : widget.defaultChoiceIndex;
-            });
-          },
+          onSelected: (val) => Navigator.push(context, CustomRightPageRoute(page: AppointmentConfirmationPage(), routeName: appointmentconfirmationpage)),
+
+          //   print(widget.choicesList[index]);
+          //   setState(() {
+          //     widget.defaultChoiceIndex = val ? index : widget.defaultChoiceIndex;
+          //   });
+          // },
           backgroundColor: Colors.white, 
           elevation: 0,
           padding: EdgeInsets.symmetric(
