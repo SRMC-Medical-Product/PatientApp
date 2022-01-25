@@ -31,7 +31,6 @@ class CommonNavbar extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
       decoration: BoxDecoration(
         color: Colors.white,
-        
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

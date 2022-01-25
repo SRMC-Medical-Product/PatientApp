@@ -40,7 +40,6 @@ class _SearchPageState extends State<SearchPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: commonNavbar(context: context, isBack: true),
         body: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Column(
@@ -48,6 +47,7 @@ class _SearchPageState extends State<SearchPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               /*-------start of search bar -------*/
+              mediumCustomSizedBox(context),
               mediumCustomSizedBox(context),
               Container(
                 padding: EdgeInsets.symmetric(

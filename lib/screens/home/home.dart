@@ -4,6 +4,7 @@ import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/components/customcards.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
 import 'package:patientapp/screens/home/notification.dart';
+import 'package:patientapp/screens/search/doctordisplay.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = homepage;
@@ -207,7 +208,8 @@ class _HomePageState extends State<HomePage> {
                       title: "Book Now",
                       subTitle: "Make appointments",
                       bgColor: Colors.white,
-                      onTap: () {})),
+                      onTap: () => Navigator.push(context, CustomSimplePageRoute(page: AppScreenController(indexScreen: 1,), routeName: appcontroller))
+                      )),
               Expanded(
                   child: displayHomeBoxGrid(
                       txtColor: Colors.white,
@@ -235,9 +237,10 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Container(
                     child: rowTitleText(
+                      onTap: (){},
                         context: context,
                         isCapitalFont: true,
-                        text: "Recent Appointments",
+                        text: "Upcoming Appointments",
                         isViewAll: true)),
                 mediumCustomSizedBox(context),
 
@@ -286,7 +289,9 @@ class _HomePageState extends State<HomePage> {
               margin: EdgeInsets.symmetric(
                   horizontal: kDefaultScreenPaddingHorizontal(context),
                   vertical: kDefaultScreenPaddingVertical(context)),
-              child: rowTitleText(isCapitalFont: true,
+              child: rowTitleText(
+                onTap: () => Navigator.push(context, CustomSimplePageRoute(page: AppScreenController(indexScreen: 1,), routeName: appcontroller)),
+                isCapitalFont: true,
                   context: context, text: "Our Doctors", isViewAll: true)),
 
           //Services
@@ -700,7 +705,7 @@ class _HomePageState extends State<HomePage> {
             margin: EdgeInsets.symmetric(
                 horizontal: kDefaultScreenPaddingHorizontal(context)),
             child:
-                rowTitleText(context: context, text: title, isViewAll: false,isCapitalFont:false)),
+                rowTitleText(context: context, text: title, isViewAll: false,isCapitalFont:false,onTap:(){})),
         smallCustomSizedBox(context),
         //Services
         Container(
@@ -730,7 +735,7 @@ class _HomePageState extends State<HomePage> {
               itemCount: 4,
               itemBuilder: (BuildContext context, int i) {
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () => Navigator.push(context, CustomRightPageRoute(page: DoctorsDisplayPage(), routeName: doctordisplay)),
                   child: Container(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,

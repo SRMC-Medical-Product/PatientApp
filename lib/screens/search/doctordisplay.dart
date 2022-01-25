@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
+import 'package:patientapp/screens/search/appointmentbook.dart';
 import 'package:patientapp/screens/search/dynamicsearchpage.dart';
 
 class DoctorsDisplayPage extends StatefulWidget {
@@ -196,20 +197,23 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                                         ],
                                       ),
                                       mediumCustomSizedBox(context),
-                                      Container(
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            color: kOrangeColor,
-                                            borderRadius:
-                                                BorderRadius.circular(25)),
-                                        child: Center(
-                                          child: Text(
-                                            "Book Now".toUpperCase(),
-                                            style: mediumTextStyle(context)
-                                                .copyWith(
-                                                    fontFamily: kMuktaBold,
-                                                    color: Colors.white,
-                                                    letterSpacing: 0.2),
+                                      GestureDetector(
+                                        onTap: () => Navigator.push(context, CustomSimplePageRoute(page: AppointmentBookingPage(), routeName: appointmentbookingpage)),
+                                        child: Container(
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: kOrangeColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(25)),
+                                          child: Center(
+                                            child: Text(
+                                              "Book Now".toUpperCase(),
+                                              style: mediumTextStyle(context)
+                                                  .copyWith(
+                                                      fontFamily: kMuktaBold,
+                                                      color: Colors.white,
+                                                      letterSpacing: 0.2),
+                                            ),
                                           ),
                                         ),
                                       ),

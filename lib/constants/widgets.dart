@@ -170,7 +170,7 @@ Widget mediumTitleText({required BuildContext context, required String text, req
 }
 
 /*------------------Title Text with View all Btn-------------------*/
-Widget rowTitleText({required BuildContext context, required String text,required bool isViewAll,required bool isCapitalFont }) {
+Widget rowTitleText({required BuildContext context, required String text,required bool isViewAll,required bool isCapitalFont,required Function() onTap}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -189,9 +189,12 @@ Widget rowTitleText({required BuildContext context, required String text,require
       if(isViewAll==true) Expanded(
         child: Align(
           alignment: Alignment.centerRight,
-          child: Text(
-            "View all",
-            style: mediumTextStyle(context).copyWith(color: kOrangeColor),
+          child: GestureDetector(
+            onTap : onTap,
+            child: Text(
+              "View all",
+              style: mediumTextStyle(context).copyWith(color: kOrangeColor),
+            ),
           ),
         ),
       )
