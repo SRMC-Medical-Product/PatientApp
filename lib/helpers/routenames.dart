@@ -13,3 +13,4 @@ const String addnewmemberpage = '/addnewmemberpage';
 const String editfamilymemberspage = '/editfamilymemberspage';
 const String allfamilymemberspage = '/allfamilymemberspage';
 const String appointmentconfirmationpage = '/appointmentconfirmationpage';
+const String upcomingappointmentspage = '/upcomingappointmentspage';
