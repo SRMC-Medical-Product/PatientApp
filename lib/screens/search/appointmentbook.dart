@@ -11,7 +11,7 @@ class AppointmentBookingPage extends StatefulWidget {
 
 class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
 
-  List<dynamic> _memberItem = ["Loga Subramani","Karthikeyan"];
+  final List<dynamic> _memberItem = ["Loga Subramani","Karthikeyan"];
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
         backgroundColor: Colors.white,
         appBar: commonNavbar(context: context, isBack: true),
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -46,7 +46,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                               children: [
                                 CircleAvatar(
                                     maxRadius: isMobile(context) ? 35 : 50,
-                                    backgroundImage: NetworkImage(
+                                    backgroundImage: const NetworkImage(
                                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU")),
                                 RotatedBox(
                                   quarterTurns: 1,
@@ -193,7 +193,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                                                     crossAxisAlignment: CrossAxisAlignment.center,
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
-                                                      Icon(Icons.add,color:Colors.black,size:15),
+                                                      const Icon(Icons.add,color:Colors.black,size:15),
                                                       Text("Add new member",style: mediumTextStyle(context))
                                                     ],
                                                   ),
@@ -202,7 +202,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                                             ),
                                             ListView.builder(
                                                 shrinkWrap: true,
-                                                physics: ScrollPhysics(),
+                                                physics: const ScrollPhysics(),
                                                 itemCount: _memberItem.length,
                                                 addAutomaticKeepAlives: true,
                                                 itemBuilder: (BuildContext context, int i) {
@@ -210,7 +210,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                                                     onTap: () {
                                                       },
                                                     title: Text(_memberItem[i], style: mediumTextStyle(context)),
-                                                    trailing: Icon(Icons.arrow_right),
+                                                    trailing: const Icon(Icons.arrow_right),
                                                   );
                                                 }),
                                           ],
@@ -233,7 +233,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                     ],
                   ),
                   //mediumCustomSizedBox(context),
-                 Container(
+                 SizedBox(
                    width: size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

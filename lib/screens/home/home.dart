@@ -6,6 +6,7 @@ import 'package:patientapp/screens/components/customcards.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
 import 'package:patientapp/screens/home/notification.dart';
 import 'package:patientapp/screens/search/doctordisplay.dart';
+import 'package:patientapp/screens/search/dynamicsearchpage.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = homepage;
@@ -117,77 +118,75 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // top bar
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                //Top Bar with name and notification icon
-                Container(
-                  height: isMobile(context) ? 90 : 120,
-                  width: size.width,
-                  padding: EdgeInsets.only(
-                      left: kScreenMarginHorizontal(context),
-                      right: kScreenMarginHorizontal(context),
-                      top: 15),
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Hello", style: mediumTextStyle(context)),
-                                Text(
-                                  "Loga Subramani",
-                                  style: largeTextStyle(context),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  softWrap: true,
-                                ),
-                              ],
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () => Navigator.push(
-                                context,
-                                CustomRightPageRoute(
-                                    page: NotificationPage(),
-                                    routeName: notificationpage)),
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color: kWhiteSmoke,
-                                borderRadius: BorderRadius.circular(6),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              //Top Bar with name and notification icon
+              Container(
+                height: isMobile(context) ? 90 : 120,
+                width: size.width,
+                padding: EdgeInsets.only(
+                    left: kScreenMarginHorizontal(context),
+                    right: kScreenMarginHorizontal(context),
+                    top: 15),
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Hello", style: mediumTextStyle(context)),
+                              Text(
+                                "Loga Subramani",
+                                style: largeTextStyle(context),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
                               ),
-                              child: Icon(Icons.notifications, color: kDimGray),
+                            ],
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              CustomRightPageRoute(
+                                  page: const NotificationPage(),
+                                  routeName: notificationpage)),
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: kWhiteSmoke,
+                              borderRadius: BorderRadius.circular(6),
                             ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+                            child: const Icon(Icons.notifications, color: kDimGray),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
+              ),
 
-                //Search Bar
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isMobile(context) ? 14 : 17,
-                  ),
-                  child: StaticSearch(
-                    radius: 5.0,
-                    onTap: () => Navigator.push(context, CustomSimplePageRoute(page: AppScreenController(indexScreen: 1,),routeName: appcontroller)),
-                    searchHint: "Search doctors and specialisation",
-                  ),
+              //Search Bar
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isMobile(context) ? 14 : 17,
                 ),
-              ],
-            ),
+                child: StaticSearch(
+                  radius: 5.0,
+                  onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const DynamicSearchPage(),routeName: dynamicsearch)),
+                  searchHint: "Search doctors and specialisation",
+                ),
+              ),
+            ],
           ),
           /*----------start promotional and ui box --------------*/
           //promotion Box
@@ -209,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                       title: "Book Now",
                       subTitle: "Make appointments",
                       bgColor: Colors.white,
-                      onTap: () => Navigator.push(context, CustomSimplePageRoute(page: AppScreenController(indexScreen: 1,), routeName: appcontroller))
+                      onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const AppScreenController(indexScreen: 1,), routeName: appcontroller))
                       )),
               Expanded(
                   child: displayHomeBoxGrid(
@@ -219,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                       title: "Visit In",
                       subTitle: "View appointments",
                       bgColor: kPrimaryColor,
-                      onTap: () => Navigator.push(context, CustomRightPageRoute(page: AppointmentController(), routeName: appointmentcontroller)))),
+                      onTap: () => Navigator.push(context, CustomRightPageRoute(page: const AppointmentController(), routeName: appointmentcontroller)))),
             ],
           ),
 
@@ -250,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                     ? Container(
                         height: 110,
                         width: size.width,
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         decoration: const BoxDecoration(
                             color: kSecondaryColor,
                             border: Border(
@@ -291,7 +290,7 @@ class _HomePageState extends State<HomePage> {
                   horizontal: kDefaultScreenPaddingHorizontal(context),
                   vertical: kDefaultScreenPaddingVertical(context)),
               child: rowTitleText(
-                onTap: () => Navigator.push(context, CustomSimplePageRoute(page: AppScreenController(indexScreen: 1,), routeName: appcontroller)),
+                onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const AppScreenController(indexScreen: 1,), routeName: appcontroller)),
                 isCapitalFont: true,
                   context: context, text: "Our Doctors", isViewAll: true)),
 
@@ -310,7 +309,7 @@ class _HomePageState extends State<HomePage> {
             width: size.width,
             height:
                 carouselHgt, //isMobile(context) ? size.width / 3.6 : size.width / 3.2,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: kPrimaryColor,
             ),
             child: Column(
@@ -338,7 +337,7 @@ class _HomePageState extends State<HomePage> {
                     itemCount: 4,
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     itemBuilder: (BuildContext context, int i) {
                       //Card
                       return Container(
@@ -386,7 +385,7 @@ class _HomePageState extends State<HomePage> {
                 vertical: kDefaultScreenPaddingVertical(context)),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5.0),
-                image: DecorationImage(
+                image: const DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
                         "https://actampa.org/wp-content/uploads/2017/10/rabies-vaccine-final-1024x538.jpg"))),
@@ -398,7 +397,7 @@ class _HomePageState extends State<HomePage> {
           ///End Details Box
           Container(
             width: size.width,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: kSecondaryColor,
             ),
             child: Container(
@@ -572,6 +571,7 @@ class _HomePageState extends State<HomePage> {
                             ? 120
                             : 130;
 
+    // ignore: sized_box_for_whitespace
     return Container(
       width: size.width,
       height:
@@ -587,13 +587,13 @@ class _HomePageState extends State<HomePage> {
               itemCount: servicesName.length,
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
               addAutomaticKeepAlives: true,
               itemBuilder: (BuildContext context, int i) {
                 //Card
                 return Container(
                   width: 90,
-                  padding: EdgeInsets.all(4),
+                  padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     border: Border.all(
                         color: isBorder ? kSecondaryColor : Colors.white,
@@ -636,7 +636,7 @@ class _HomePageState extends State<HomePage> {
         margin: EdgeInsets.symmetric(
             horizontal: 5,
             vertical: kDefaultScreenPaddingVertical(context)),
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(9.0),
             border: Border.all(color: circleClr),
@@ -718,7 +718,7 @@ class _HomePageState extends State<HomePage> {
           ),
           child: GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: smallMobile(context)
                       ? 0.8
@@ -739,29 +739,27 @@ class _HomePageState extends State<HomePage> {
               itemCount: 4,
               itemBuilder: (BuildContext context, int i) {
                 return GestureDetector(
-                  onTap: () => Navigator.push(context, CustomRightPageRoute(page: DoctorsDisplayPage(), routeName: doctordisplay)),
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.network(
-                          "https://image.flaticon.com/icons/png/512/387/387577.png",
-                          fit: BoxFit.fill,
-                          height: imgDimension,
-                          width: imgDimension,
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsets.only(top: isMobile(context) ? 4 : 7),
-                          child: Text("Cardiologist",
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                              overflow: TextOverflow.clip,
-                              style: smallTextStyle(context)),
-                        ),
-                      ],
-                    ),
+                  onTap: () => Navigator.push(context, CustomRightPageRoute(page: const DoctorsDisplayPage(), routeName: doctordisplay)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.network(
+                        "https://image.flaticon.com/icons/png/512/387/387577.png",
+                        fit: BoxFit.fill,
+                        height: imgDimension,
+                        width: imgDimension,
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsets.only(top: isMobile(context) ? 4 : 7),
+                        child: Text("Cardiologist",
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.clip,
+                            style: smallTextStyle(context)),
+                      ),
+                    ],
                   ),
                 );
               }),

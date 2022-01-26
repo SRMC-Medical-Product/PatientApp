@@ -1,5 +1,4 @@
 import 'package:patientapp/helpers/headers.dart';
-import 'package:patientapp/screens/components/appcontroller.dart';
 
 /*-------------------------- Navbar with just a Single Text--------------------*/
 class CommonNavbar extends StatelessWidget {
@@ -28,8 +27,8 @@ class CommonNavbar extends StatelessWidget {
     return Container(
       width: size.width,
       height: cartNavHeight,
-      padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+      decoration: const BoxDecoration(
         color: Colors.white,
       ),
       child: Row(

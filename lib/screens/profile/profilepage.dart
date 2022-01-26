@@ -47,7 +47,7 @@ return SingleChildScrollView(
                   Text("testing01@gmail.com",style: mediumTextStyle(context).copyWith(color:kDimGray),)
                     ]),
                 ),
-                IconButton(onPressed:() => Navigator.of(context).push(CustomRightPageRoute(page: PersonalDataPage(), routeName: personaldatapage)), 
+                IconButton(onPressed:() => Navigator.of(context).push(CustomRightPageRoute(page: const PersonalDataPage(), routeName: personaldatapage)), 
                     icon: const FaIcon(FontAwesomeIcons.edit,color: kPrimaryColor,size: 18),),
                   ],
                 ),
@@ -59,9 +59,9 @@ return SingleChildScrollView(
           mediumCustomSizedBox(context),
           mediumCustomSizedBox(context),
           ///Profiles
-          profileTiles(title: "Personal Data", icon: Icons.person,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: PersonalDataPage(), routeName: personaldatapage))),
-          profileTiles(title: "Appointments History",icon: Icons.history,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: AppointmentHistoryPage(), routeName: appointmenthistorypage))),
-          profileTiles(title: "Family Members", icon:Icons.family_restroom_outlined,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: AllFamilyMembersPage(), routeName: allfamilymemberspage))),
+          profileTiles(title: "Personal Data", icon: Icons.person,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const PersonalDataPage(), routeName: personaldatapage))),
+          profileTiles(title: "Appointments History",icon: Icons.history,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const AppointmentHistoryPage(), routeName: appointmenthistorypage))),
+          profileTiles(title: "Family Members", icon:Icons.family_restroom_outlined,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const AllFamilyMembersPage(), routeName: allfamilymemberspage))),
           profileTiles(title: "Help & Support", icon:Icons.help,onTap: (){}),
           profileTiles(title: "Terms & Conditions", icon: Icons.rule_sharp,onTap: (){}),
           profileTiles(title: "Logout", icon:Icons.logout,onTap: (){}),

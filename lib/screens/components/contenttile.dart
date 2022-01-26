@@ -41,7 +41,7 @@ Widget mesauresTakenList(BuildContext context){
                     smallCustomSizedBox(context),
                     ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: measuresTakenJson.length,
                       itemBuilder: (BuildContext context, int i){
                           return Padding(

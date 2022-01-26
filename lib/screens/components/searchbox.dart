@@ -14,7 +14,7 @@ class StaticSearch extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         width: size.width,
         height: isMobile(context) ? 45 : 58,
         decoration: BoxDecoration(
@@ -92,7 +92,7 @@ class _DynamicSearchState extends State<DynamicSearch> {
               fontFamily: kQuickSandRegular,
               fontSize: isMobile(context) ? 12 : 15),
           prefix: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Icon(
               CupertinoIcons.search,
               color: kDarkGray,

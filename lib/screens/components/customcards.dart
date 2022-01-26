@@ -5,7 +5,7 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
   return Container(
     height: isMobile(context) ? 140 : 180,
     width: size.width,
-    padding: EdgeInsets.all(20),
+    padding: const EdgeInsets.all(20),
     decoration: BoxDecoration(
       border: Border.all(color: borderClr  ?? kSecondaryColor),
       borderRadius: BorderRadius.circular(10),
@@ -14,7 +14,7 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           height: isMobile(context) ? 50 : 70,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -24,7 +24,7 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
                 width: isMobile(context) ? 50 : 70,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    image: DecorationImage(
+                    image: const DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
                             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU"))
@@ -69,7 +69,7 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child:
-                    Icon(Icons.arrow_right_alt_outlined, color: kPrimaryColor),
+                    const Icon(Icons.arrow_right_alt_outlined, color: kPrimaryColor),
               )
             ],
           ),

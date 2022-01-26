@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home:  const AppScreenController(indexScreen: 2,),
+      home:  const AppScreenController(indexScreen: 0,),
       routes: {
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller

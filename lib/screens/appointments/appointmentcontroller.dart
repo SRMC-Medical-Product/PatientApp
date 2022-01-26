@@ -1,7 +1,6 @@
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/appointments/futureappointments.dart';
 import 'package:patientapp/screens/appointments/presentappointments.dart';
-import 'package:patientapp/screens/components/navbar.dart';
 
 class AppointmentController extends StatefulWidget {
   static const routeName = appointmentcontroller;

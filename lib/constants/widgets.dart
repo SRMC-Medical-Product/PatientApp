@@ -211,7 +211,7 @@ Future bottomDialog({required context,double? height,required Widget widget}){
   return showGeneralDialog(
       barrierDismissible: false,
       barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: Duration(milliseconds: 100),
+      transitionDuration: const Duration(milliseconds: 100),
       context: context,
       pageBuilder: (context, anim1, anim2) {
         return Scaffold(
@@ -249,7 +249,7 @@ Future bottomDialog({required context,double? height,required Widget widget}){
                                 ),
                               ],
                             ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
               ),
             ),
@@ -258,7 +258,7 @@ Future bottomDialog({required context,double? height,required Widget widget}){
       },
       transitionBuilder: (context, anim1, anim2, child) {
         return SlideTransition(
-          position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim1),
+          position: Tween(begin: const Offset(0, 1), end: const Offset(0, 0)).animate(anim1),
           child: child,
         );
       },
@@ -323,73 +323,72 @@ void onTappedBar(int value) {
    });
  }
 
-    int _morningChoiceIndex= 0;
+    final int _morningChoiceIndex= 0;
     List<String> morningList = ['01:00 A.M','02:00 A.M','03:00 A.M','09:00 A.M','10:00 A.M'];
 
   @override
   Widget build(BuildContext context) {
     var size = sizeMedia(context);
-    return Container(
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [ 
-            Container(
-              height: 80.0,
-              width: size.width,
-               color: kWhiteSmoke,
-              padding: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),),
-              child: ListView.builder(
-                addAutomaticKeepAlives: true,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
-                itemCount: widget.dateSlots.length,
-                itemBuilder: (BuildContext context, int i){
-                    return   GestureDetector(
-                     onTap:  () {
-                      onTappedBar(i);
-                     },
-                     child: Container(
-                       width: 40,
-                       margin: EdgeInsets.all(7.0),
-                       child: Column(
-                         crossAxisAlignment: CrossAxisAlignment.center,
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                           Text(widget.dateSlots[i],style: mediumTextStyle(context).copyWith(
-                             color: _currentIndex == i ? kPrimaryColor : kPrimaryColor),),
-                           Container(
-                             height: 35,
-                             width: 35,
-                             decoration: BoxDecoration(
-                               color: _currentIndex == i ? kPrimaryColor : Colors.white,
-                         borderRadius: BorderRadius.circular(6),
-                         border: Border.all(color:_currentIndex == i ? kPrimaryColor : kSlateGray),
-                       ),
-                             child: Center(child: Text("24",style: mediumTextStyle(context).copyWith(
-                               color : _currentIndex == i ? Colors.white : kPrimaryColor,
-                               fontFamily : kMuktaBold)))),
-                         ],
-                       ) 
-                     ));
-                }),
-            ),
-            kLargeDivider(context, dividerClr: kWhiteSmoke), 
-            SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Morning"),
-            SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Afternoon"),
-            SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Night"),
-            mediumCustomSizedBox(context),
-            smallCustomSizedBox(context),
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [ 
+          Container(
+            height: 80.0,
+            width: size.width,
+             color: kWhiteSmoke,
+            padding: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),),
+            child: ListView.builder(
+              addAutomaticKeepAlives: true,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+              itemCount: widget.dateSlots.length,
+              itemBuilder: (BuildContext context, int i){
+                  return   GestureDetector(
+                   onTap:  () {
+                    onTappedBar(i);
+                   },
+                   child: Container(
+                     width: 40,
+                     margin: const EdgeInsets.all(7.0),
+                     child: Column(
+                       crossAxisAlignment: CrossAxisAlignment.center,
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         Text(widget.dateSlots[i],style: mediumTextStyle(context).copyWith(
+                           color: _currentIndex == i ? kPrimaryColor : kPrimaryColor),),
+                         Container(
+                           height: 35,
+                           width: 35,
+                           decoration: BoxDecoration(
+                             color: _currentIndex == i ? kPrimaryColor : Colors.white,
+                       borderRadius: BorderRadius.circular(6),
+                       border: Border.all(color:_currentIndex == i ? kPrimaryColor : kSlateGray),
+                     ),
+                           child: Center(child: Text("24",style: mediumTextStyle(context).copyWith(
+                             color : _currentIndex == i ? Colors.white : kPrimaryColor,
+                             fontFamily : kMuktaBold)))),
+                       ],
+                     ) 
+                   ));
+              }),
+          ),
+          kLargeDivider(context, dividerClr: kWhiteSmoke), 
+          SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Morning"),
+          SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Afternoon"),
+          SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Night"),
+          mediumCustomSizedBox(context),
+          smallCustomSizedBox(context),
 
-          ],
-        ),
-    );
+        ],
+      );
     
   }
 }
 
 /* ------------------ Choice Chips ------------------ */
+// ignore: must_be_immutable
 class SlotChoiceChips extends StatefulWidget {
   int defaultChoiceIndex;
   final List<dynamic> choicesList;
@@ -418,10 +417,10 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
             runSpacing: 10,
       children: List.generate(widget.choicesList.length, (index) {
         return ChoiceChip(
-          labelPadding: EdgeInsets.all(2.0),
+          labelPadding: const EdgeInsets.all(2.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4.0),
-            side: BorderSide(color:  kSlateGray ,width: 0.5)
+            side: const BorderSide(color:  kSlateGray ,width: 0.5)
           ),
           pressElevation: 0,
           label: Text(
@@ -430,7 +429,7 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
           ),
           selected: widget.defaultChoiceIndex == index,
           selectedColor:Colors.white,
-          onSelected: (val) => Navigator.push(context, CustomRightPageRoute(page: AppointmentConfirmationPage(), routeName: appointmentconfirmationpage)),
+          onSelected: (val) => Navigator.push(context, CustomRightPageRoute(page: const AppointmentConfirmationPage(), routeName: appointmentconfirmationpage)),
 
           //   print(widget.choicesList[index]);
           //   setState(() {
@@ -479,14 +478,14 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
           ),
           child: TextFormField(
             controller: controller,
-            style: TextStyle(color: kBlackTextColor, fontSize: 17),
+            style: const TextStyle(color: kBlackTextColor, fontSize: 17),
             keyboardType: textInputType,
             cursorColor: kPrimaryColor,
             decoration: InputDecoration(
               hintText: hintTextField,
               hintStyle: mediumTextStyle(context).copyWith(color: kDarkGray),
               border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+              contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
             ),
           ),
         )

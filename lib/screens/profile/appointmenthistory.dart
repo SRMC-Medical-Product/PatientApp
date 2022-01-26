@@ -20,7 +20,7 @@ class _AppointmentHistoryPageState extends State<AppointmentHistoryPage> {
             context: context, isBack: true),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
                         margin: EdgeInsets.symmetric(
                 horizontal: kDefaultScreenPaddingHorizontal(context),
@@ -33,12 +33,12 @@ class _AppointmentHistoryPageState extends State<AppointmentHistoryPage> {
                  mediumCustomSizedBox(context),
                 ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   addAutomaticKeepAlives: true,
                   itemCount: 1,
                   itemBuilder: (BuildContext context, int i) {
                     return GestureDetector(
-                      onTap: () => Navigator.push(context,CustomRightPageRoute(page: AppointmentsDetailsPage(), routeName: appointmentdetailspage)),
+                      onTap: () => Navigator.push(context,CustomRightPageRoute(page: const AppointmentsDetailsPage(), routeName: appointmentdetailspage)),
                       child: Column(
                         children: [
                           customAppointmentCard(context: context,borderClr: Colors.white),

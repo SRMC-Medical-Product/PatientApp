@@ -39,7 +39,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
         backgroundColor: Colors.white,
         appBar: commonNavbar(context: context, isBack: true),
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -99,7 +99,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                               ),
                               child: TextFormField(
                                 controller: _dateController,
-                                style: TextStyle(color: kBlackTextColor, fontSize: 17),
+                                style: const TextStyle(color: kBlackTextColor, fontSize: 17),
                                 keyboardType: TextInputType.datetime,
                                 cursorColor: kPrimaryColor,
                                 readOnly: true,
@@ -138,7 +138,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                                   hintText: "DOB",
                                   hintStyle: mediumTextStyle(context).copyWith(color: kDarkGray),
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
                                 ),
                               ),
                             )
@@ -223,7 +223,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                       }),
                       child: Container(
                         height: 45,
-                        margin: EdgeInsets.symmetric(vertical: 50),
+                        margin: const EdgeInsets.symmetric(vertical: 50),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: kPrimaryColor,
@@ -269,7 +269,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
             borderRadius: BorderRadius.circular(9),
           ),
           child: TextFormField(
-            style: TextStyle(color: kBlackTextColor, fontSize: 17),
+            style: const TextStyle(color: kBlackTextColor, fontSize: 17),
             keyboardType: TextInputType.text,
             readOnly: true,
             initialValue: initialValue,

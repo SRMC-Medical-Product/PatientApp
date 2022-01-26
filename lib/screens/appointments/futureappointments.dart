@@ -15,7 +15,7 @@ class _FutureAppointmentsState extends State<FutureAppointments> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Container(
           margin: EdgeInsets.symmetric(
             horizontal: kDefaultScreenPaddingHorizontal(context),
@@ -23,11 +23,11 @@ class _FutureAppointmentsState extends State<FutureAppointments> {
           ),
           child: ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: 2,
             itemBuilder: (BuildContext context, int i){
               return GestureDetector(
-                onTap: () => Navigator.push(context,CustomRightPageRoute(page: AppointmentsDetailsPage(), routeName: appointmentdetailspage)),
+                onTap: () => Navigator.push(context,CustomRightPageRoute(page: const AppointmentsDetailsPage(), routeName: appointmentdetailspage)),
                 child: Column(
                         children: [
                           customAppointmentCard(context: context,borderClr: Colors.white),

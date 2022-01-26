@@ -22,7 +22,7 @@ class _AddNewMemberPageState extends State<AddNewMemberPage> {
         backgroundColor: Colors.white,
         appBar: commonNavbar(context: context, isBack: true),
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),vertical: kDefaultScreenPaddingVertical(context)),
             child: Column(
@@ -64,7 +64,7 @@ class _AddNewMemberPageState extends State<AddNewMemberPage> {
                       }),
                       child: Container(
                         height: 45,
-                        margin: EdgeInsets.symmetric(vertical: 50),
+                        margin: const EdgeInsets.symmetric(vertical: 50),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: kPrimaryColor,

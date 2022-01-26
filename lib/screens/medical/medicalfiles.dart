@@ -18,7 +18,7 @@ class _MedicalFilesPageState extends State<MedicalFilesPage> {
         appBar: commonNavbar(context: context, isBack: true),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -29,7 +29,7 @@ class _MedicalFilesPageState extends State<MedicalFilesPage> {
           margin: EdgeInsets.symmetric(
               horizontal: kDefaultScreenPaddingHorizontal(context),
               vertical: kDefaultScreenPaddingVertical(context)),
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -60,7 +60,7 @@ class _MedicalFilesPageState extends State<MedicalFilesPage> {
                 children: [
                   CircleAvatar(
                       maxRadius: isMobile(context) ? 25 : 35,
-                      backgroundImage: NetworkImage(
+                      backgroundImage: const NetworkImage(
                           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU")),
                   RotatedBox(
                     quarterTurns: 1,
@@ -113,7 +113,7 @@ class _MedicalFilesPageState extends State<MedicalFilesPage> {
             margin: screenPads(context),
             child: ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount : 4,
               itemBuilder: (BuildContext context, int i){
                 return Column(
@@ -129,11 +129,11 @@ class _MedicalFilesPageState extends State<MedicalFilesPage> {
                 smallCustomSizedBox(context),
                 ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount : 2,
                   itemBuilder: (BuildContext context, int i){
                     return Container(
-                      margin: EdgeInsets.all(5.0),
+                      margin: const EdgeInsets.all(5.0),
                       child: ListTile(
                         leading: Container(
                           height: 40,

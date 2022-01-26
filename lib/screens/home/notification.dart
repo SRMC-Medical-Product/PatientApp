@@ -18,7 +18,7 @@ class _NotificationPageState extends State<NotificationPage> {
             context: context, isBack: true),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
                         margin: EdgeInsets.symmetric(
                 horizontal: kDefaultScreenPaddingHorizontal(context),
@@ -32,7 +32,7 @@ class _NotificationPageState extends State<NotificationPage> {
                  mediumCustomSizedBox(context),
                 ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   addAutomaticKeepAlives: true,
                   itemCount: 3,
                   itemBuilder: (BuildContext context, int i) {

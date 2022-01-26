@@ -22,7 +22,7 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
         backgroundColor: Colors.white,
         appBar: commonNavbar(context: context, isBack: true),
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +33,7 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
                 margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),
                     vertical: kDefaultScreenPaddingVertical(context)),
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -87,7 +87,7 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
                  margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),
                     vertical: kDefaultScreenPaddingVertical(context)),
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -120,7 +120,7 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
                       children: [
                         CircleAvatar(
                             maxRadius: isMobile(context) ? 25 : 35,
-                            backgroundImage: NetworkImage(
+                            backgroundImage: const NetworkImage(
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU")),
                         RotatedBox(
                           quarterTurns: 1,
@@ -173,7 +173,7 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
                 margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),
                     vertical: kDefaultScreenPaddingVertical(context)),
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -227,7 +227,7 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
     return Container(
       margin: EdgeInsets.symmetric(
           horizontal: kDefaultScreenPaddingHorizontal(context),),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -243,7 +243,7 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
   }
 
     Widget _stepperWidget({required bool isDone,required bool isProcessing,bool? isLast,required String title,String? time}){
-    return Container(
+    return SizedBox(
               height: 60,
               child: TimelineTile(
                   beforeLineStyle: LineStyle(color: isProcessing != true ? Colors.black : kTertiaryColor,thickness:0.6 ),
@@ -264,7 +264,7 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
                           size: 16, color:Colors.white),
                       ),
                     ),
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       top: 5,
                       bottom: 5,
                     ),
@@ -288,7 +288,7 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
                             style: smallTextStyle(context).copyWith(color: isDone ==true ? kPrimaryColor : isProcessing == true ? kPrimaryColor : kLavenderGrayColor ,fontSize: isMobile(context) ? 11.5 : 13.5),
                           ),
                           mediumCustomSizedBox(context),
-                          Divider(color: kTertiaryColor, height: 0.5)
+                          const Divider(color: kTertiaryColor, height: 0.5)
                         ],
                       ))),
             );

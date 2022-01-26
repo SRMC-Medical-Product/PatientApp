@@ -37,7 +37,7 @@ class _EditFamilyMembersPageState extends State<EditFamilyMembersPage> {
         backgroundColor: Colors.white,
         appBar: commonNavbar(context: context, isBack: true),
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
             margin: screenPads(context),
             child: Column(
@@ -97,7 +97,7 @@ class _EditFamilyMembersPageState extends State<EditFamilyMembersPage> {
                       }),
                       child: Container(
                         height: 45,
-                        margin: EdgeInsets.symmetric(vertical: 50),
+                        margin: const EdgeInsets.symmetric(vertical: 50),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: kPrimaryColor,

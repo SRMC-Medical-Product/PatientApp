@@ -57,7 +57,7 @@ var size = sizeMedia(context);
                     itemCount: 10,
                     itemBuilder: (BuildContext context, int i){
                       return GestureDetector(
-                        onTap: () => Navigator.push(context,CustomRightPageRoute(page:MedicalFilesPage(),routeName:  medicalrecordspage)),
+                        onTap: () => Navigator.push(context,CustomRightPageRoute(page:const MedicalFilesPage(),routeName:  medicalrecordspage)),
                         child: Container(
                                           margin: const EdgeInsets.symmetric(vertical: 5),
                                           padding: const EdgeInsets.all(10),
@@ -103,7 +103,7 @@ var size = sizeMedia(context);
                           children: [
                                CircleAvatar(
                                       maxRadius: isMobile(context) ? 20 : 25,
-                                      backgroundImage: NetworkImage(
+                                      backgroundImage: const NetworkImage(
                                           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU")),
                               RotatedBox(quarterTurns: 1,child:smallCustomSizedBox(context)),
                               Column(
