@@ -39,7 +39,7 @@ class _EditFamilyMembersPageState extends State<EditFamilyMembersPage> {
         body: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),vertical: kDefaultScreenPaddingVertical(context)),
+            margin: screenPads(context),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,

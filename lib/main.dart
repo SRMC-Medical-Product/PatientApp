@@ -1,8 +1,9 @@
 import 'package:patientapp/helpers/headers.dart';
+import 'package:patientapp/screens/appointments/appointmentsindetail.dart';
 import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/home/home.dart';
 import 'package:patientapp/screens/home/notification.dart';
-import 'package:patientapp/screens/home/upcomingappointments.dart';
+import 'package:patientapp/screens/appointments/appointmentcontroller.dart';
 import 'package:patientapp/screens/medical/medicalrecords.dart';
 import 'package:patientapp/screens/profile/addnewmember.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home:const AppScreenController(indexScreen: 0,),
+      home:AppointmentsDetailsPage(), //  const AppScreenController(indexScreen: 0,),
       routes: {
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller
@@ -61,7 +62,8 @@ class MyApp extends StatelessWidget {
         //Appointment Booking Screen
         AppointmentBookingPage.routeName : (context) => const AppointmentBookingPage(), // Path :  /appointmentbookingpage
         AppointmentConfirmationPage.routeName : (context) => const AppointmentConfirmationPage(), // Path :  /appointmentconfirmationpage
-        UpcomingAppointments.routeName : (context) => const UpcomingAppointments(), // Path :  /upcomingappointments
+        AppointmentController.routeName : (context) => const AppointmentController(), // Path :  /upcomingappointments
+        AppointmentsDetailsPage.routeName : (context) => const AppointmentsDetailsPage(), // Path :  /appointmentdetailspage
 
         //Add New Member Screen
         AddNewMemberPage.routeName : (context) => const AddNewMemberPage(), // Path :  /addnewmemberpage

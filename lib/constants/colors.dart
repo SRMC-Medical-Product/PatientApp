@@ -20,27 +20,31 @@ const kSecondaryColor =
     //Color(0xffbbe2e5);
     //Color(0xffF3EFFD);
 const kTertiaryColor = Color(0xff4B257E);
-const kOrangeColor = Color(0xfffa8112);
 
-const kIndigocolor = Color(0xff431C77);
 const kBorderColor = Color(0xff585858);
 const kMenuColor = Color(0xffF7F8FC);
-const klightblue = Color(0xFFfafbff);
-const kYellowColor = Color(0xffFDC500);
 const kLavenderGrayColor = Color(0xffe2e7f3);
 const kLightLavengerGrayColor = Color(0xffF7F8FC);
 const kBlackTextColor = Color(0xff000000);
+
+///Yellow color
+const kYellowColor = Color(0xffFDC500);
+
+///Orange color
+const kOrangeColor = Color(0xfffa8112);
+
+
+///Blue color
+const klightblue = Color(0xFFfafbff);
 const kAliceBlueColor = Color(0xfff3f6fb);
+const kIndigocolor = Color(0xff431C77);
+const kSteelBlue = Color(0xff4671c6);
+
+/// Green 
+const kSeaGreenColor = Color(0xff0a9c59);
+const kMediumSeaGreen = Color(0xff27aa69);
 const kGreenColor = Color(0xff03C04A);
 
-final otpInputDecoration = InputDecoration(
-    contentPadding: const EdgeInsets.symmetric(vertical: 15),
-    enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(color: kSecondaryColor)),
-    focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(color: kSecondaryColor)));
 
 //Gray Color Type
 const kDarkGray = Color(0xff535356);
@@ -73,3 +77,13 @@ MaterialColor kPrimaryMaterialColor = const MaterialColor(
     900: Color(0xff5E56BF),
   },
 );
+
+
+final otpInputDecoration = InputDecoration(
+    contentPadding: const EdgeInsets.symmetric(vertical: 15),
+    enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(color: kSecondaryColor)),
+    focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(color: kSecondaryColor)));

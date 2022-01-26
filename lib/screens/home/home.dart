@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:patientapp/helpers/headers.dart';
+import 'package:patientapp/screens/appointments/appointmentcontroller.dart';
 import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/components/customcards.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
@@ -218,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                       title: "Visit In",
                       subTitle: "View appointments",
                       bgColor: kPrimaryColor,
-                      onTap: () {})),
+                      onTap: () => Navigator.push(context, CustomRightPageRoute(page: AppointmentController(), routeName: appointmentcontroller)))),
             ],
           ),
 
@@ -625,59 +626,62 @@ class _HomePageState extends State<HomePage> {
       required String title,
       required String subTitle,
       required Color bgColor,
-      required Function onTap}) {
+      required Function() onTap}) {
     var size = sizeMedia(context);
-    return Container(
-      width: size.width,
-      height: isMobile(context) ? size.height / 4.0 : size.height / 3.2,
-      margin: EdgeInsets.symmetric(
-          horizontal: 5,
-          vertical: kDefaultScreenPaddingVertical(context)),
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(9.0),
-          border: Border.all(color: circleClr),
-          color: bgColor),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(
-            child: CircleAvatar(
-              maxRadius: isMobile(context) ? 26 : 32,
-              backgroundColor: circleClr,
-              child: Center(
-                child: Icon(icon,
-                    color: kPrimaryColor, size: isMobile(context) ? 32 : 38),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: size.width,
+        height: isMobile(context) ? size.height / 4.0 : size.height / 3.2,
+        margin: EdgeInsets.symmetric(
+            horizontal: 5,
+            vertical: kDefaultScreenPaddingVertical(context)),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(9.0),
+            border: Border.all(color: circleClr),
+            color: bgColor),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: CircleAvatar(
+                maxRadius: isMobile(context) ? 26 : 32,
+                backgroundColor: circleClr,
+                child: Center(
+                  child: Icon(icon,
+                      color: kPrimaryColor, size: isMobile(context) ? 32 : 38),
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                smallCustomSizedBox(context),
-                Text(
-                  title,
-                  style: smallMobile(context)
-                      ? mediumTextStyle(context)
-                          .copyWith(wordSpacing: 2.0, color: txtColor)
-                      : largeTextStyle(context)
-                          .copyWith(wordSpacing: 2.0, color: txtColor,fontSize: isMobile(context) ? 18.0 : 21.0,),
-                ),
-                Text(subTitle,
-                    maxLines: 2,
-                    softWrap: true,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  smallCustomSizedBox(context),
+                  Text(
+                    title,
                     style: smallMobile(context)
-                        ? smallTextStyle(context)
-                            .copyWith(wordSpacing: 1.0, color: txtColor)
-                        : mediumTextStyle(context)
-                            .copyWith(wordSpacing: 1.0, color: txtColor))
-              ],
-            ),
-          )
-        ],
+                        ? mediumTextStyle(context)
+                            .copyWith(wordSpacing: 2.0, color: txtColor)
+                        : largeTextStyle(context)
+                            .copyWith(wordSpacing: 2.0, color: txtColor,fontSize: isMobile(context) ? 18.0 : 21.0,),
+                  ),
+                  Text(subTitle,
+                      maxLines: 2,
+                      softWrap: true,
+                      style: smallMobile(context)
+                          ? smallTextStyle(context)
+                              .copyWith(wordSpacing: 1.0, color: txtColor)
+                          : mediumTextStyle(context)
+                              .copyWith(wordSpacing: 1.0, color: txtColor))
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

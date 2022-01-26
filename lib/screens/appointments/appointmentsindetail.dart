@@ -1,100 +1,27 @@
+import 'package:flutter/cupertino.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/contenttile.dart';
 import 'package:patientapp/screens/components/navbar.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
-class AppointmentConfirmationPage extends StatefulWidget {
-  static const routeName = appointmentconfirmationpage;
-  const AppointmentConfirmationPage({Key? key}) : super(key: key);
+class AppointmentsDetailsPage extends StatefulWidget {
+  static const routeName = appointmentdetailspage;
+  const AppointmentsDetailsPage({ Key? key }) : super(key: key);
 
   @override
-  _AppointmentConfirmationPageState createState() =>
-      _AppointmentConfirmationPageState();
+  _AppointmentsDetailsPageState createState() => _AppointmentsDetailsPageState();
 }
 
-class _AppointmentConfirmationPageState
-    extends State<AppointmentConfirmationPage> {
-    
+class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
+  bool isCancelled = true;
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: commonNavbar(context: context, isBack: true),
-        body: Column(
-          children: [
-              Expanded(child: buildSummaryContent()),
-              buildConfirmAppointmentBox()
-          ],
-        )
-      ),
-    );
-  }
-
-  Widget buildConfirmAppointmentBox(){
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        height: 55,
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 2,
-              color: kWhiteSmoke,
-              offset: Offset(0,-1),
-              spreadRadius: 1
-            )
-          ],
-          border: Border(
-            top: BorderSide(
-              color: kWhiteSmoke,
-              width: 1,
-            ),
-          )
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-             Expanded(
-               child: Padding(
-                 padding: const EdgeInsets.only(left: 10.0),
-                 child: Text(
-                    "Book Now",
-                    maxLines: 1,
-                    overflow: TextOverflow.clip,
-                    style: mediumTextStyle(context)
-                        .copyWith(color: kPrimaryColor,fontFamily:kMuktaBold),
-                  ),
-               ),
-             ),
-             Expanded(
-               flex: 1,
-               child: Container(
-                 decoration : BoxDecoration(
-                    color: kPrimaryColor,
-                    borderRadius: BorderRadius.circular(50)
-                 ),
-                 height: 40,
-                 child: Center(
-                   child: Text(
-                     "Confirm".toUpperCase(),
-                     style: smallTextStyle(context)
-                         .copyWith(color: Colors.white,fontFamily:kMuktaBold,letterSpacing: 0.2),
-                   ),
-                 ),
-               ),
-             )
-          ],
-        ),
-      )
-    );
-  }
-
-  Widget buildSummaryContent(){
-    return  SingleChildScrollView(
+        body: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,6 +38,30 @@ class _AppointmentConfirmationPageState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+              Text("#1245GHS23",style : mediumLargeTextStyle(context).copyWith(fontFamily : kMuktaBold)),
+              smallCustomSizedBox(context),
+              lineDivider(context),
+              mediumCustomSizedBox(context),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                      "Appointment Status",
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
+                      softWrap: true,
+                      style: smallTextStyle(context).copyWith(
+                          height: 1.2, color: kGraycolor, fontFamily: kMuktaBold),
+                    ),
+                    Text(
+                      "Processing".toUpperCase(),
+                      style: mediumTextStyle(context)
+                          .copyWith(color: kOrangeColor,fontFamily:kMuktaBold),
+                    ),
+                ],
+              ),
+                            mediumCustomSizedBox(context),
                     contentDescTile(
                       context: context,
                       title: "Venue", subtitle: "Sri Ramachandra Medical Hospital"),
@@ -122,15 +73,40 @@ class _AppointmentConfirmationPageState
                     contentDescTile(
                       context: context,
                       title: "Consultation", subtitle: "In visit"),
+                    mediumCustomSizedBox(context),
+              lineDivider(context),
+              mediumCustomSizedBox(context),
+               Text(" *Please report before 20 mins of your consultation time and take necessary measures before arriving at the hospital",
+                              softWrap: true,
+                              style: smallTextStyle(context).copyWith(fontFamily: kMuktaRegular,color:kIndigocolor,height:1.1))
                   ],
                 ),
               ),  
-              kSmallDivider(context),
+              kMediumDivider(context),
+              Container(
+                 margin: EdgeInsets.symmetric(
+                    horizontal: kDefaultScreenPaddingHorizontal(context),
+                    vertical: kDefaultScreenPaddingVertical(context)),
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    contentDescTile(context: context, title: "Service Counter", subtitle: "COUNTER 1"),
+                    smallCustomSizedBox(context),
+                    Text(" *You are requested to apporach this counter number for your appointments procedures and guidance",
+                              softWrap: true,
+                              style: smallTextStyle(context).copyWith(fontFamily: kMuktaRegular,color:Colors.red,height:1.1))
+                 
+                  ],
+                ),
+              ),
+              kMediumDivider(context),
+              _orderStatus(),
+              kMediumDivider(context),
               //Doctor Details
               Container(
-                //color: kSecondaryColor,
-
-                margin: EdgeInsets.symmetric(
+                 margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),
                     vertical: kDefaultScreenPaddingVertical(context)),
                 child: Column(
@@ -233,42 +209,90 @@ class _AppointmentConfirmationPageState
                         ),
                       ],
                     ),
-                    mediumCustomSizedBox(context),
-                    Text(" *If this appointment is not for your, please go back and change",
-                              softWrap: true,
-                              style: smallTextStyle(context).copyWith(fontFamily: kMuktaRegular,color:Colors.red,height:1.1))
                   ],
                 ),
               ),             
               kMediumDivider(context),
-
               //Safety Measures
               mesauresTakenList(context),
-
-              kSmallDivider(context),
-              //Agree Terms and Conditions
-              Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: kDefaultScreenPaddingHorizontal(context),
-                    vertical: kDefaultScreenPaddingVertical(context)),
-                  child: RichText(
-                      text: TextSpan(
-                        style:  smallTextStyle(context).copyWith(
-                              height: 1.2, color: kGraycolor, fontFamily: kMuktaRegular,),                   
-                        text: 'By booking appointment, you agree to our ',
-                        children: <TextSpan>[
-                          TextSpan(text: 'Terms & Conditions',style: smallTextStyle(context).copyWith(
-                            color:Colors.blue,fontFamily:kMuktaBold,
-                            decoration : TextDecoration.underline
-                            )),
-                        ],
-                      ),
-                    ),
-              )
-            ],
+              mediumCustomSizedBox(context),
+ ],
           ),
-        );
+        )
+      ) ,
+    );
   }
 
+  Widget _orderStatus() {
+    return Container(
+      margin: EdgeInsets.symmetric(
+          horizontal: kDefaultScreenPaddingHorizontal(context),),
+      padding: EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          contentDescTile(context: context, subtitle: "Appointment Timeline", title: ""),
+          mediumCustomSizedBox(context),
+          _stepperWidget(isDone: true, isProcessing: false, title: "Booking Confirmed",time: "12.06 am"),
+          _stepperWidget(isDone: false, isProcessing: true, title: "Arrived at Hospital",time: "12.16 am"),
+          _stepperWidget(isDone:false,isProcessing: false, title: "Consulted",time: "Pending",isLast: true),
+          
+        ],
+      ),
+    );
+  }
+
+    Widget _stepperWidget({required bool isDone,required bool isProcessing,bool? isLast,required String title,String? time}){
+    return Container(
+              height: 60,
+              child: TimelineTile(
+                  beforeLineStyle: LineStyle(color: isProcessing != true ? Colors.black : kTertiaryColor,thickness:0.6 ),
+                  indicatorStyle: IndicatorStyle(
+                    color: kMediumSeaGreen,
+                    drawGap: true,
+                    height: 25,
+                    width: 25,
+                    indicatorXY: 0,
+                    indicator: Container(
+                      decoration:  BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: isDone == true  ? kMediumSeaGreen : isProcessing ? kSteelBlue : kLavenderGrayColor,
+                      ),
+                      child:  Center(
+                        child: Icon(
+                          isDone == true ? Icons.done : isProcessing == true ? CupertinoIcons.hourglass : Icons.trip_origin_outlined, 
+                          size: 16, color:Colors.white),
+                      ),
+                    ),
+                    padding: EdgeInsets.only(
+                      top: 5,
+                      bottom: 5,
+                    ),
+                  ),
+                  alignment: TimelineAlign.start,
+                  isFirst: true,
+                  isLast: isLast == true ?  true : false,
+                  endChild: Container(
+                      padding: const EdgeInsets.only(left: 8, right: 8, top: 0),
+                      constraints: const BoxConstraints(minHeight: 120),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: smallTextStyle(context).copyWith(color: isDone ==true ? kPrimaryColor : isProcessing == true ? kPrimaryColor : kLavenderGrayColor ,fontFamily:"RobotoMedium"),
+                          ),
+                          Text(
+                            time ?? "-",
+                            style: smallTextStyle(context).copyWith(color: isDone ==true ? kPrimaryColor : isProcessing == true ? kPrimaryColor : kLavenderGrayColor ,fontSize: isMobile(context) ? 11.5 : 13.5),
+                          ),
+                          mediumCustomSizedBox(context),
+                          Divider(color: kTertiaryColor, height: 0.5)
+                        ],
+                      ))),
+            );
+       
+  }
 
 }
