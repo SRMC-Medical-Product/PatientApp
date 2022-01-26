@@ -15,3 +15,4 @@ const String allfamilymemberspage = '/allfamilymemberspage';
 const String appointmentconfirmationpage = '/appointmentconfirmationpage';
 const String appointmentcontroller = '/appointmentcontroller';
 const String appointmentdetailspage = '/appointmentdetailspage';
+const String medicalfilespage = '/medicalfilespage';

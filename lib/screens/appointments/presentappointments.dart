@@ -1,4 +1,5 @@
 import 'package:patientapp/helpers/headers.dart';
+import 'package:patientapp/screens/appointments/appointmentsindetail.dart';
 import 'package:patientapp/screens/components/customcards.dart';
 
 class PresentAppointmentsPage extends StatefulWidget {
@@ -25,12 +26,15 @@ class _PresentAppointmentsPageState extends State<PresentAppointmentsPage> {
             physics: NeverScrollableScrollPhysics(),
             itemCount: 1,
             itemBuilder: (BuildContext context, int i){
-              return Column(
-                      children: [
-                        customAppointmentCard(context: context,borderClr: Colors.white),
-                        lineDivider(context,color: kSecondaryColor,thickness: 1.5)
-                      ],
-                    );
+              return GestureDetector(
+                onTap: () => Navigator.push(context,CustomRightPageRoute(page: AppointmentsDetailsPage(), routeName: appointmentdetailspage)),
+                child: Column(
+                        children: [
+                          customAppointmentCard(context: context,borderClr: Colors.white),
+                          lineDivider(context,color: kSecondaryColor,thickness: 1.5)
+                        ],
+                      ),
+              );
             },
           ),
         ),

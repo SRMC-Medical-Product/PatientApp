@@ -4,6 +4,7 @@ import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/home/home.dart';
 import 'package:patientapp/screens/home/notification.dart';
 import 'package:patientapp/screens/appointments/appointmentcontroller.dart';
+import 'package:patientapp/screens/medical/medicalfiles.dart';
 import 'package:patientapp/screens/medical/medicalrecords.dart';
 import 'package:patientapp/screens/profile/addnewmember.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
@@ -30,12 +31,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'HomieTouch User App',
+      title: 'SRMC User App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home:AppointmentsDetailsPage(), //  const AppScreenController(indexScreen: 0,),
+      home:  const AppScreenController(indexScreen: 2,),
       routes: {
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller
@@ -70,6 +71,8 @@ class MyApp extends StatelessWidget {
         EditFamilyMembersPage.routeName : (context) => const EditFamilyMembersPage(), // Path :  /editfamilymemberspage
         AllFamilyMembersPage.routeName : (context) => const AllFamilyMembersPage(), // Path :  /allfamilymemberspage
 
+        //Medical Records
+        MedicalFilesPage.routeName : (context) => const MedicalFilesPage(), // Path :  /medicalfilespage
 
       },
     );

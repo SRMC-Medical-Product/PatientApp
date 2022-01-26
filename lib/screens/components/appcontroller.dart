@@ -50,7 +50,7 @@ void onNavigateIndex(){
 }
 
   //initializing the current index = 0 : HomePage
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
   //Current Index with Widget paths
   final List<Widget> _children = const [
