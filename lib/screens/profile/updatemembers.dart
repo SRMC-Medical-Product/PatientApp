@@ -16,7 +16,6 @@ class EditFamilyMembersPage extends StatefulWidget {
 class _EditFamilyMembersPageState extends State<EditFamilyMembersPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _aadharController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
 
   @override
@@ -24,7 +23,6 @@ class _EditFamilyMembersPageState extends State<EditFamilyMembersPage> {
       super.initState();
       _nameController.text = "testing";//widget.name;
       _emailController.text = "email@email.com"; //widget.email;
-      _aadharController.text = "1234 5432 7612";//widget.aadhar;
       _mobileController.text = "1234567890";//widget.mobile;
     }    
 
@@ -83,12 +81,14 @@ class _EditFamilyMembersPageState extends State<EditFamilyMembersPage> {
                         controller: _emailController,
                         hintTextField: "Your Email",
                         textInputType: TextInputType.emailAddress),
-                personalInfoDynamicTitle(
+
+                 /*-----Not necessary till now until confirmation of the external sources-----*/       
+                /* personalInfoDynamicTitle(
                       context: context,
                         title: "Aadhar Card (Optional)",
                         controller: _aadharController,
                         hintTextField: "Your Aadhar Number",
-                        textInputType: TextInputType.number),  
+                        textInputType: TextInputType.number),  */
 
                 //Save or update Button
                     GestureDetector(

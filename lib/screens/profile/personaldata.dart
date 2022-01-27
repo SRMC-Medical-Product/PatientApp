@@ -63,8 +63,11 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                         title: "Patient Id*", initialValue: "4hSSETKS6"),
                     personalInfoStaticTitle(
                         title: "Phone Number*", initialValue: "9876543211"),
+
+                  /*-----Not necessary till now until confirmation of the external sources-----*/       
+                /* 
                     personalInfoStaticTitle(
-                        title: "Aadhar Number*", initialValue: "1234 5678 7643"),
+                        title: "Aadhar Number*", initialValue: "1234 5678 7643"), */
 
                     personalInfoDynamicTitle(
                       context: context,
