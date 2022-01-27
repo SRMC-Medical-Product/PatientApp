@@ -10,16 +10,18 @@ const kQuickSandBold = 'QuickSandBold';
 
 //Screen background color
 const kScreenBackground = Colors.white;
-// Color
-const kPrimaryColor =Color(0xff242c78);
+// Colors
+const kPrimaryColor = Color(0xff242c78);
+ 
+  //Color(0xff2b91bf);
     //Color(0xff242c78); 
     //Color(0xff06919d); 
     //Color(0xff5E56BF);
-const kSecondaryColor =
-    Color(0xffafcfed); 
+const kSecondaryColor =Color(0xffafcfed);
+    //Color(0xffafcfed); 
     //Color(0xffbbe2e5);
-    //Color(0xffF3EFFD);
-const kTertiaryColor = Color(0xff4B257E);
+    //Color(0xffF3EFFD); 
+const kTertiaryColor = Color(0xff1b94c5);
 
 const kBorderColor = Color(0xff585858);
 const kMenuColor = Color(0xffF7F8FC);

@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool isAppointment = false;
+  bool isAppointment = true;
 
   //Services
   final List<Map> servicesName = [
@@ -196,33 +196,6 @@ class _HomePageState extends State<HomePage> {
                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU"),
           mediumCustomSizedBox(context),
 
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                  child: displayHomeBoxGrid(
-                      txtColor: Colors.black,
-                      icon: Icons.add,
-                      circleClr: kSecondaryColor,
-                      title: "Book Now",
-                      subTitle: "Make appointments",
-                      bgColor: Colors.white,
-                      onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const AppScreenController(indexScreen: 1,), routeName: appcontroller))
-                      )),
-              Expanded(
-                  child: displayHomeBoxGrid(
-                      txtColor: Colors.white,
-                      icon: Icons.medical_services_outlined,
-                      circleClr: Colors.white,
-                      title: "Visit In",
-                      subTitle: "View appointments",
-                      bgColor: kPrimaryColor,
-                      onTap: () => Navigator.push(context, CustomRightPageRoute(page: const AppointmentController(), routeName: appointmentcontroller)))),
-            ],
-          ),
-
-          mediumCustomSizedBox(context),
           /*----------end promotional and ui box --------------*/
 
           /*----------start appointments box --------------*/
@@ -303,19 +276,29 @@ class _HomePageState extends State<HomePage> {
           /*----------start carousel box --------------*/
           mediumCustomSizedBox(context),
           smallCustomSizedBox(context),
-
           ///Carousel
           Container(
             width: size.width,
             height:
                 carouselHgt, //isMobile(context) ? size.width / 3.6 : size.width / 3.2,
-            decoration: const BoxDecoration(
-              color: kPrimaryColor,
+            decoration: BoxDecoration(
+              color: Colors.white, // kPrimaryColor, //TODO
+              // //border: Border.all(color: kPrimaryColor, width: 1),
+              // boxShadow: [
+              //   BoxShadow(
+              //     blurRadius: 2,
+              //     color: kSlateGray,
+              //     offset: Offset(0, 1),
+              //     spreadRadius: 1,
+              //   )
+              // ]
             ),
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                //kSmallDivider(context),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: kDefaultScreenPaddingHorizontal(context),
@@ -325,7 +308,7 @@ class _HomePageState extends State<HomePage> {
                       style: mediumLargeTextStyle(context).copyWith(
                           letterSpacing: 0.15,
                           fontWeight : FontWeight.bold,
-                          color: Colors.white,
+                          //color:Colors.black, //TODO Colors.white,
                           fontFamily: kMuktaBold),
                     ),
                 ),
@@ -364,6 +347,8 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
+                //mediumCustomSizedBox(context),
+                //kSmallDivider(context),
               ],
             ),
           ),

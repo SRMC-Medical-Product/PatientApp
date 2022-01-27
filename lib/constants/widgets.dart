@@ -492,3 +492,26 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
       ],
     );
   }
+
+
+/* -------------- Primary Btn --------------*/
+Widget primaryBtn({required BuildContext context,required Function() onTap,required String btnText}) {
+  return GestureDetector(
+                      onTap: onTap,
+                      child: Container(
+                        height: 45,
+                        margin: const EdgeInsets.symmetric(vertical: 50),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: kTertiaryColor,
+                          //border: Border.all(color: Colors.black, width: 1.5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            btnText,
+                            style: mediumTextStyle(context).copyWith(color: Colors.white,letterSpacing : 0.3),
+                          ),
+                        ),
+                      ),
+                    );
+}

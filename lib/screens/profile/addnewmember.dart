@@ -58,26 +58,8 @@ class _AddNewMemberPageState extends State<AddNewMemberPage> {
                         textInputType: TextInputType.number),  
 
                 //Save or update Button
-                    GestureDetector(
-                      onTap: () => setState(() {
-                        
-                      }),
-                      child: Container(
-                        height: 45,
-                        margin: const EdgeInsets.symmetric(vertical: 50),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: kPrimaryColor,
-                          //border: Border.all(color: Colors.black, width: 1.5),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Add Member".toUpperCase(),
-                            style: mediumTextStyle(context).copyWith(color: Colors.white,letterSpacing : 0.3),
-                          ),
-                        ),
-                      ),
-                    )                              
+                    primaryBtn(context: context, 
+                    onTap: (){}, btnText: "Add member".toUpperCase())                           
               ],
             ),
           ),

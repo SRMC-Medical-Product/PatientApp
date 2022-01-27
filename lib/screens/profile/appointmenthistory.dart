@@ -39,12 +39,7 @@ class _AppointmentHistoryPageState extends State<AppointmentHistoryPage> {
                   itemBuilder: (BuildContext context, int i) {
                     return GestureDetector(
                       onTap: () => Navigator.push(context,CustomRightPageRoute(page: const AppointmentsDetailsPage(), routeName: appointmentdetailspage)),
-                      child: Column(
-                        children: [
-                          customAppointmentCard(context: context,borderClr: Colors.white),
-                          lineDivider(context,color: kSecondaryColor,thickness: 1.5)
-                        ],
-                      ),
+                      child:customAppointmentCard(context: context),
                     );
                   },
                 ),

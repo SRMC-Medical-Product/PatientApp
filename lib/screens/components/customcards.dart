@@ -7,8 +7,8 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
     width: size.width,
     padding: const EdgeInsets.all(20),
     decoration: BoxDecoration(
-      border: Border.all(color: borderClr  ?? kSecondaryColor),
-      borderRadius: BorderRadius.circular(10),
+      border: Border.all(color: borderClr  ?? kSlateGray),
+      borderRadius: BorderRadius.circular(5),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,13 +75,15 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
           ),
         ),
         mediumCustomSizedBox(context),
+        lineDivider(context,color:kSlateGray,thickness: 0.7),
+        smallCustomSizedBox(context),
         Expanded(
           child: Container(
             padding: EdgeInsets.symmetric(
                 horizontal: isMobile(context) ? 6 : 14, vertical: 4),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
-              color: kSecondaryColor,
+              color: Colors.white,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
