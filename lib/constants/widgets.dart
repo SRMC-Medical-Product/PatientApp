@@ -464,7 +464,7 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         mediumCustomSizedBox(context),
-        Text(
+        Text( 
           title,
           style: mediumTextStyle(context).copyWith(letterSpacing: 0.2),
         ),
@@ -495,21 +495,21 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
 
 
 /* -------------- Primary Btn --------------*/
-Widget primaryBtn({required BuildContext context,required Function() onTap,required String btnText}) {
+Widget primaryBtn({required BuildContext context,required Function() onTap,required String btnText,double? vertical,Color? btnColor,required bool isOutline }) {
   return GestureDetector(
                       onTap: onTap,
                       child: Container(
                         height: 45,
-                        margin: const EdgeInsets.symmetric(vertical: 50),
+                        margin: EdgeInsets.symmetric(vertical: vertical ?? 50),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: kTertiaryColor,
-                          //border: Border.all(color: Colors.black, width: 1.5),
+                          color:isOutline ? Colors.white : (btnColor?? kTertiaryColor),
+                          border: Border.all(color: isOutline ? (btnColor?? kTertiaryColor) : Colors.white, width: isOutline ? 1 : 0.0),
                         ),
                         child: Center(
                           child: Text(
                             btnText,
-                            style: mediumTextStyle(context).copyWith(color: Colors.white,letterSpacing : 0.3),
+                            style: mediumTextStyle(context).copyWith(color:isOutline ? (btnColor?? kTertiaryColor) : Colors.white,letterSpacing : 0.3),
                           ),
                         ),
                       ),

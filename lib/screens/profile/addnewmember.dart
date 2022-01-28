@@ -58,7 +58,7 @@ class _AddNewMemberPageState extends State<AddNewMemberPage> {
                         textInputType: TextInputType.number),  
 
                 //Save or update Button
-                    primaryBtn(context: context, 
+                    primaryBtn(context: context, isOutline: false, 
                     onTap: (){}, btnText: "Add member".toUpperCase())                           
               ],
             ),

@@ -28,3 +28,23 @@
           
           mediumCustomSizedBox(context),
   */
+
+/*
+RichText(
+                  text: TextSpan(
+                      text: "New to the app ?",
+                      style: smallTextStyle(context).copyWith(
+                          height: 1.2,
+                          color: kGraycolor,
+                          fontFamily: kMuktaRegular),
+                      children: [
+                        TextSpan(
+                          text: " Register",
+                          style: smallTextStyle(context).copyWith(
+                              height: 1.2,
+                              color: Colors.black,
+                              fontFamily: kMuktaBold),
+                        )
+                      ]),
+                ),
+                 */

@@ -12,7 +12,7 @@ const kQuickSandBold = 'QuickSandBold';
 const kScreenBackground = Colors.white;
 // Colors
 const kPrimaryColor = Color(0xff242c78);
- 
+ // Color(0xff0041c4)
   //Color(0xff2b91bf);
     //Color(0xff242c78); 
     //Color(0xff06919d); 

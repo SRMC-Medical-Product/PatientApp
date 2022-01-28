@@ -220,7 +220,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                     ),
  
                     //Save or update Button
-                    primaryBtn(context: context, 
+                    primaryBtn(context: context,  isOutline: false,
                     onTap: (){}, btnText: "Update".toUpperCase())
                   ],
                 ),
