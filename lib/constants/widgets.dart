@@ -503,13 +503,13 @@ Widget primaryBtn({required BuildContext context,required Function() onTap,requi
                         margin: EdgeInsets.symmetric(vertical: vertical ?? 50),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color:isOutline ? Colors.white : (btnColor?? kTertiaryColor),
-                          border: Border.all(color: isOutline ? (btnColor?? kTertiaryColor) : Colors.white, width: isOutline ? 1 : 0.0),
+                          color:isOutline ? Colors.white : (btnColor?? kPrimaryColor),
+                          border: Border.all(color: isOutline ? (btnColor?? kPrimaryColor) : Colors.white, width: isOutline ? 1 : 0.0),
                         ),
                         child: Center(
                           child: Text(
                             btnText,
-                            style: mediumTextStyle(context).copyWith(color:isOutline ? (btnColor?? kTertiaryColor) : Colors.white,letterSpacing : 0.3),
+                            style: mediumTextStyle(context).copyWith(color:isOutline ? (btnColor?? kPrimaryColor) : Colors.white,letterSpacing : 0.3),
                           ),
                         ),
                       ),

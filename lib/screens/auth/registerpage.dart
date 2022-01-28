@@ -1,17 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:patientapp/helpers/headers.dart';
-import 'package:patientapp/screens/auth/registerpage.dart';
+import 'package:patientapp/screens/components/navbar.dart';
 
-class LoginPage extends StatefulWidget {
-  static const routeName = loginpage;
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  static const routeName = registerpage;
+  const RegisterPage({ Key? key }) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
                 mediumCustomSizedBox(context),
                 mediumCustomSizedBox(context),
                 Text(
-                  "Login Now",
+                  "Sign Up ",
                   style: largeTextStyle(context).copyWith(
                       letterSpacing: 0.2, fontWeight: FontWeight.bold),
                 ),
@@ -48,6 +48,29 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: kLightLavengerGrayColor,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: TextFormField(
+                          controller: _usernameController,
+                          style: largeTextStyle(context),
+                          keyboardType: TextInputType.text,
+                          
+                          cursorColor: kPrimaryColor,
+                          decoration: InputDecoration(
+                            hintText: "Name",
+                            hintStyle: mediumTextStyle(context)
+                                .copyWith(color: kDarkGray),
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 6, horizontal: 8),
+                          ),
+                        ),
+                      ),
+                     mediumCustomSizedBox(context),
                       Container(
                         height: 50,
                         decoration: BoxDecoration(
@@ -99,8 +122,8 @@ class _LoginPageState extends State<LoginPage> {
                       mediumCustomSizedBox(context),
                     primaryBtn(
                       isOutline: true,btnColor: kPrimaryColor,
-                          context: context, onTap: () => Navigator.push(context,CustomRightPageRoute(page: RegisterPage(), routeName: registerpage)), 
-                          btnText: "Sign Up".toUpperCase(),vertical:20,),
+                          context: context, onTap: () => Navigator.pop(context),
+                          btnText: "Sign In".toUpperCase(),vertical:20,),
                       
                     ],
                   ),

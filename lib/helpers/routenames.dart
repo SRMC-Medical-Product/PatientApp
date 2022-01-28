@@ -17,3 +17,5 @@ const String appointmentcontroller = '/appointmentcontroller';
 const String appointmentdetailspage = '/appointmentdetailspage';
 const String medicalfilespage = '/medicalfilespage';
 const String loginpage = '/loginpage';
+const String registerpage = '/registerpage';
+const String otppage = '/otppage';
