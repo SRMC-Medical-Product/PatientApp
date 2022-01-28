@@ -1,5 +1,4 @@
 import 'package:patientapp/helpers/headers.dart';
-import 'package:patientapp/screens/components/navbar.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
 import 'package:patientapp/screens/search/dynamicsearchpage.dart';
 
@@ -41,7 +40,7 @@ class _SearchPageState extends State<SearchPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -56,7 +55,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: StaticSearch(
                   radius: 5.0,
                   searchHint: "Search doctors and specialisation",
-                  onTap: () => Navigator.push(context, CustomSimplePageRoute(page: DynamicSearchPage(),routeName: dynamicsearch)),
+                  onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const DynamicSearchPage(),routeName: dynamicsearch)),
                 ),
               ),
               mediumCustomSizedBox(context),
@@ -81,7 +80,7 @@ class _SearchPageState extends State<SearchPage> {
                     //All Specialisations
                     GridView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: smallMobile(context)
                                 ? 0.8
@@ -107,29 +106,27 @@ class _SearchPageState extends State<SearchPage> {
                         itemBuilder: (BuildContext context, int i) {
                           return GestureDetector(
                             onTap: () {},
-                            child: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.network(
-                                    "https://cdn1.iconfinder.com/data/icons/medical-specialties-2-3/380/Pediatrics-512.png",
-                                    fit: BoxFit.fill,
-                                    height: imgDimension,
-                                    width: imgDimension,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: isMobile(context) ? 4 : 7),
-                                    child: Text(
-                                        "Child care",
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.clip,
-                                        style: smallTextStyle(context)),
-                                  ),
-                                ],
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.network(
+                                  "https://cdn1.iconfinder.com/data/icons/medical-specialties-2-3/380/Pediatrics-512.png",
+                                  fit: BoxFit.fill,
+                                  height: imgDimension,
+                                  width: imgDimension,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: isMobile(context) ? 4 : 7),
+                                  child: Text(
+                                      "Child care",
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.clip,
+                                      style: smallTextStyle(context)),
+                                ),
+                              ],
                             ),
                           );
                         }),
@@ -183,7 +180,7 @@ class _SearchPageState extends State<SearchPage> {
                     //All Specialisations
                     GridView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: smallMobile(context)
                                 ? 0.8
@@ -205,28 +202,26 @@ class _SearchPageState extends State<SearchPage> {
                         itemBuilder: (BuildContext context, int i) {
                           return GestureDetector(
                             onTap: () {},
-                            child: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.network(
-                                    "https://image.flaticon.com/icons/png/512/387/387577.png",
-                                    fit: BoxFit.fill,
-                                    height: imgDimension,
-                                    width: imgDimension,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: isMobile(context) ? 4 : 7),
-                                    child: Text("Cardiologist",
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.clip,
-                                        style: smallTextStyle(context)),
-                                  ),
-                                ],
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.network(
+                                  "https://image.flaticon.com/icons/png/512/387/387577.png",
+                                  fit: BoxFit.fill,
+                                  height: imgDimension,
+                                  width: imgDimension,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: isMobile(context) ? 4 : 7),
+                                  child: Text("Cardiologist",
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.clip,
+                                      style: smallTextStyle(context)),
+                                ),
+                              ],
                             ),
                           );
                         }),

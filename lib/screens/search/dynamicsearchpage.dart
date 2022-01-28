@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
@@ -23,7 +21,7 @@ class _DynamicSearchPageState extends State<DynamicSearchPage> {
         backgroundColor: Colors.white,
         appBar: commonNavbar(context: context, isBack: true),
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

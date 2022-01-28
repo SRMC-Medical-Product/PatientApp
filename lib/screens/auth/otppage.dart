@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:patientapp/helpers/headers.dart';
+import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 
 class OtpPage extends StatefulWidget {
@@ -19,13 +20,12 @@ class _OtpPageState extends State<OtpPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = sizeMedia(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: commonNavbar(context: context, isBack: true),
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
             margin: screenPads(context),
             child: Column(
@@ -47,7 +47,7 @@ class _OtpPageState extends State<OtpPage> {
                           color: kGraycolor,
                           fontFamily: kMuktaRegular)),
                 Container(
-                  margin: EdgeInsets.only(top: 60),
+                  margin: const EdgeInsets.only(top: 60),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -79,7 +79,7 @@ class _OtpPageState extends State<OtpPage> {
                       ),
                       Container(
                         height: 45,
-                        margin: EdgeInsets.symmetric(vertical: 10),
+                        margin: const EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                         ),
@@ -125,7 +125,8 @@ class _OtpPageState extends State<OtpPage> {
                       mediumCustomSizedBox(context),
                    primaryBtn(
                          isOutline: true,btnColor: kPrimaryColor,
-                          context: context, onTap: () {}, btnText: "Get Started".toUpperCase(),vertical:20,),
+                          context: context, onTap: () => Navigator.push(context,CustomSimplePageRoute(page: const AppScreenController(indexScreen: 0,), routeName: appcontroller)),
+                          btnText: "Get Started".toUpperCase(),vertical:20,),
                        Container(
                 margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),
@@ -157,6 +158,7 @@ class _OtpPageState extends State<OtpPage> {
   
     void startTimer() {
     const onsec = Duration(seconds: 1);
+    // ignore: unused_local_variable
     Timer _timer = Timer.periodic(onsec, (timer) {
       if (start == 0) {
         setState(() {

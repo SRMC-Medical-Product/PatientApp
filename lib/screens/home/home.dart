@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Container(
                     child: rowTitleText(
-                      onTap: (){},
+                      onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const AppointmentController(), routeName: appointmentcontroller)),
                         context: context,
                         isCapitalFont: true,
                         text: "Upcoming Appointments",
@@ -281,7 +281,7 @@ class _HomePageState extends State<HomePage> {
             width: size.width,
             height:
                 carouselHgt, //isMobile(context) ? size.width / 3.6 : size.width / 3.2,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white, // kPrimaryColor, //TODO
               // //border: Border.all(color: kPrimaryColor, width: 1),
               // boxShadow: [

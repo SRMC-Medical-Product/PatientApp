@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:patientapp/helpers/headers.dart';
+import 'package:patientapp/screens/auth/otppage.dart';
 import 'package:patientapp/screens/auth/registerpage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,12 +16,11 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = sizeMedia(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
             margin: screenPads(context),
             child: Column(
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                           color: kGraycolor,
                           fontFamily: kMuktaRegular)),
                 Container(
-                  margin: EdgeInsets.only(top: 60),
+                  margin: const EdgeInsets.only(top: 60),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -75,7 +75,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       primaryBtn(
                          isOutline: false,btnColor: kPrimaryColor,
-                          context: context, onTap: () {}, btnText: "Get OTP".toUpperCase(),vertical:20,),
+                          context: context, onTap: () => Navigator.push(context,CustomRightPageRoute(page: const OtpPage(), routeName: otppage)), 
+                          btnText: "Get OTP".toUpperCase(),vertical:20,),
                       mediumCustomSizedBox(context),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                       mediumCustomSizedBox(context),
                     primaryBtn(
                       isOutline: true,btnColor: kPrimaryColor,
-                          context: context, onTap: () => Navigator.push(context,CustomRightPageRoute(page: RegisterPage(), routeName: registerpage)), 
+                          context: context, onTap: () => Navigator.push(context,CustomRightPageRoute(page: const RegisterPage(), routeName: registerpage)), 
                           btnText: "Sign Up".toUpperCase(),vertical:20,),
                       
                     ],

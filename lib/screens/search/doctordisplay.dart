@@ -14,11 +14,6 @@ class DoctorsDisplayPage extends StatefulWidget {
 }
 
 class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
-  final List<dynamic> _sortFilters = [
-    {"name": "Specialisation", "icon": Icons.sort},
-    {"name": "Gender", "icon": Icons.arrow_drop_down},
-    {"name": "Exp", "icon": Icons.arrow_drop_down}
-  ];
 
   final List<dynamic> _specialisation = ['Cardiology', 'General Surgeon'];
   final List<dynamic> _gender = ["Male", "Female", "Other"];
@@ -32,7 +27,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
         backgroundColor: Colors.white,
         appBar: commonNavbar(context: context, isBack: true),
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -51,7 +46,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                       onTap: () => Navigator.push(
                           context,
                           CustomSimplePageRoute(
-                              page: DynamicSearchPage(),
+                              page: const DynamicSearchPage(),
                               routeName: dynamicsearch)),
                     ),
                   ],
@@ -64,7 +59,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                   ),
                   height: isMobile(context) ? 45 : 55,
                   child: ListView(
-                    physics: AlwaysScrollableScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     children: [
                       bottomDisplaybox(
@@ -110,7 +105,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
               mediumCustomSizedBox(context),
               ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: 1,
                 itemBuilder: (BuildContext context, int i) {
                   return Column(
@@ -119,7 +114,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                     children: [
                       Container(
                         //color: kSecondaryColor,
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         margin: EdgeInsets.symmetric(
                             horizontal:
                                 kDefaultScreenPaddingHorizontal(context) * 2,
@@ -134,7 +129,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                               children: [
                                 CircleAvatar(
                                     maxRadius: isMobile(context) ? 35 : 50,
-                                    backgroundImage: NetworkImage(
+                                    backgroundImage: const NetworkImage(
                                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU")),
                                 RotatedBox(
                                   quarterTurns: 1,
@@ -198,7 +193,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                                       ),
                                       mediumCustomSizedBox(context),
                                       GestureDetector(
-                                        onTap: () => Navigator.push(context, CustomSimplePageRoute(page: AppointmentBookingPage(), routeName: appointmentbookingpage)),
+                                        onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const AppointmentBookingPage(), routeName: appointmentbookingpage)),
                                         child: Container(
                                           height: 40,
                                           decoration: BoxDecoration(
@@ -249,7 +244,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
           height: hgt ?? 200,
           widget: ListView.builder(
               shrinkWrap: true,
-              physics: ScrollPhysics(),
+              physics: const ScrollPhysics(),
               itemCount: listItem.length,
               addAutomaticKeepAlives: true,
               itemBuilder: (BuildContext context, int i) {
@@ -259,15 +254,15 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                     //Navigator.push(context, CustomSimplePageRoute(page: PickUpProductsConfirm() ,routeName: '/pickupproductconfirm'));
                   },
                   title: Text(listItem[i], style: mediumTextStyle(context)),
-                  trailing: Icon(Icons.arrow_right),
+                  trailing: const Icon(Icons.arrow_right),
                 );
               }),
         );
       },
       child: Container(
         height: 35,
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        margin: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
         decoration: BoxDecoration(
           //color: Colors.white,
           border: Border.all(color: kPrimaryColor),
@@ -281,7 +276,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                 style: mediumTextStyle(context).copyWith(color: kPrimaryColor),
               ),
               Container(
-                  margin: EdgeInsets.only(left: 4),
+                  margin: const EdgeInsets.only(left: 4),
                   child: Icon(icon, color: kPrimaryColor, size: 22)),
             ],
           ),

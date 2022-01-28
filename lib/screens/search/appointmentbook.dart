@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 
@@ -258,7 +260,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                     ],
                   ),
                 ),
-                  FixedTabSwitcher(
+                  const FixedTabSwitcher(
                     isExpanded: true,
                     dateSlots: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                ),

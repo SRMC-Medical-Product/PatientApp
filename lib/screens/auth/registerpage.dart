@@ -1,5 +1,4 @@
 import 'package:patientapp/helpers/headers.dart';
-import 'package:patientapp/screens/components/navbar.dart';
 
 class RegisterPage extends StatefulWidget {
   static const routeName = registerpage;
@@ -15,12 +14,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = sizeMedia(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
             margin: screenPads(context),
             child: Column(
@@ -43,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: kGraycolor,
                           fontFamily: kMuktaRegular)),
                 Container(
-                  margin: EdgeInsets.only(top: 60),
+                  margin: const EdgeInsets.only(top: 60),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: OtpPage(), // const AppScreenController(indexScreen: 0,),
+      home: const LoginPage(), // const AppScreenController(indexScreen: 0,),
       routes: {
         //Auth Screens
         LoginPage.routeName: (context) => const LoginPage(), //Path : /loginpage

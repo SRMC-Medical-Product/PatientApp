@@ -36,7 +36,7 @@ class _AppointmentConfirmationPageState
       child: Container(
         height: 55,
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -95,7 +95,7 @@ class _AppointmentConfirmationPageState
 
   Widget buildSummaryContent(){
     return  SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -106,7 +106,7 @@ class _AppointmentConfirmationPageState
                 margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),
                     vertical: kDefaultScreenPaddingVertical(context)),
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -144,7 +144,7 @@ class _AppointmentConfirmationPageState
                       children: [
                         CircleAvatar(
                             maxRadius: isMobile(context) ? 25 : 35,
-                            backgroundImage: NetworkImage(
+                            backgroundImage: const NetworkImage(
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU")),
                         RotatedBox(
                           quarterTurns: 1,
@@ -197,7 +197,7 @@ class _AppointmentConfirmationPageState
                 margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),
                     vertical: kDefaultScreenPaddingVertical(context)),
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
