@@ -29,7 +29,7 @@ class _FutureAppointmentsState extends State<FutureAppointments> {
               return GestureDetector(
                       onTap: () => Navigator.push(context,CustomRightPageRoute(page: const AppointmentsDetailsPage(), routeName: appointmentdetailspage)),
                       child:customAppointmentCard(context: context),
-                    );
+                    ); 
             },
           ),
         ),
