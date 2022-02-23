@@ -55,6 +55,7 @@ const kDimGray = Color(0xff707070);
 const kGraycolor = Color(0xff807979);
 const kSlateGray = Color(0xffEDF0F4);
 const kWhiteSmoke = Color(0xfff2f2f8);
+const kTitleColor = Color(0xff383d3e);
 
 //Rating Star
 const kStarColor = Color(0xffFDC903);

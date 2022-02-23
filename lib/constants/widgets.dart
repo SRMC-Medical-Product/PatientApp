@@ -509,7 +509,7 @@ Widget primaryBtn({required BuildContext context,required Function() onTap,requi
                         child: Center(
                           child: Text(
                             btnText,
-                            style: mediumTextStyle(context).copyWith(color:isOutline ? (btnColor?? kPrimaryColor) : Colors.white,letterSpacing : 0.3),
+                            style: mediumTextStyle(context).copyWith(fontFamily : kQuickSandBold , color:isOutline ? (btnColor?? kPrimaryColor) : Colors.white,letterSpacing : 0.3),
                           ),
                         ),
                       ),

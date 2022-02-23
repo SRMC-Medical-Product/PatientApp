@@ -26,20 +26,26 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 mediumCustomSizedBox(context),
-                mediumCustomSizedBox(context),
-                mediumCustomSizedBox(context),
+                mediumCustomSizedBox(context), 
                 Text(
-                  "Sign Up ",
-                  style: largeTextStyle(context).copyWith(
-                      letterSpacing: 0.2, fontWeight: FontWeight.bold),
+                  "Let's sign you in.",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontSize: isMobile(context) ? 27.0 : 32.0,
+                      fontWeight: FontWeight.w900,
+                      color: kTitleColor,
+                      fontFamily: kQuickSandBold),
                 ),
-                mediumCustomSizedBox(context),
-                 Text(
-                      "Lorem Ipusm Lorem Ipusm",
-                      style: smallTextStyle(context).copyWith(
-                          height: 1.2,
-                          color: kGraycolor,
-                          fontFamily: kMuktaRegular)),
+                mediumCustomSizedBox(context), 
+                Text(
+                  "Register to continue.",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontSize: isMobile(context) ? 23.0 : 28.0,
+                      fontWeight: FontWeight.bold,
+                      color: kTitleColor,
+                      fontFamily: kQuickSandBold),
+                ),
                 Container(
                   margin: const EdgeInsets.only(top: 60),
                   child: Column(
@@ -52,21 +58,32 @@ class _RegisterPageState extends State<RegisterPage> {
                           color: kLightLavengerGrayColor,
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: TextFormField(
-                          controller: _usernameController,
-                          style: largeTextStyle(context),
-                          keyboardType: TextInputType.text,
-                          
-                          cursorColor: kPrimaryColor,
-                          decoration: InputDecoration(
-                            hintText: "Name",
-                            hintStyle: mediumTextStyle(context)
-                                .copyWith(color: kDarkGray),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 8),
-                          ),
-                        ),
+                        child: 
+                        TextFormField(
+                controller: _usernameController,
+                 
+                keyboardType: TextInputType.text,
+                enableSuggestions: true,
+                enableInteractiveSelection: true,
+                decoration: InputDecoration(
+                  enabled: true,
+                  labelText: 'User Name',
+                  labelStyle: const TextStyle(
+                    color: kGraycolor,
+                    fontSize: 13.0,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: kGraycolor),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: const BorderSide(color: kGraycolor),
+                  ),
+                ), 
+                ),    
                       ),
                      mediumCustomSizedBox(context),
                       Container(
@@ -76,27 +93,36 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: TextFormField(
-                          controller: _phoneNumberController,
-                          style: largeTextStyle(context),
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(10)
-                          ],
-                          cursorColor: kPrimaryColor,
-                          decoration: InputDecoration(
-                            hintText: "Mobile Number",
-                            hintStyle: mediumTextStyle(context)
-                                .copyWith(color: kDarkGray),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 8),
-                          ),
-                        ),
+                controller: _phoneNumberController,
+                 inputFormatters: [
+                  LengthLimitingTextInputFormatter(10),
+                ],
+                keyboardType: TextInputType.number,
+                enableSuggestions: true,
+                enableInteractiveSelection: true,
+                decoration: InputDecoration(
+                  enabled: true,
+                  labelText: 'Phone Number',
+                  labelStyle: const TextStyle(
+                    color: kGraycolor,
+                    fontSize: 13.0,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: kGraycolor),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: const BorderSide(color: kGraycolor),
+                  ),
+                ), 
+                ),    
                       ),
                       primaryBtn(
                          isOutline: false,btnColor: kPrimaryColor,
-                          context: context, onTap: () {}, btnText: "Get OTP".toUpperCase(),vertical:20,),
+                          context: context, onTap: () {}, btnText: "Get OTP",vertical:20,),
                       mediumCustomSizedBox(context),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,9 +133,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           RotatedBox(quarterTurns: 1,child : smallCustomSizedBox(context)),
                           Text(
-                            "OR",
+                            "Or",
                             style: mediumTextStyle(context).copyWith(
-                                color: Colors.black.withOpacity(0.9), fontWeight: FontWeight.bold),
+                                color: Colors.black.withOpacity(0.9), fontFamily : kQuickSandBold , fontWeight: FontWeight.bold),
                           ),
                           RotatedBox(quarterTurns: 1,child : smallCustomSizedBox(context)),
                           Expanded(
@@ -121,7 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     primaryBtn(
                       isOutline: true,btnColor: kPrimaryColor,
                           context: context, onTap: () => Navigator.pop(context),
-                          btnText: "Sign In".toUpperCase(),vertical:20,),
+                          btnText: "Sign In",vertical:20,),
                       
                     ],
                   ),
