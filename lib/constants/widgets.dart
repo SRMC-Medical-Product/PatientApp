@@ -515,3 +515,132 @@ Widget primaryBtn({required BuildContext context,required Function() onTap,requi
                       ),
                     );
 }
+
+
+
+/* --------------Custom AlertDialog -------------- */
+customInfoAlertDialog(
+    {required BuildContext context,
+    required String title,
+    required String message,
+    Function()? onTapBtn,
+    String btnName = "",
+    double alertBoxHgt = 200,
+    double alertBtnWidth = 320}) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.0)), //this right here
+          child: Container(
+            height: alertBoxHgt,
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 8, right: 8, top: 5, bottom: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  mediumCustomSizedBox(context),
+                  Text(
+                    "$title",
+                    style: largeTextStyle(context)
+                        .copyWith(color: kBlackTextColor),
+                  ),
+                  smallCustomSizedBox(context),
+                  Text(
+                    "$message",
+                    textAlign: TextAlign.center,
+                    style: mediumTextStyle(context).copyWith(color: kDimGray),
+                  ),
+                  mediumCustomSizedBox(context),
+                  if (btnName != "")
+                    SizedBox(
+                      width: alertBtnWidth,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(kSecondaryColor),
+                        ),
+                        onPressed: onTapBtn ?? (){},
+                        child: Text(
+                          "$btnName",
+                          style: mediumTextStyle(context)
+                              .copyWith(color: Colors.white),
+                        ),
+                      ),
+                    )
+                ],
+              ),
+            ),
+          ),
+        );
+      });
+}
+
+defaultErrordialog(
+    {required BuildContext context,
+    required String errorCode,
+    Function()? onTapBtn,
+    String message =
+        "Oops ! An unknown error occurred.Please try again later"}) {
+  return customInfoAlertDialog(
+      context: context,
+      title: "Error $errorCode",
+      message: message,
+      btnName: "Close",
+      alertBtnWidth: 120,
+      onTapBtn: onTapBtn ?? () => Navigator.pop(context));
+}
+
+
+/* --------------Circular Progress Indicator -------------- */
+customCircularProgress() {
+  return CircularProgressIndicator(
+    //backgroundColor: kPrimaryColor,
+    color: kPrimaryColor,
+    strokeWidth: 3,
+  );
+}
+
+
+customsnackErrorBar(BuildContext context, String message) {
+  return SnackBar(
+    content: Row(
+      children: [
+        Icon(
+          Icons.error_outline,
+          color: Colors.white,
+        ), 
+        const SizedBox(width: 10),
+        Expanded(child: Text("$message" , maxLines: 2)),
+      ],
+    ),
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: Colors.redAccent, 
+    padding:const EdgeInsets.all(15),
+  );
+}
+
+customSnackSuccessBar(BuildContext context, String message) {
+  return SnackBar(
+    content: Text("$message"),  
+    behavior: SnackBarBehavior.floating,
+    backgroundColor: kGreenColor, 
+    padding:const EdgeInsets.all(15),
+  );
+}
+
+/*--------------Overlay loader --------------*/
+
+// overlayLoader(BuildContext context){
+//   return Loader.show(context,
+//           isAppbarOverlay: true,
+//           isBottomBarOverlay: true,
+//           overlayColor: Colors.black38,
+//           progressIndicator:customCircularProgress(),
+//       );
+// }
+
+
