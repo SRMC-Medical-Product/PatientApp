@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:patientapp/apis/profilescreenapi.dart';
 import 'package:patientapp/helpers/headers.dart';
+import 'package:patientapp/screens/auth/info.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
 import 'package:patientapp/screens/profile/familymembers.dart';
 import 'package:patientapp/screens/profile/personaldata.dart';
@@ -13,6 +15,18 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    profileFuture = _getProfile();
+  }
+
+  _getProfile() async {
+    return await ProfileScreenApi().getProfile(context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
   var size = sizeMedia(context);
@@ -21,39 +35,56 @@ return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          mediumCustomSizedBox(context),
+        children: [ 
           mediumCustomSizedBox(context),
           ///User Details
-          Container(
-            padding: EdgeInsets.symmetric(horizontal:kScreenMarginHorizontal(context)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+          FutureBuilder(
+            future: profileFuture,
+            builder: (BuildContext context , AsyncSnapshot snapshot) {
+             if (snapshot.hasData) {
+               Map<dynamic , dynamic> user = snapshot.data['user'];
+              return Container(
+                padding: EdgeInsets.symmetric(horizontal:kScreenMarginHorizontal(context)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                  Text("Rohith ND",style: largeTextStyle(context),),
-                  smallCustomSizedBox(context),
-                  Text("1234567890",style: mediumTextStyle(context).copyWith(color:kDimGray),),
-                  Text("testing01@gmail.com",style: mediumTextStyle(context).copyWith(color:kDimGray),)
-                    ]),
-                ),
-                IconButton(onPressed:() => Navigator.of(context).push(CustomRightPageRoute(page: const PersonalDataPage(), routeName: personaldatapage)), 
-                    icon: const FaIcon(FontAwesomeIcons.edit,color: kPrimaryColor,size: 18),),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                      Text("${user['name']}",style: largeTextStyle(context),),
+                      smallCustomSizedBox(context),
+                      Text("${user['mobile']}",style: mediumTextStyle(context).copyWith(color:kDimGray),),
+                      Text(snapshot.data['profile']['email'] ==  null ? "Email not yet updated" : "${snapshot.data['profile']['email']}",style: mediumTextStyle(context).copyWith(color:kDimGray),)
+                        ]),
+                    ),
+                    IconButton(onPressed:() => Navigator.of(context).push(CustomRightPageRoute(page: const PersonalDataPage(), routeName: personaldatapage)), 
+                        icon: const FaIcon(FontAwesomeIcons.edit,color: kPrimaryColor,size: 18),),
+                      ],
+                    ),
+                    mediumCustomSizedBox(context),
                   ],
                 ),
-                mediumCustomSizedBox(context),
-              ],
-            ),
+              );
+           
+   } 
+    else if (snapshot.hasError) {
+                                  return defaultErrordialog(
+                                      context: context,
+                                      errorCode: ES_0060,
+                                      message:
+                                          "Something went wrong.Try again Later");
+                                }
+                                return SizedBox( 
+                                    child: Center(child: linearLoader()));
+   }
           ),
           kLargeDivider(context),
           mediumCustomSizedBox(context),
@@ -64,7 +95,7 @@ return SingleChildScrollView(
           profileTiles(title: "Family Members", icon:Icons.family_restroom_outlined,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const AllFamilyMembersPage(), routeName: allfamilymemberspage))),
           profileTiles(title: "Help & Support", icon:Icons.help,onTap: (){}),
           profileTiles(title: "Terms & Conditions", icon: Icons.rule_sharp,onTap: (){}),
-          profileTiles(title: "Logout", icon:Icons.logout,onTap: (){}),
+          profileTiles(title: "Logout", icon:Icons.logout,onTap: ()=>Navigator.of(context).push(CustomRightPageRoute(page: const LoginInfo(), routeName: logininfo))),
 
           ///Version
           Container(

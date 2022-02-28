@@ -207,7 +207,7 @@ class _SearchPageState extends State<SearchPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.network(
-                                  "https://image.flaticon.com/icons/png/512/387/387577.png",
+                                  "https://img.icons8.com/external-filled-outline-satawat-anukul/344/external-medical-medical-filled-outline-filled-outline-satawat-anukul-50.png",
                                   fit: BoxFit.fill,
                                   height: imgDimension,
                                   width: imgDimension,
