@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/home/home.dart';
+import 'package:patientapp/screens/medical/familymembers.dart';
 import 'package:patientapp/screens/medical/medicalrecords.dart';
 import 'package:patientapp/screens/profile/profilepage.dart';
 import 'package:patientapp/screens/search/searchpage.dart';
@@ -56,7 +57,7 @@ void onNavigateIndex(){
   final List<Widget> _children = const [
       HomePage(),
       SearchPage(),
-      MedicalRecordsPage(),
+      FamilyMembers(),
       ProfilePage(),
   ];
 

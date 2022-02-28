@@ -5,7 +5,7 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
   return Container(
     height: isMobile(context) ? 140 : 180,
     width: size.width,
-    padding: const EdgeInsets.all(20),
+    padding: const EdgeInsets.all(10.0),
     decoration: BoxDecoration(
       border: Border.all(color: borderClr  ?? kSlateGray),
       borderRadius: BorderRadius.circular(5),
@@ -46,7 +46,7 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
                           overflow: TextOverflow.clip,
                           style: isMobile(context)
                               ? mediumTextStyle(context).copyWith(
-                                  color: kPrimaryColor, fontSize: 17.5)
+                                  color: kPrimaryColor, fontSize: 15.5)
                               : largeTextStyle(context)
                                   .copyWith(color: kPrimaryColor)),
                       Text("ENT",

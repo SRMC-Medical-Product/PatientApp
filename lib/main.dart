@@ -1,5 +1,6 @@
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/appointments/appointmentsindetail.dart';
+import 'package:patientapp/screens/auth/info.dart';
 import 'package:patientapp/screens/auth/login.dart';
 import 'package:patientapp/screens/auth/otppage.dart';
 import 'package:patientapp/screens/auth/registerpage.dart';
@@ -39,10 +40,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: const LoginPage(), // const AppScreenController(indexScreen: 0,),
+      home: const LoginInfo(), // const AppScreenController(indexScreen: 0,),
       routes: {
         //Auth Screens
         LoginPage.routeName: (context) => const LoginPage(), //Path : /loginpage
+        LoginInfo.routeName: (context) => const LoginInfo(), //Path : /loginpage
         RegisterPage.routeName : (context) => const RegisterPage(), // Path :  /registerpage
         OtpPage.routeName : (context) => const OtpPage(), // Path :  /otppage
 

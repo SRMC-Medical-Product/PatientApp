@@ -32,22 +32,21 @@ class _OtpPageState extends State<OtpPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                mediumCustomSizedBox(context),
-                mediumCustomSizedBox(context),
+                mediumCustomSizedBox(context), 
                 Text(
-                  "Enter your Received OTP",
-                  style: largeTextStyle(context).copyWith(
-                      letterSpacing: 0.2, fontWeight: FontWeight.bold),
+                  "Enter your OTP.",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                      fontSize: isMobile(context) ? 27.0 : 32.0,
+                      fontWeight: FontWeight.w900,
+                      color: kTitleColor,
+                      fontFamily: kQuickSandBold),
+                ), 
+                SizedBox(
+                  height: isMobile(context) ? 35.0 : 40.0,
                 ),
-                mediumCustomSizedBox(context),
-                 Text(
-                      "Lorem Ipusm Lorem Ipusm",
-                      style: smallTextStyle(context).copyWith(
-                          height: 1.2,
-                          color: kGraycolor,
-                          fontFamily: kMuktaRegular)),
                 Container(
-                  margin: const EdgeInsets.only(top: 60),
+                  margin: const EdgeInsets.only(top: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -58,24 +57,54 @@ class _OtpPageState extends State<OtpPage> {
                           color: kLightLavengerGrayColor,
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: TextFormField(
-                          controller: _otpController,
-                          style: largeTextStyle(context),
-                          keyboardType: TextInputType.number,
+                        child:TextFormField(
+                controller: _otpController,
+               keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                             LengthLimitingTextInputFormatter(6)
                           ],
-                          cursorColor: kPrimaryColor,
-                          decoration: InputDecoration(
-                            hintText: "6 Digit OTP",
-                            hintStyle: mediumTextStyle(context)
-                                .copyWith(color: kDarkGray),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 8),
-                          ),
-                        ),
+                enableSuggestions: true,
+                enableInteractiveSelection: true,
+                decoration: InputDecoration(
+                  enabled: true,
+                  labelText: 'Enter OTP',
+                  labelStyle: const TextStyle(
+                    color: kGraycolor,
+                    fontSize: 13.0,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: kGraycolor),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: const BorderSide(color: kGraycolor),
+                  ),
+                ),
+                // maxLength: 10,
+                ),  
+                        
+                        //  TextFormField(
+                        //   controller: _otpController,
+                        //   style: largeTextStyle(context),
+                        //   keyboardType: TextInputType.number,
+                        //   inputFormatters: [
+                        //     FilteringTextInputFormatter.digitsOnly,
+                        //     LengthLimitingTextInputFormatter(6)
+                        //   ],
+                        //   cursorColor: kPrimaryColor,
+                        //   decoration: InputDecoration(
+                        //     hintText: "6 Digit OTP",
+                        //     hintStyle: mediumTextStyle(context)
+                        //         .copyWith(color: kDarkGray),
+                        //     border: InputBorder.none,
+                        //     contentPadding: const EdgeInsets.symmetric(
+                        //         vertical: 6, horizontal: 8),
+                        //   ),
+                        // ),
                       ),
                       Container(
                         height: 45,
@@ -126,7 +155,7 @@ class _OtpPageState extends State<OtpPage> {
                    primaryBtn(
                          isOutline: true,btnColor: kPrimaryColor,
                           context: context, onTap: () => Navigator.push(context,CustomSimplePageRoute(page: const AppScreenController(indexScreen: 0,), routeName: appcontroller)),
-                          btnText: "Get Started".toUpperCase(),vertical:20,),
+                          btnText: "Get Started",vertical:20,),
                        Container(
                 margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),

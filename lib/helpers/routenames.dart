@@ -1,8 +1,11 @@
 const String appcontroller = "/appcontroller";
 const String homepage = '/homepage';
 const String searchpage = '/searchpage';
+const String specialisationpage = '/specialisationpage';
+const String logininfo = '/logininfo';
 const String medicalrecordspage = '/medicalrecordspage';
 const String profilepage = '/profilepage';
+const String familmembers = '/familmembers';
 const String appointmenthistorypage = '/appointmenthistorypage';
 const String notificationpage = '/notificationpage';
 const String personaldatapage = '/personaldatapage';
