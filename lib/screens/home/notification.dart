@@ -47,7 +47,7 @@ class _NotificationPageState extends State<NotificationPage> {
                             children: [
                               Expanded(
                                 flex: 3,
-                                child: Text("Bruce Wayne has donated the amount of to Weekend Festival",
+                                child: Text("Lorem Ipsum and Lorem Ipsum.Lorem Ipsum and Lorem Ipsum.",
                                 softWrap: true,style: mediumTextStyle(context).copyWith(color : Colors.black.withOpacity(0.8),),
                               ),),
                               RotatedBox(quarterTurns: 1,child: smallCustomSizedBox(context),),
