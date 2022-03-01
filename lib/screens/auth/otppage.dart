@@ -1,12 +1,14 @@
 import 'dart:async';
 
+import 'package:patientapp/apis/auth.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 
 class OtpPage extends StatefulWidget {
   static const routeName = otppage;
-  const OtpPage({ Key? key }) : super(key: key);
+  final String secretCode;
+  const OtpPage({ Key? key ,required this.secretCode}) : super(key: key);
 
   @override
   _OtpPageState createState() => _OtpPageState();
@@ -17,6 +19,10 @@ class _OtpPageState extends State<OtpPage> {
   bool wait = false;
 
   final TextEditingController _otpController = TextEditingController();
+
+  _otpVerificationMethod({required String otp})async{
+    return await AuthenticationAPI().postOtpVerification(context: context, otp: otp, code: widget.secretCode);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +160,13 @@ class _OtpPageState extends State<OtpPage> {
                       mediumCustomSizedBox(context),
                    primaryBtn(
                          isOutline: true,btnColor: kPrimaryColor,
-                          context: context, onTap: () => Navigator.push(context,CustomSimplePageRoute(page: const AppScreenController(indexScreen: 0,), routeName: appcontroller)),
+                          context: context, onTap: () {
+                            if (_otpController.text.length == 5) {
+                              _otpVerificationMethod(otp: _otpController.text);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(customSnackSuccessBar(context, "Please enter a proper 5 digit otp"));
+                            }
+                          },
                           btnText: "Get Started",vertical:20,),
                        Container(
                 margin: EdgeInsets.symmetric(

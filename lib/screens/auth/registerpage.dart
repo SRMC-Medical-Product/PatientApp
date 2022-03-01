@@ -1,3 +1,4 @@
+import 'package:patientapp/helpers/apiheaders.dart';
 import 'package:patientapp/helpers/headers.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -9,8 +10,16 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+
+  AuthenticationAPI _authapi = AuthenticationAPI();
+
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+
+ _postRegisterUser({required String phonenumber  ,  required String userName}) async {
+    return await _authapi.postRegisterUser(
+        context: context, phonenumber: phonenumber, userName: userName);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +131,19 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       primaryBtn(
                          isOutline: false,btnColor: kPrimaryColor,
-                          context: context, onTap: () {}, btnText: "Get OTP",vertical:20,),
+                          context: context, onTap: () {
+                             if (_phoneNumberController.text.isEmpty || _usernameController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                          customsnackErrorBar(
+                              context, "Please enter your phone number and username")); 
+                            } else {
+                              overlayLoader(context);
+                              _postRegisterUser(
+                                  phonenumber: _phoneNumberController.text,
+                                  userName: _usernameController.text);
+                            }
+                          },
+                           btnText: "Get OTP",vertical:20,),
                       mediumCustomSizedBox(context),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

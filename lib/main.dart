@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         LoginPage.routeName: (context) => const LoginPage(), //Path : /loginpage
         LoginInfo.routeName: (context) => const LoginInfo(), //Path : /loginpage
         RegisterPage.routeName : (context) => const RegisterPage(), // Path :  /registerpage
-        OtpPage.routeName : (context) => const OtpPage(), // Path :  /otppage
+        OtpPage.routeName : (context) => const OtpPage(secretCode: "",), // Path :  /otppage
 
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller

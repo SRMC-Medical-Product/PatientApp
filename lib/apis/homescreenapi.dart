@@ -5,13 +5,14 @@ class HomeScreenAPI{
  
   Future<void> getHomeScreen({required BuildContext context}) async {
     var bearerToken = await flutterSecureStorage.read(key: "BEARERTOKEN");
-    dio.options.headers["authorization"] = "Bearer $bearerToken";
+    // dio.options.headers["authorization"] = "Bearer $bearerToken";
+    dio.options.headers["authorization"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIwMjIwMDAwMDAwMDAiLCJleHAiOjE2NTExMjIxMzcuNTg3ODN9.YdHIOSFU3hvalegAuuvuz6RhICkLRcA8rmJ7ndJ0Oig";
     try {
-      // Response response = await dio.get(HOME_SCREEN_URL,options : dioOptions);
-      // if(response.statusCode == 200) {
-      //   print(response.data);
-      //   return response.data;
-      // }
+      Response response = await dio.get(HOME_SCREEN_URL,options : dioOptions);
+      if(response.statusCode == 200) {
+        print(response.data);
+        return response.data['BODY'];
+      }
     } on DioError catch (e) {
       if (e.type == DioErrorType.sendTimeout) {
         //Send Timeout
@@ -40,6 +41,5 @@ class HomeScreenAPI{
       } 
     }
   }
-
 
 }

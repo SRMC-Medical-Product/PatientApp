@@ -4,6 +4,8 @@ export 'package:patientapp/constants/colors.dart';
 export 'package:patientapp/constants/responsive.dart';
 export 'package:patientapp/constants/widgets.dart';
 export 'package:patientapp/helpers/routenames.dart';
+export 'package:patientapp/helpers/errorcodes.dart';
+export 'package:patientapp/helpers/futures.dart';
 export 'package:flutter/services.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:patientapp/constants/jsoncontent.dart';

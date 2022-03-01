@@ -1,5 +1,6 @@
 /*---------------- Custom Widgets which is common for whole app -------------------*/
 
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/search/appointmentconfirmation.dart';
 
@@ -634,13 +635,44 @@ customSnackSuccessBar(BuildContext context, String message) {
 
 /*--------------Overlay loader --------------*/
 
-// overlayLoader(BuildContext context){
-//   return Loader.show(context,
-//           isAppbarOverlay: true,
-//           isBottomBarOverlay: true,
-//           overlayColor: Colors.black38,
-//           progressIndicator:customCircularProgress(),
-//       );
-// }
+overlayLoader(BuildContext context){
+  return Loader.show(context,
+          isAppbarOverlay: true,
+          isBottomBarOverlay: true,
+          overlayColor: Colors.black38,
+          progressIndicator:customCircularProgress(),
+      );
+}
 
 
+//Progress Indicators
+linearLoader() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 12.0),
+    child: Center(
+      child: LinearProgressIndicator(
+        valueColor: AlwaysStoppedAnimation(kSecondaryColor),
+        backgroundColor: Colors.white,
+        minHeight: 1,
+      ),
+    ),
+  );
+} 
+
+// is null show icon text 
+
+  Widget isNullIcon({required BuildContext context , required String text , required IconData icon}) {
+    return Center(
+      child: Column(children: [
+        Text(text,
+            style: mediumLargeTextStyle(context)
+                .copyWith(fontWeight: FontWeight.w700)),
+        mediumCustomSizedBox(context),
+        Icon(
+          icon,
+          size: 25.0,
+          color: kPrimaryColor,
+        )
+      ]),
+    );
+  }
