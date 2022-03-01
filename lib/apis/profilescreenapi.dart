@@ -4,12 +4,12 @@ class ProfileScreenApi {
 
    Future<void> getProfile({required BuildContext context}) async {
      var bearerToken = await flutterSecureStorage.read(key: "BEARERTOKEN");
-    // dio.options.headers["authorization"] = "Bearer $bearerToken";
-    dio.options.headers["authorization"] = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIwMjIwMDAwMDAwMDAiLCJleHAiOjE2NTExMjIxMzcuNTg3ODN9.YdHIOSFU3hvalegAuuvuz6RhICkLRcA8rmJ7ndJ0Oig";
-
+    dio.options.headers["authorization"] = "Bearer $bearerToken";
+    
     try {
       Response response = await dio.get(PROFILE_SCREEN_URL,options : dioOptions);
       if(response.statusCode == 200) { 
+        print(response.data);
         return response.data['BODY'];
       }
     }
@@ -25,7 +25,7 @@ class ProfileScreenApi {
         return defaultErrordialog(context: context, errorCode: ES_0052,onTapBtn: () => Navigator.of(context).pop());
          } else if(e.response?.statusCode == 401){
         //When anonymous user is requesting for data
-        AuthenticationAPI().performLogOut(context);
+        AuthenticationAPI().performLogOut(context: context,userLogout: false);
         return defaultErrordialog(context: context, errorCode: ES_0041);
       } else if(e.response?.statusCode == 500){
         //Internal server error

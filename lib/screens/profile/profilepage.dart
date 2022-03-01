@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:patientapp/apis/auth.dart';
 import 'package:patientapp/apis/profilescreenapi.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/auth/info.dart';
@@ -44,35 +45,77 @@ return SingleChildScrollView(
             builder: (BuildContext context , AsyncSnapshot snapshot) {
              if (snapshot.hasData) {
                Map<dynamic , dynamic> user = snapshot.data['user'];
-              return Container(
-                padding: EdgeInsets.symmetric(horizontal:kScreenMarginHorizontal(context)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal:kScreenMarginHorizontal(context)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                      Text("${user['name']}",style: largeTextStyle(context),),
-                      smallCustomSizedBox(context),
-                      Text("${user['mobile']}",style: mediumTextStyle(context).copyWith(color:kDimGray),),
-                      Text(snapshot.data['profile']['email'] ==  null ? "Email not yet updated" : "${snapshot.data['profile']['email']}",style: mediumTextStyle(context).copyWith(color:kDimGray),)
-                        ]),
-                    ),
-                    IconButton(onPressed:() => Navigator.of(context).push(CustomRightPageRoute(page: const PersonalDataPage(), routeName: personaldatapage)), 
-                        icon: const FaIcon(FontAwesomeIcons.edit,color: kPrimaryColor,size: 18),),
+Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                    Text("${user['name']}",style: largeTextStyle(context),),
+                    smallCustomSizedBox(context),
+                    Text("${user['mobile']}",style: mediumTextStyle(context).copyWith(color:kDimGray),),
+                    Text(snapshot.data['profile']['email'] ==  null ? "Email not yet updated" : "${snapshot.data['profile']['email']}",style: mediumTextStyle(context).copyWith(color:kDimGray),)
+                      ]),
+                  ),
+                  IconButton(onPressed:() => Navigator.of(context).push(CustomRightPageRoute(page: const PersonalDataPage(), routeName: personaldatapage)), 
+                      icon: const FaIcon(FontAwesomeIcons.edit,color: kPrimaryColor,size: 18),),
+                    ],
+                  ),
+                  mediumCustomSizedBox(context),
+                 
                       ],
                     ),
-                    mediumCustomSizedBox(context),
-                  ],
-                ),
+                  ),
+                   kLargeDivider(context),
+                  mediumCustomSizedBox(context),
+                  mediumCustomSizedBox(context),
+                  ///Profiles
+                  profileTiles(title: "Personal Data", icon: Icons.person,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const PersonalDataPage(), routeName: personaldatapage))),
+                  profileTiles(title: "Appointments History",icon: Icons.history,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const AppointmentHistoryPage(), routeName: appointmenthistorypage))),
+                  profileTiles(title: "Family Members", icon:Icons.family_restroom_outlined,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const AllFamilyMembersPage(), routeName: allfamilymemberspage))),
+                  profileTiles(title: "Help & Support", icon:Icons.help,onTap: (){}),
+                  profileTiles(title: "Terms & Conditions", icon: Icons.rule_sharp,onTap: (){}),
+                  profileTiles(title: "Logout", icon:Icons.logout,
+                  onTap: () async{
+                    AuthenticationAPI().performLogOut(context:context,userLogout: true);
+                  }
+                  ),
+
+                  ///Version
+                  Container(
+                    width: size.width,
+                    padding: EdgeInsets.symmetric(horizontal: kScreenMarginHorizontal(context)),
+                    child: Column(
+                      children: [
+                  mediumCustomSizedBox(context),
+                  mediumCustomSizedBox(context),
+                  lineDivider(context,thickness: 0.5,color: kBlackTextColor),
+                  mediumCustomSizedBox(context),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("v1.1.0",style: smallTextStyle(context),),
+                        ),
+                  mediumCustomSizedBox(context),
+                  
+                      ],
+                    ),
+                  )  
+                
+                ],
               );
            
    } 
@@ -87,36 +130,7 @@ return SingleChildScrollView(
                                     child: Center(child: linearLoader()));
    }
           ),
-          kLargeDivider(context),
-          mediumCustomSizedBox(context),
-          mediumCustomSizedBox(context),
-          ///Profiles
-          profileTiles(title: "Personal Data", icon: Icons.person,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const PersonalDataPage(), routeName: personaldatapage))),
-          profileTiles(title: "Appointments History",icon: Icons.history,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const AppointmentHistoryPage(), routeName: appointmenthistorypage))),
-          profileTiles(title: "Family Members", icon:Icons.family_restroom_outlined,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const AllFamilyMembersPage(), routeName: allfamilymemberspage))),
-          profileTiles(title: "Help & Support", icon:Icons.help,onTap: (){}),
-          profileTiles(title: "Terms & Conditions", icon: Icons.rule_sharp,onTap: (){}),
-          profileTiles(title: "Logout", icon:Icons.logout,onTap: ()=>Navigator.of(context).push(CustomRightPageRoute(page: const LoginInfo(), routeName: logininfo))),
-
-          ///Version
-          Container(
-            width: size.width,
-            padding: EdgeInsets.symmetric(horizontal: kScreenMarginHorizontal(context)),
-            child: Column(
-              children: [
-          mediumCustomSizedBox(context),
-          mediumCustomSizedBox(context),
-          lineDivider(context,thickness: 0.5,color: kBlackTextColor),
-          mediumCustomSizedBox(context),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("v1.1.0",style: smallTextStyle(context),),
-                ),
-          mediumCustomSizedBox(context),
           
-              ],
-            ),
-          )  
         ],
       )
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:patientapp/apis/homescreenapi.dart';
-import 'package:patientapp/helpers/futures.dart';
+import 'package:patientapp/helpers/apiheaders.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/appointments/appointmentcontroller.dart';
 import 'package:patientapp/screens/components/appcontroller.dart';
@@ -94,6 +94,7 @@ class _HomePageState extends State<HomePage> {
             Map<dynamic , dynamic > promotiondeparts = snapshot.data['promotiondeparts'];
             Map<dynamic , dynamic > upcomingappointments = snapshot.data['upcomingappointments'];
             Map<dynamic , dynamic > endcontent = snapshot.data['endcontent'];
+            Map<dynamic , dynamic > userprofile = snapshot.data['user'];
             
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,8 +126,7 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("Hello", style: mediumTextStyle(context)),
-                                  Text(
-                                    "Loga Subramani",
+                                  Text(isEmptyOrNull(userprofile['name']) ? "" : "${userprofile['name']}",
                                     style: largeTextStyle(context),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -174,10 +174,7 @@ class _HomePageState extends State<HomePage> {
               //promotion Box
               mediumCustomSizedBox(context),
               SinglePromotionBox(
-                  imgUrl: isEmptyOrNull(firstcarousel['img'])
-                  // todo url
-                  ? "https://cdn.dribbble.com/users/2118692/screenshots/11837184/media/9fb2ed55e159389af41ca22c9f37d287.png?compress=1&resize=1200x900&vertical=top" 
-                  : "${firstcarousel['img']}"
+                  imgUrl: "${firstcarousel['img']}"
                   ),
                   mediumCustomSizedBox(context),
 
@@ -243,7 +240,7 @@ class _HomePageState extends State<HomePage> {
               ),
               /*----------end appointments box --------------*/
               /*----------start Our Categories Services UI Part --------------*/
-              Container(
+              if(categoryspecialist['isempty'] == false) Container(
                   margin: EdgeInsets.symmetric(
                       horizontal: kDefaultScreenPaddingHorizontal(context),
                       vertical: kDefaultScreenPaddingVertical(context)),
@@ -252,36 +249,24 @@ class _HomePageState extends State<HomePage> {
                     isCapitalFont: true,
                       context: context, text: "${categoryspecialist['title']}".toUpperCase(), isViewAll: true)),
 
-              //Services
-              categoryspecialist['categories_1'].length == 0 ? 
-              Container()
-              :
-              serviceSlider(isBorder: true, servicedata: categoryspecialist['categories_1']),
+              if(categoryspecialist['categories_1'].length != 0)
+                serviceSlider(isBorder: true, servicedata: categoryspecialist['categories_1']),
+              
               mediumCustomSizedBox(context),
-             categoryspecialist['categories_2'].length == 0 ? 
-              Container()
-              :serviceSlider(isBorder: true, servicedata: categoryspecialist['categories_2']),
+              if(categoryspecialist['categories_2'].length != 0) 
+                serviceSlider(isBorder: true, servicedata: categoryspecialist['categories_2']),
              
               /*----------end Our Our Categories Services UI Part --------------*/
 
-              /*----------start carousel box --------------*/
+              /*----------start slider carousel box --------------*/
               smallCustomSizedBox(context), 
-              ///Carousel
-              Container(
+              ///Slider 
+              if(slider['isempty'] == false) Container(
                 width: size.width,
                 height:
                     carouselHgt, //isMobile(context) ? size.width / 3.6 : size.width / 3.2,
                 decoration: const BoxDecoration(
-                  color: Colors.white, // kPrimaryColor, //TODO
-                  // //border: Border.all(color: kPrimaryColor, width: 1),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     blurRadius: 2,
-                  //     color: kSlateGray,
-                  //     offset: Offset(0, 1),
-                  //     spreadRadius: 1,
-                  //   )
-                  // ]
+                  color: Colors.white,
                 ),
 
                 child: Column(
@@ -299,7 +284,6 @@ class _HomePageState extends State<HomePage> {
                           style: mediumLargeTextStyle(context).copyWith(
                               letterSpacing: 0.15,
                               fontWeight : FontWeight.bold,
-                              //color:Colors.black, //TODO Colors.white,
                               fontFamily: kMuktaBold),
                         ),
                     ),
@@ -348,7 +332,17 @@ class _HomePageState extends State<HomePage> {
               /*----------end carousel box --------------*/
 
               /*----------start Our Prokmotional Services UI Part --------------*/ 
-              scrollContentsTitle(title: "Doctors specially for your Children",isempty : promotiondeparts['isempty'],   promotiondata: promotiondeparts['depts']),
+              if(promotiondeparts['isempty'] == false) ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: promotiondeparts['depts'].length,
+                itemBuilder: (BuildContext context, int i){
+                  return (promotiondeparts['depts'][i]['departments'].length > 0) ? scrollContentsTitle(
+                    title: promotiondeparts['depts'][i]['title'],
+                    promotiondata: promotiondeparts['depts'][i]['departments'])
+                    : Container();
+                },
+              ),
              
                 /*----------end Our Prokmotional Services UI Part --------------*/
 
@@ -366,8 +360,6 @@ class _HomePageState extends State<HomePage> {
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                            isEmptyOrNull(lastcarousel['img']) ?
-                            "https://cdn.dribbble.com/users/2118692/screenshots/11837184/media/9fb2ed55e159389af41ca22c9f37d287.png?compress=1&resize=1200x900&vertical=top" :
                              "${lastcarousel['img']}"
                             ))),
               ),
@@ -407,8 +399,7 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: kDefaultScreenPaddingHorizontal(context),
                             vertical: kDefaultScreenPaddingVertical(context)),
-                        child: Text(
-                          "Our community of doctors and patients drive us to create technologies for better and afforable healthcare",
+                        child: Text("${endcontent['content']}",
                           softWrap: true,
                           textAlign: TextAlign.center,
                           style: mediumTextStyle(context)
@@ -685,7 +676,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget scrollContentsTitle({required String title , required bool isempty ,required List promotiondata}) {
+  Widget scrollContentsTitle({required String title ,required List promotiondata}) {
     var size = sizeMedia(context);
     var imgDimension = smallMobile(context)
         ? size.width / 8
@@ -709,9 +700,6 @@ class _HomePageState extends State<HomePage> {
             child:
                 rowTitleText(context: context, text: title, isViewAll: false,isCapitalFont:false,onTap:(){})),
         smallCustomSizedBox(context),
-        isempty == true ? 
-        Container() :
-        //Services
         Container(
           margin: EdgeInsets.symmetric(
             horizontal: kDefaultScreenPaddingHorizontal(context),
@@ -746,7 +734,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Image.network(
                        isEmptyOrNull(promotiondata[i]['img']) 
-                       ? "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/344/external-medical-athletics-flaticons-lineal-color-flat-icons-2.png"
+                       ? CATEGORY_PROMOTIONS_IMG
                        : promotiondata[i]['img'],
                         fit: BoxFit.fill,
                         height: imgDimension,
@@ -755,7 +743,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding:
                             EdgeInsets.only(top: isMobile(context) ? 4 : 7),
-                        child: Text("Cardiologist",
+                        child: Text(isEmptyOrNull(promotiondata[i]['name']) ? "Specials" : promotiondata[i]['name'],
                             textAlign: TextAlign.center,
                             maxLines: 2,
                             overflow: TextOverflow.clip,

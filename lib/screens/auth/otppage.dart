@@ -1,28 +1,52 @@
 import 'dart:async';
-
 import 'package:patientapp/apis/auth.dart';
 import 'package:patientapp/helpers/headers.dart';
-import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 
 class OtpPage extends StatefulWidget {
   static const routeName = otppage;
-  final String secretCode;
-  const OtpPage({ Key? key ,required this.secretCode}) : super(key: key);
+  String secretCode;
+  final String phoneNumber;
+  OtpPage({ Key? key ,required this.secretCode,required this.phoneNumber}) : super(key: key);
 
   @override
   _OtpPageState createState() => _OtpPageState();
 }
 
 class _OtpPageState extends State<OtpPage> {
-  int start = 30;
-  bool wait = false;
+  int start = 10;
+  bool wait = true;
+  late Timer _timer;
 
   final TextEditingController _otpController = TextEditingController();
+  final AuthenticationAPI _authapi = AuthenticationAPI();
+  @override
+  @override
+    void initState() {
+      super.initState();
+      startTimer();
+    }    
 
   _otpVerificationMethod({required String otp})async{
-    return await AuthenticationAPI().postOtpVerification(context: context, otp: otp, code: widget.secretCode);
+    return await _authapi.postOtpVerification(context: context, otp: otp, code: widget.secretCode);
   }
+
+  _postResendOtp() async {
+    return await _authapi.postResendOtp(
+        context: context, phonenumber: widget.phoneNumber).then((res) {
+          print(res);
+          if(res['status'] ==true){
+            setState(() {
+                      start = 10;
+                      wait = true;
+                      widget.secretCode = res['code'];
+                      //buttonName = "Resend";
+                    });
+                    startTimer();
+          }
+        });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -137,17 +161,14 @@ class _OtpPageState extends State<OtpPage> {
                 //     });
                 //   },
                   if(wait == true) Text(
-                              "00:$start",
+                              "$start",
                               style: mediumTextStyle(context).copyWith(color:kPrimaryColor,letterSpacing : 0.3,fontFamily:kMuktaBold),
                             ),  
             if(wait == false) GestureDetector(
               onTap : () async {
-                    setState(() {
-                      start = 30;
-                      wait = true;
-                      //buttonName = "Resend";
-                    });
-                    startTimer();
+                overlayLoader(context);
+                _postResendOtp();
+                    
                   },
               child: Text(
                                 "Resend",
@@ -161,10 +182,11 @@ class _OtpPageState extends State<OtpPage> {
                    primaryBtn(
                          isOutline: true,btnColor: kPrimaryColor,
                           context: context, onTap: () {
-                            if (_otpController.text.length == 5) {
+                            if (_otpController.text.length == 6) {
+                              overlayLoader(context);
                               _otpVerificationMethod(otp: _otpController.text);
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(customSnackSuccessBar(context, "Please enter a proper 5 digit otp"));
+                              ScaffoldMessenger.of(context).showSnackBar(customsnackErrorBar(context, "Please enter a proper 6 digit otp"));
                             }
                           },
                           btnText: "Get Started",vertical:20,),
@@ -196,11 +218,11 @@ class _OtpPageState extends State<OtpPage> {
       ),
     );
   }
-  
+
     void startTimer() {
     const onsec = Duration(seconds: 1);
-    // ignore: unused_local_variable
-    Timer _timer = Timer.periodic(onsec, (timer) {
+   
+     _timer = Timer.periodic(onsec, (timer) {
       if (start == 0) {
         setState(() {
           timer.cancel();
@@ -212,6 +234,13 @@ class _OtpPageState extends State<OtpPage> {
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _otpController.dispose();
+    _timer.cancel();
+    super.dispose();
   }
 
 }

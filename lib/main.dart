@@ -40,13 +40,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: const LoginInfo(), // const AppScreenController(indexScreen: 0,),
+      home:  const AppScreenController(indexScreen: 3,),
       routes: {
         //Auth Screens
         LoginPage.routeName: (context) => const LoginPage(), //Path : /loginpage
         LoginInfo.routeName: (context) => const LoginInfo(), //Path : /loginpage
         RegisterPage.routeName : (context) => const RegisterPage(), // Path :  /registerpage
-        OtpPage.routeName : (context) => const OtpPage(secretCode: "",), // Path :  /otppage
+        OtpPage.routeName : (context) => OtpPage(secretCode: "",phoneNumber: "",), // Path :  /otppage
 
         //App Screens
         AppScreenController.routeName : (context) => const AppScreenController(), // Path :  /appcontroller

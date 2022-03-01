@@ -12,6 +12,7 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPageState extends State<NotificationPage> {
   Future? _notificationFuture;
+  NotificationScreenAPI _notificationAPI = new NotificationScreenAPI();
   @override
   void initState() {
     super.initState();
@@ -19,7 +20,11 @@ class _NotificationPageState extends State<NotificationPage> {
   }
 
   _receiveNotification() async {
-    return await NotificationScreenAPI().getNotifications(context: context);
+    return await _notificationAPI.getNotifications(context: context);
+  }
+
+  _putMessageSeenZone({required String messageId})async{
+    return await _notificationAPI.putSeenMessage(context: context, messageId: messageId);
   }
 
   @override
@@ -61,57 +66,92 @@ class _NotificationPageState extends State<NotificationPage> {
                             itemBuilder: (BuildContext context, int i) {
                               return Column(
                                 children: [
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(top: i == 0 ? 0 : 15),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: 30,
-                                          width: 30,
-                                          child: Icon(
-                                              messages[i]['seen'] == true
-                                                  ? Icons.visibility_outlined
-                                                  : Icons
-                                                      .notifications_active_outlined,
-                                              color: messages[i]['seen'] == true
-                                                  ? kSteelBlue
-                                                  : kPinkRedishColor,
-                                              size: 20.0),
-                                        ),
-                                        RotatedBox(
-                                          quarterTurns: 1,
-                                          child: smallCustomSizedBox(context),
-                                        ),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "${messages[i]['message']}",
-                                                softWrap: true,
-                                                maxLines: 3,
-                                                style: mediumTextStyle(context)
-                                                    .copyWith(
-                                                  color: Colors.black
-                                                      .withOpacity(0.8),
-                                                ),
-                                              ),
-                                              smallCustomSizedBox(context),
-                                              Text(
-                                                "${messages[i]['timestamp']}",
-                                                style: smallTextStyle(context),
-                                                softWrap: true,
-                                              ),
-                                            ],
+                                  Theme(
+                                    data: ThemeData(
+                    dividerColor: Colors.transparent,
+                    unselectedWidgetColor: kPrimaryColor,
+                    dialogBackgroundColor: Colors.white
+              ),
+                                    child: ExpansionTile(
+                                      initiallyExpanded: false,
+                                      onExpansionChanged: (isExpanded){
+                                        if(messages[i]['seen'] == false){
+                                          _putMessageSeenZone(messageId: messages[i]['id'].toString(),);
+                                          setState(() {
+                                          messages[i]['seen'] = isExpanded;
+                                        });
+                                        }
+                                      },
+                                      title: Container(
+                                      margin:
+                                          EdgeInsets.only(top: i == 0 ? 0 : 15),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // Container(
+                                          //   height: 30,
+                                          //   width: 30,
+                                          //   child: Icon(
+                                          //       messages[i]['seen'] == true
+                                          //           ? Icons.visibility_outlined
+                                          //           : Icons
+                                          //               .notifications_active_outlined,
+                                          //       color: messages[i]['seen'] == true
+                                          //           ? kSteelBlue
+                                          //           : kPinkRedishColor,
+                                          //       size: 20.0),
+                                          // ),
+                                          RotatedBox(
+                                            quarterTurns: 1,
+                                            child: smallCustomSizedBox(context),
                                           ),
-                                        ),
+                                          Expanded(
+                                            flex: 3,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "${messages[i]['message']}",
+                                                  softWrap: true,
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: mediumTextStyle(context)
+                                                      .copyWith(
+                                                        fontWeight : messages[i]['seen'] == true ? FontWeight.w300 : FontWeight.w700,
+                                                    color: Colors.black
+                                                        .withOpacity(0.8),
+                                                  ),
+                                                ),
+                                                smallCustomSizedBox(context),
+                                                Text(
+                                                  "${messages[i]['timestamp']}",
+                                                  style: smallTextStyle(context).copyWith(
+                                                    fontWeight : messages[i]['seen'] == true ? FontWeight.w300 : FontWeight.w700,
+                                                  ),
+                                                  softWrap: true,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                      children: <Widget>[
+                                        ListTile(
+                                          title:  Text(
+                                                  "${messages[i]['message']}",
+                                                  softWrap: true,
+                                                  style: mediumTextStyle(context)
+                                                      .copyWith(
+                                                    color: Colors.black
+                                                        .withOpacity(0.8),
+                                                  ),
+                                                ),
+                                        )
                                       ],
                                     ),
                                   ),

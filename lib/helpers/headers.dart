@@ -9,3 +9,4 @@ export 'package:patientapp/helpers/futures.dart';
 export 'package:flutter/services.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:patientapp/constants/jsoncontent.dart';
+export 'package:flutter_overlay_loader/flutter_overlay_loader.dart';

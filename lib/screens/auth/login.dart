@@ -16,7 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _phoneNumberController = TextEditingController();
 
-  AuthenticationAPI _authapi = AuthenticationAPI();
+  final AuthenticationAPI _authapi = AuthenticationAPI();
 
   _postLoginUser({required String phonenumber}) async {
     return await _authapi.postLoginUser(
@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: commonNavbar(context: context, isBack: true),
+        appBar: commonNavbar(context: context, isBack: false),
         body: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
