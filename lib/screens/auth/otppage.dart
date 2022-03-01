@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:patientapp/apis/auth.dart';
+import 'package:patientapp/apis/authapi.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 

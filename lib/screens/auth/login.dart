@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:patientapp/apis/auth.dart';
+import 'package:patientapp/apis/authapi.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/auth/otppage.dart';
 import 'package:patientapp/screens/auth/registerpage.dart';

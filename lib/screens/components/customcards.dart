@@ -1,3 +1,4 @@
+import 'package:patientapp/helpers/apiheaders.dart';
 import 'package:patientapp/helpers/headers.dart';
 
 Widget customListAppointmentCard({required BuildContext context,Color? borderClr , required List appointment}) {
@@ -123,11 +124,12 @@ Widget customListAppointmentCard({required BuildContext context,Color? borderClr
 }
 
 
-Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
+Widget customAppointmentCard({required BuildContext context,Color? borderClr,required String doctorImg,required String doctorName,required String doctorSpec,required String appointmentDate,required String appointmentTime}) {
   var size = sizeMedia(context);
   return Container(
     height: isMobile(context) ? 140 : 180,
     width: size.width,
+    margin: EdgeInsets.only(bottom: isMobile(context) ? 10 : 20),
     padding: const EdgeInsets.all(10.0),
     decoration: BoxDecoration(
       border: Border.all(color: borderClr  ?? kSlateGray),
@@ -147,10 +149,10 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
                 width: isMobile(context) ? 50 : 70,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    image: const DecorationImage(
+                    image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU"))
+                          isEmptyOrNull(doctorImg)  ? DOCTOR_DEFAULT_IMG :  doctorImg))
                             ),
               ),
               Expanded(
@@ -164,7 +166,7 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Dr . Testing Subba Raoss",
+                      Text("Dr . $doctorName",
                           maxLines: 1,
                           overflow: TextOverflow.clip,
                           style: isMobile(context)
@@ -172,7 +174,7 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
                                   color: kPrimaryColor, fontSize: 15.5)
                               : largeTextStyle(context)
                                   .copyWith(color: kPrimaryColor)),
-                      Text("ENT",
+                      Text(doctorSpec,
                           maxLines: 1,
                           overflow: TextOverflow.clip,
                           style: isMobile(context)
@@ -213,10 +215,10 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr}) {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 iconText(context: context,
-                    icon: Icons.calendar_today_sharp, text: "Monday, Aug 19"),
+                    icon: Icons.calendar_today_sharp, text: appointmentDate),
                 RotatedBox(
                     quarterTurns: 1, child: mediumCustomSizedBox(context)),
-                iconText(context:context,icon: Icons.access_time, text: "11:00 am"),
+                iconText(context:context,icon: Icons.access_time, text: appointmentTime),
               ],
             ),
           ),

@@ -5,5 +5,4 @@ export 'package:patientapp/helpers/errorcodes.dart';
 export 'package:patientapp/helpers/headers.dart';
 export 'package:patientapp/helpers/routing.dart';
 export 'package:patientapp/constants/widgets.dart';
-export 'package:patientapp/apis/auth.dart';
-export 'package:patientapp/helpers/contents.dart';
+export 'package:patientapp/apis/authapi.dart';
