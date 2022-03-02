@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home:  const AppScreenController(indexScreen: 3,),
+      home: AppointmentController(), //  const AppScreenController(indexScreen: 3,),
       routes: {
         //Auth Screens
         LoginPage.routeName: (context) => const LoginPage(), //Path : /loginpage
@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
         AppointmentBookingPage.routeName : (context) => const AppointmentBookingPage(), // Path :  /appointmentbookingpage
         AppointmentConfirmationPage.routeName : (context) => const AppointmentConfirmationPage(), // Path :  /appointmentconfirmationpage
         AppointmentController.routeName : (context) => const AppointmentController(), // Path :  /upcomingappointments
-        AppointmentsDetailsPage.routeName : (context) => const AppointmentsDetailsPage(), // Path :  /appointmentdetailspage
+        AppointmentsDetailsPage.routeName : (context) => const AppointmentsDetailsPage(appointmentId: "",), // Path :  /appointmentdetailspage
 
         //Add New Member Screen
         AddNewMemberPage.routeName : (context) => const AddNewMemberPage(), // Path :  /addnewmemberpage

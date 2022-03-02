@@ -68,7 +68,7 @@ class _AppointmentHistoryPageState extends State<AppointmentHistoryPage> {
                     itemCount: historyappointments.length,
                     itemBuilder: (BuildContext context, int i) {
                       return GestureDetector(
-                        onTap: () => Navigator.push(context,CustomRightPageRoute(page: const AppointmentsDetailsPage(), routeName: appointmentdetailspage)),
+                        onTap: () => Navigator.push(context,CustomRightPageRoute(page: AppointmentsDetailsPage(appointmentId: "${historyappointments[i]['id']}",), routeName: appointmentdetailspage)),
                         child: customAppointmentCard(
                           context: context,
                           appointmentDate: historyappointments[i]['date'].toString(),

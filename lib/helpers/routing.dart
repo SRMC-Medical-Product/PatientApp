@@ -26,6 +26,7 @@ const String FAMILY_MEMBERS_SCREEN_URL = "$BASE_URL/all-family-members/";
 /*------Appointment  Screen API ------- */
 const String APPOINTMENT_PENDING_URL = "$BASE_URL/appointment-pending/";
 const String APPOINTMENT_HISTORY_URL = "$BASE_URL/appointment-history/";
+const String APPOINTMENT_DETAILS_URL = "$BASE_URL/appointment-indetail/";
 
 /*------- All Categories Screen API ------- */
 const String ALL_CATEGORIES_SCREEN_URL = "$BASE_URL/all-categories/";

@@ -23,7 +23,7 @@ Widget contentDescTile({required BuildContext context,required String title,requ
                 );
   }
 
-Widget mesauresTakenList(BuildContext context){
+Widget measuresTakenList({required BuildContext context,required List<dynamic> measuresList}){
   return               Container(
                 margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),
@@ -42,7 +42,7 @@ Widget mesauresTakenList(BuildContext context){
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: measuresTakenJson.length,
+                      itemCount: measuresList.length,
                       itemBuilder: (BuildContext context, int i){
                           return Padding(
                       padding: const EdgeInsets.only(left: 7,bottom: 7),
@@ -61,7 +61,7 @@ Widget mesauresTakenList(BuildContext context){
                           RotatedBox(quarterTurns: 1,child: mediumCustomSizedBox(context),),
                           Expanded(
                             child: Text(
-                                                  measuresTakenJson[i]['steps'],
+                                                  "${measuresList[i]}",
                                                   overflow: TextOverflow.clip,
                                                   softWrap: true,
                                                   style: smallTextStyle(context).copyWith(

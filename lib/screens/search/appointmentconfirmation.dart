@@ -243,7 +243,7 @@ class _AppointmentConfirmationPageState
               kMediumDivider(context),
 
               //Safety Measures
-              mesauresTakenList(context),
+              measuresTakenList(context: context,measuresList: []),
 
               kSmallDivider(context),
               //Agree Terms and Conditions

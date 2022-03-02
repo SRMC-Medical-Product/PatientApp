@@ -49,7 +49,7 @@ class _FutureAppointmentsState extends State<FutureAppointments> {
             itemCount: liveappointments['appointments'].length,
             itemBuilder: (BuildContext context, int i){
               return GestureDetector(
-                      onTap: () => Navigator.push(context,CustomRightPageRoute(page: const AppointmentsDetailsPage(), routeName: appointmentdetailspage)),
+                      onTap: () => Navigator.push(context,CustomRightPageRoute(page: AppointmentsDetailsPage(appointmentId: liveappointments['appointments'][i]['id'].toString(),), routeName: appointmentdetailspage)),
                       child:customAppointmentCard(
                         context: context,
                         appointmentDate: liveappointments['appointments'][i]['date'].toString(),
