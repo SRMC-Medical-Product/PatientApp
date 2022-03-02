@@ -7,7 +7,10 @@ import 'package:patientapp/screens/components/navbar.dart';
 
 class PersonalDataPage extends StatefulWidget {
   static const routeName = personaldatapage;
-  const PersonalDataPage({Key? key}) : super(key: key);
+
+  final String patientId;
+
+  const PersonalDataPage({Key? key,required this.patientId}) : super(key: key);
 
   @override
   _PersonalDataPageState createState() => _PersonalDataPageState();
@@ -73,24 +76,28 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     }    
 
     _fetchUserProfile() async{
-      return await _profileScreenApi.getProfileUpdate(context: context)
+      return await _profileScreenApi.getProfileUpdate(context: context,patientId: widget.patientId)
       .then((res) {
         if(res['profile']['id'].toString().isNotEmpty == true){
           print("---------------------res---------------------");
+          print(res);
+          print(widget.patientId);
+          print(res['profile']['gender']);
+          print(res['profile']['gender'].runtimeType);
              SchedulerBinding.instance!
                   .addPostFrameCallback((_) => setState(() {
           _nameController.text = res['profile']['name'];
-          if(res['profile']['email'] != null){
+          if(isEmptyOrNull(res['profile']['email']) !=true){
           _emailController.text = res['profile']['email'];
           }
-           if(res['profile']['gender'] != null){
+                    if(isEmptyOrNull(res['profile']['gender']) != true){
                         genderDropDownValue = res['profile']['gender'];
                       }
-                      if(res['profile']['blood'] != null){
+                      if(isEmptyOrNull(res['profile']['blood'] ) != true){
                         bloodGroupValue = res['profile']['blood'];
                       }
-                      genderDropDownItems = res['gender'].cast<String>();
-                      bloodGroupDropDownItems = res['blood'].cast<String>();
+                     genderDropDownItems = res['gender'].cast<String>();
+                    bloodGroupDropDownItems = res['blood'].cast<String>();
                }));
 
         }
@@ -100,7 +107,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     }
 
     _putProfileUpdate({required String name,required String dob, required String email,String? blood,String? gender,String? relation,String? filePath,String? fileName}) async{
-      return await _profileScreenApi.putProfile(context: context, name: name, dob: dob, email: email,blood: blood,gender: gender,relation: relation,fileName: fileName,filePath:filePath);
+      return await _profileScreenApi.putProfile(context: context,patientId: widget.patientId, name: name, dob: dob, email: email,blood: blood,gender: gender,relation: relation,fileName: fileName,filePath:filePath);
     }
 
 
@@ -300,6 +307,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                                           ),
                       ),
                         RotatedBox(quarterTurns: 1,child: mediumCustomSizedBox(context),),
+                    
                     Expanded(
                       flex: 1,
                       child: dropDownMenu(
@@ -332,10 +340,10 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                         ),
                       ),
                     ),
-                  
+                    
                       ],
                     ),
-
+                    
                     //Save or update Buttonxt
                     primaryBtn(context: context,  isOutline: false,
                     onTap: ()async{

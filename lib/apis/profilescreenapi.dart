@@ -42,12 +42,12 @@ class ProfileScreenApi {
     }
   } 
 
-   Future<dynamic> getProfileUpdate({required BuildContext context}) async {
+   Future<dynamic> getProfileUpdate({required BuildContext context,String? patientId}) async {
      var bearerToken = await flutterSecureStorage.read(key: "BEARERTOKEN");
     dio.options.headers["authorization"] = "Bearer $bearerToken";
     
     try {
-      Response response = await dio.get(PROFILE_SCREEN_URL,options : dioOptions);
+      Response response = await dio.get("$PROFILE_SCREEN_URL?patientid=$patientId",options : dioOptions);
       if(response.statusCode == 200) { 
         print(response.data);
         return response.data['BODY'];
@@ -84,11 +84,12 @@ class ProfileScreenApi {
   } 
 
  
-   putProfile({required BuildContext context,String? filePath,String? fileName,required String name,String? relation,String? gender, String? blood,required String dob,required String email }) async {
+   putProfile({required BuildContext context,required String patientId,String? filePath,String? fileName,required String name,String? relation,String? gender, String? blood,required String dob,required String email }) async {
      var bearerToken = await flutterSecureStorage.read(key: "BEARERTOKEN");
     dio.options.headers["authorization"] = "Bearer $bearerToken";
     
     FormData data = FormData.fromMap({
+      "patientid" : patientId,
       "name" :name,
       "relation" : relation,
       "gender" : gender,

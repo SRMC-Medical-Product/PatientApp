@@ -15,7 +15,6 @@ import 'package:patientapp/screens/profile/appointmenthistory.dart';
 import 'package:patientapp/screens/profile/familymembers.dart';
 import 'package:patientapp/screens/profile/personaldata.dart';
 import 'package:patientapp/screens/profile/profilepage.dart';
-import 'package:patientapp/screens/profile/updatemembers.dart';
 import 'package:patientapp/screens/search/appointmentbook.dart';
 import 'package:patientapp/screens/search/appointmentconfirmation.dart';
 import 'package:patientapp/screens/search/doctordisplay.dart';
@@ -62,7 +61,7 @@ class MyApp extends StatelessWidget {
         NotificationPage.routeName : (context) => const NotificationPage(), // Path :  /notificationpage
 
         //Profile Page Screen
-        PersonalDataPage.routeName : (context) => const PersonalDataPage(), // Path :  /personaldata
+        PersonalDataPage.routeName : (context) => const PersonalDataPage(patientId: "",), // Path :  /personaldata
 
         //Search Page
         DynamicSearchPage.routeName : (context) => const DynamicSearchPage(), // Path :  /dynamicsearchpage
@@ -78,7 +77,6 @@ class MyApp extends StatelessWidget {
 
         //Add New Member Screen
         AddNewMemberPage.routeName : (context) => const AddNewMemberPage(), // Path :  /addnewmemberpage
-        EditFamilyMembersPage.routeName : (context) => const EditFamilyMembersPage(), // Path :  /editfamilymemberspage
         AllFamilyMembersPage.routeName : (context) => const AllFamilyMembersPage(), // Path :  /allfamilymemberspage
 
         //Medical Records
