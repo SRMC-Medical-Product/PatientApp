@@ -396,6 +396,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                         width: size.width,
                         height: size.height,
                         child: Center(child: customCircularProgress()));
+           
             },
           )
         ),

@@ -4,6 +4,7 @@ import 'package:patientapp/apis/profilescreenapi.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/auth/info.dart';
 import 'package:patientapp/screens/home/notification.dart';
+import 'package:patientapp/screens/home/raisedissues.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
 import 'package:patientapp/screens/profile/familymembers.dart';
 import 'package:patientapp/screens/profile/personaldata.dart';
@@ -164,7 +165,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           profileTiles(
                               title: "Raised Issues",
                               icon: Icons.report_problem_outlined,
-                              onTap: () {}),
+                              onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const RasisedIssues(), routeName: raisedissuespage))
+                              ),
 
                           profileTiles(
                               title: "Help & Support",

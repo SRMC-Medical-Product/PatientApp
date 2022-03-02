@@ -22,3 +22,4 @@ const String medicalfilespage = '/medicalfilespage';
 const String loginpage = '/loginpage';
 const String registerpage = '/registerpage';
 const String otppage = '/otppage';
+const String raisedissuespage = '/raisedissuespage';
