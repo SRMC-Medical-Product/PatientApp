@@ -129,7 +129,7 @@ Widget smallCustomSizedBox(context) {
 
 /* ---------------To check if the value is null or empty--------------------------------*/
 isEmptyOrNull(var x) {
-  if ((x.toString().isEmpty) || (x == null)) {
+  if ((x.toString().isEmpty) || (x == null) || (x.toString() == "null")) {
     return true;
   } else {
     return false;

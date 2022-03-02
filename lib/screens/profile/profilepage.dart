@@ -3,6 +3,7 @@ import 'package:patientapp/apis/authapi.dart';
 import 'package:patientapp/apis/profilescreenapi.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/auth/info.dart';
+import 'package:patientapp/screens/home/notification.dart';
 import 'package:patientapp/screens/profile/appointmenthistory.dart';
 import 'package:patientapp/screens/profile/familymembers.dart';
 import 'package:patientapp/screens/profile/personaldata.dart';
@@ -87,6 +88,8 @@ Row(
                   profileTiles(title: "Personal Data", icon: Icons.person,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const PersonalDataPage(), routeName: personaldatapage))),
                   profileTiles(title: "Appointments History",icon: Icons.history,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const AppointmentHistoryPage(), routeName: appointmenthistorypage))),
                   profileTiles(title: "Family Members", icon:Icons.family_restroom_outlined,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const AllFamilyMembersPage(), routeName: allfamilymemberspage))),
+                  profileTiles(title: "Notifications", icon:Icons.notifications_active,onTap: () => Navigator.of(context).push(CustomRightPageRoute(page: const NotificationPage(), routeName: notificationpage))),
+                  profileTiles(title: "Raised Issues", icon:Icons.report_problem_outlined,onTap: () {}),
                   profileTiles(title: "Help & Support", icon:Icons.help,onTap: (){}),
                   profileTiles(title: "Terms & Conditions", icon: Icons.rule_sharp,onTap: (){}),
                   profileTiles(title: "Logout", icon:Icons.logout,
@@ -118,16 +121,16 @@ Row(
                 ],
               );
            
-   } 
-    else if (snapshot.hasError) {
-                                  return defaultErrordialog(
-                                      context: context,
-                                      errorCode: ES_0060,
-                                      message:
-                                          "Something went wrong.Try again Later");
-                                }
-                                return SizedBox( 
-                                    child: Center(child: linearLoader()));
+   } else if (snapshot.hasError) {
+                      return defaultErrordialog(
+                          context: context,
+                          errorCode: ES_0060,
+                          message: "Something went wrong.Try again Later");
+                    }
+                    return SizedBox(
+                        width: size.width,
+                        height: size.height,
+                        child: Center(child: customCircularProgress()));
    }
           ),
           

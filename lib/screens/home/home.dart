@@ -32,6 +32,12 @@ class _HomePageState extends State<HomePage> {
     return await HomeScreenAPI().getHomeScreen(context: context);
   }
 
+  Future<void> _getRefreshedHomeScreenData() async {
+    setState(() {
+      _homeScreenFuture = _getHomeScreenData();
+    });
+  }
+
  @override
   Widget build(BuildContext context) {
     var size = sizeMedia(context);
@@ -80,342 +86,113 @@ class _HomePageState extends State<HomePage> {
                             ? 280
                             : 290;
 
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: FutureBuilder(
-        future : _homeScreenFuture,
-        builder: (BuildContext context , AsyncSnapshot snapshot) {
-          if(snapshot.hasData) {
-
-            Map<dynamic , dynamic > firstcarousel = snapshot.data['firstcarousel'];
-            Map<dynamic , dynamic > lastcarousel = snapshot.data['lastcarousel'];
-            Map<dynamic , dynamic > slider = snapshot.data['slider'];
-            Map<dynamic , dynamic > categoryspecialist = snapshot.data['categoryspecialist'];
-            Map<dynamic , dynamic > promotiondeparts = snapshot.data['promotiondeparts'];
-            Map<dynamic , dynamic > upcomingappointments = snapshot.data['upcomingappointments'];
-            Map<dynamic , dynamic > endcontent = snapshot.data['endcontent'];
-            Map<dynamic , dynamic > userprofile = snapshot.data['user'];
-            
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              // top bar
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  //Top Bar with name and notification icon
-                  Container(
-                    height: isMobile(context) ? 90 : 120,
-                    width: size.width,
-                    padding: EdgeInsets.only(
-                        left: kScreenMarginHorizontal(context),
-                        right: kScreenMarginHorizontal(context),
-                        top: 15),
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Hello", style: mediumTextStyle(context)),
-                                  Text(isEmptyOrNull(userprofile['name']) ? "" : "${userprofile['name']}",
-                                    style: largeTextStyle(context),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: true,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => Navigator.push(
-                                  context,
-                                  CustomRightPageRoute(
-                                      page: const NotificationPage(),
-                                      routeName: notificationpage)),
-                              child: Container(
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  color: kWhiteSmoke,
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: const Icon(Icons.notifications, color: kDimGray),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  //Search Bar
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isMobile(context) ? 14 : 17,
-                    ),
-                    child: StaticSearch(
-                      radius: 5.0,
-                      onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const DynamicSearchPage(),routeName: dynamicsearch)),
-                      searchHint: "Search doctors and specialisation",
-                    ),
-                  ),
-                ],
-              ),
-              /*----------start promotional and ui box --------------*/
-              //promotion Box
-              mediumCustomSizedBox(context),
-              SinglePromotionBox(
-                  imgUrl: "${firstcarousel['img']}"
-                  ),
-                  mediumCustomSizedBox(context),
-
-              /*----------end promotional and ui box --------------*/
-
-              /*----------start appointments box --------------*/
-              //Appointments Today
-              Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: kDefaultScreenPaddingHorizontal(context),
-                    vertical: kDefaultScreenPaddingVertical(context)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                        child: rowTitleText(
-                          onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const AppointmentController(), routeName: appointmentcontroller)),
-                            context: context,
-                            isCapitalFont: true,
-                            text: "Upcoming Appointments",
-                            isViewAll: true)),
-                    mediumCustomSizedBox(context),
-
-                    ///If no appointments are available,then use this
-                    upcomingappointments['isempty'] == true
-                        ? Container(
-                            height: 110,
-                            width: size.width,
-                            padding: const EdgeInsets.all(15),
-                            decoration: const BoxDecoration(
-                                color: kSecondaryColor,
-                                border: Border(
-                                  left: BorderSide(width: 2, color: kPrimaryColor),
-                                )),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("No appointments for today",
-                                          style: mediumLargeTextStyle(context).copyWith(color: kPrimaryColor,fontSize: isMobile(context) ? 18.0 : 21.0,)),
-                                      Text("Book an appointment now",
-                                          style: mediumTextStyle(context).copyWith(
-                                              color: kDimGray,
-                                              fontFamily: kMuktaRegular)),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-
-                        ///If appointments are available,then use this
-                        : customListAppointmentCard(context: context , appointment : upcomingappointments['appointments'] ),
-                    mediumCustomSizedBox(context),
-                  ],
-                ),
-              ),
-              /*----------end appointments box --------------*/
-              /*----------start Our Categories Services UI Part --------------*/
-              if(categoryspecialist['isempty'] == false) Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: kDefaultScreenPaddingHorizontal(context),
-                      vertical: kDefaultScreenPaddingVertical(context)),
-                  child: rowTitleText(
-                    onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const AppScreenController(indexScreen: 1,), routeName: appcontroller)),
-                    isCapitalFont: true,
-                      context: context, text: "${categoryspecialist['title']}".toUpperCase(), isViewAll: true)),
-
-              if(categoryspecialist['categories_1'].length != 0)
-                serviceSlider(isBorder: true, servicedata: categoryspecialist['categories_1']),
+    return RefreshIndicator(
+      onRefresh: _getRefreshedHomeScreenData,
+          color: kPrimaryColor,
+    strokeWidth: 3,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: FutureBuilder(
+          future : _homeScreenFuture,
+          builder: (BuildContext context , AsyncSnapshot snapshot) {
+            if(snapshot.hasData) {
+    
+              Map<dynamic , dynamic > firstcarousel = snapshot.data['firstcarousel'];
+              Map<dynamic , dynamic > lastcarousel = snapshot.data['lastcarousel'];
+              Map<dynamic , dynamic > slider = snapshot.data['slider'];
+              Map<dynamic , dynamic > categoryspecialist = snapshot.data['categoryspecialist'];
+              Map<dynamic , dynamic > promotiondeparts = snapshot.data['promotiondeparts'];
+              Map<dynamic , dynamic > upcomingappointments = snapshot.data['upcomingappointments'];
+              Map<dynamic , dynamic > endcontent = snapshot.data['endcontent'];
+              Map<dynamic , dynamic > userprofile = snapshot.data['user'];
               
-              mediumCustomSizedBox(context),
-              if(categoryspecialist['categories_2'].length != 0) 
-                serviceSlider(isBorder: true, servicedata: categoryspecialist['categories_2']),
-             
-              /*----------end Our Our Categories Services UI Part --------------*/
-
-              /*----------start slider carousel box --------------*/
-              smallCustomSizedBox(context), 
-              ///Slider 
-              if(slider['isempty'] == false) Container(
-                width: size.width,
-                height:
-                    carouselHgt, //isMobile(context) ? size.width / 3.6 : size.width / 3.2,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-
-                child: Column(
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // top bar
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    //kSmallDivider(context),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: kDefaultScreenPaddingHorizontal(context),
-                          vertical: kDefaultScreenPaddingVertical(context)
-                          ),
-                      child: Text(
-                          "${slider['title']}".toUpperCase(),
-                          style: mediumLargeTextStyle(context).copyWith(
-                              letterSpacing: 0.15,
-                              fontWeight : FontWeight.bold,
-                              fontFamily: kMuktaBold),
-                        ),
-                    ),
-
-                    ///Carousel Scrolling Content
-                    SizedBox(
-                      height: cardHeight,
-                      child: ListView.builder(
-                        itemCount: slider['content'].length,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int i) {
-                          //Card
-                          return Container(
-                            padding: EdgeInsets.only(
-                                left: i == 0
-                                    ? kDefaultScreenPaddingHorizontal(context)
-                                    : 8.0,
-                                right: i == 3
-                                    ? kDefaultScreenPaddingHorizontal(context)
-                                    : 0.0),
-                            width: cardWidth,
-                            margin: EdgeInsets.symmetric(
-                                vertical: isMobile(context) ? 8 : 12,
-                                horizontal: 5),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(7),
-                              child: Image.network(
-                               isEmptyOrNull(slider['content'][i]['img']) 
-                               ? "https://cdn.dribbble.com/users/2367860/screenshots/16934707/media/0ae295f6cb8a218edca4a3efa46a2a7c.png?compress=1&resize=1200x900&vertical=top"
-                               : "${slider['content'][i]['img']}", 
-                               fit: BoxFit.cover,
-                                width: size.width,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    //mediumCustomSizedBox(context),
-                    //kSmallDivider(context),
-                  ],
-                ),
-              ),
-              /*----------end carousel box --------------*/
-
-              /*----------start Our Prokmotional Services UI Part --------------*/ 
-              if(promotiondeparts['isempty'] == false) ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: promotiondeparts['depts'].length,
-                itemBuilder: (BuildContext context, int i){
-                  return (promotiondeparts['depts'][i]['departments'].length > 0) ? scrollContentsTitle(
-                    title: promotiondeparts['depts'][i]['title'],
-                    promotiondata: promotiondeparts['depts'][i]['departments'])
-                    : Container();
-                },
-              ),
-             
-                /*----------end Our Prokmotional Services UI Part --------------*/
-
-              /*----------start second promoitons box --------------*/
-              ///Second Promotions Box
-              mediumCustomSizedBox(context),
-              Container(
-                width: size.width,
-                height: isMobile(context) ? size.height / 4.3 : size.height / 3.9,
-                margin: EdgeInsets.symmetric(
-                    horizontal: kDefaultScreenPaddingHorizontal(context),
-                    vertical: kDefaultScreenPaddingVertical(context)),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                             "${lastcarousel['img']}"
-                            ))),
-              ),
-              mediumCustomSizedBox(context),
-              /*----------end second promoitons box --------------*/
-
-              /*----------start end details box --------------*/
-              ///End Details Box
-              Container(
-                width: size.width,
-                decoration: const BoxDecoration(
-                  color: kSecondaryColor,
-                ),
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: kDefaultScreenPaddingHorizontal(context),
-                      vertical: kDefaultScreenPaddingVertical(context)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      mediumCustomSizedBox(context),
-                      mediumCustomSizedBox(context),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //Top Bar with name and notification icon
+                    Container(
+                      height: isMobile(context) ? 90 : 120,
+                      width: size.width,
+                      padding: EdgeInsets.only(
+                          left: kScreenMarginHorizontal(context),
+                          right: kScreenMarginHorizontal(context),
+                          top: 15),
+                      child: Column(
                         children: [
-                          verticialIconText(
-                              text: "${endcontent['building']}", icon: FontAwesomeIcons.hospitalAlt),
-                          verticialIconText(
-                              text: "${endcontent['doctors']}", icon: FontAwesomeIcons.userMd),
-                          verticialIconText(text: "${endcontent['patients']}", icon: Icons.person),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Hello", style: mediumTextStyle(context)),
+                                    Text(isEmptyOrNull(userprofile['name']) ? "" : "${userprofile['name']}",
+                                      style: largeTextStyle(context),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: true,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () => Navigator.push(
+                                    context,
+                                    CustomRightPageRoute(
+                                        page: const NotificationPage(),
+                                        routeName: notificationpage)),
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    color: kWhiteSmoke,
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: const Icon(Icons.notifications, color: kDimGray),
+                                ),
+                              )
+                            ],
+                          ),
                         ],
                       ),
-                      mediumCustomSizedBox(context),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: kDefaultScreenPaddingHorizontal(context),
-                            vertical: kDefaultScreenPaddingVertical(context)),
-                        child: Text("${endcontent['content']}",
-                          softWrap: true,
-                          textAlign: TextAlign.center,
-                          style: mediumTextStyle(context)
-                              .copyWith(color: kPrimaryColor, wordSpacing: 0.5),
-                        ),
+                    ),
+    
+                    //Search Bar
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isMobile(context) ? 14 : 17,
                       ),
-                    ],
-                  ),
+                      child: StaticSearch(
+                        radius: 5.0,
+                        onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const DynamicSearchPage(),routeName: dynamicsearch)),
+                        searchHint: "Search doctors and specialisation",
+                      ),
+                    ),
+                  ],
                 ),
-              )
-              /*----------end end details box --------------*/
-
-              /*----------start daily updates box --------------*/
-              //Daily updates
-              /*
-              Container(
+                /*----------start promotional and ui box --------------*/
+                //promotion Box
+                mediumCustomSizedBox(context),
+                SinglePromotionBox(
+                    imgUrl: "${firstcarousel['img']}"
+                    ),
+                    mediumCustomSizedBox(context),
+    
+                /*----------end promotional and ui box --------------*/
+    
+                /*----------start appointments box --------------*/
+                //Appointments Today
+                Container(
                   margin: EdgeInsets.symmetric(
                       horizontal: kDefaultScreenPaddingHorizontal(context),
                       vertical: kDefaultScreenPaddingVertical(context)),
@@ -423,84 +200,318 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      titleText(
-                          context: context,
-                          text: "Daily updates",
-                          color: Colors.black.withOpacity(0.7)),
+                      Container(
+                          child: rowTitleText(
+                            onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const AppointmentController(), routeName: appointmentcontroller)),
+                              context: context,
+                              isCapitalFont: true,
+                              text: "Upcoming Appointments",
+                              isViewAll: true)),
                       mediumCustomSizedBox(context),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 3,
-                        itemBuilder: (BuildContext context, int i) {
-                          return Container(
-                            height: isMobile(context) ? 120 : 140,
-                            width: size.width,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: isMobile(context) ? 100 : 120,
-                                  height: isMobile(context) ? 100 : 120,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(2.0),
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          "https://cdn.dribbble.com/users/606683/screenshots/3978222/news_app_concept.png"),
+    
+                      ///If no appointments are available,then use this
+                      upcomingappointments['isempty'] == true
+                          ? Container(
+                              height: 110,
+                              width: size.width,
+                              padding: const EdgeInsets.all(15),
+                              decoration: const BoxDecoration(
+                                  color: kSecondaryColor,
+                                  border: Border(
+                                    left: BorderSide(width: 2, color: kPrimaryColor),
+                                  )),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("No appointments for today",
+                                            style: mediumLargeTextStyle(context).copyWith(color: kPrimaryColor,fontSize: isMobile(context) ? 18.0 : 21.0,)),
+                                        Text("Book an appointment now",
+                                            style: mediumTextStyle(context).copyWith(
+                                                color: kDimGray,
+                                                fontFamily: kMuktaRegular)),
+                                      ],
                                     ),
                                   ),
-                                ),
-                                RotatedBox(
-                                  quarterTurns: 1,
-                                  child: mediumCustomSizedBox(context),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "News UI designs, themes, templates and downloadable I designs, themes, templates and downloadable ",
-                                        style: mediumTextStyle(context),
-                                        maxLines: 2,
-                                        softWrap: true,
-                                        overflow: TextOverflow.clip,
-                                      ),
-                                      smallCustomSizedBox(context),
-                                      Text(
-                                        '''News App UI Inspirational designs, illustrations, and graphic elements from the world’s best designers. Want more inspiration? Browse our search results... View News iOS mobile app. News''',
-                                        style: smallTextStyle(context),
-                                        maxLines: 2,
-                                        softWrap: true,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      )
+                                ],
+                              ),
+                            )
+    
+                          ///If appointments are available,then use this
+                          : customListAppointmentCard(context: context , appointment : upcomingappointments['appointments'] ),
+                      mediumCustomSizedBox(context),
                     ],
-                  )),
-              */
-              /*----------end daily updates box --------------*/
-            ],
-          );
-        }else if (snapshot.hasError) {
-                    return defaultErrordialog(
-                        context: context,
-                        errorCode: ES_0060,
-                        message: "Something went wrong.Try again Later");
-                  }
-                  return SizedBox(
-                      width: size.width,
-                      height: size.height,
-                      child: Center(child: customCircularProgress()));
-        }
+                  ),
+                ),
+                /*----------end appointments box --------------*/
+                /*----------start Our Categories Services UI Part --------------*/
+                if(categoryspecialist['isempty'] == false) Container(
+                    margin: EdgeInsets.symmetric(
+                        horizontal: kDefaultScreenPaddingHorizontal(context),
+                        vertical: kDefaultScreenPaddingVertical(context)),
+                    child: rowTitleText(
+                      onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const AppScreenController(indexScreen: 1,), routeName: appcontroller)),
+                      isCapitalFont: true,
+                        context: context, text: "${categoryspecialist['title']}".toUpperCase(), isViewAll: true)),
+    
+                if(categoryspecialist['categories_1'].length != 0)
+                  serviceSlider(isBorder: true, servicedata: categoryspecialist['categories_1']),
+                
+                mediumCustomSizedBox(context),
+                if(categoryspecialist['categories_2'].length != 0) 
+                  serviceSlider(isBorder: true, servicedata: categoryspecialist['categories_2']),
+               
+                /*----------end Our Our Categories Services UI Part --------------*/
+    
+                /*----------start slider carousel box --------------*/
+                smallCustomSizedBox(context), 
+                ///Slider 
+                if(slider['isempty'] == false) Container(
+                  width: size.width,
+                  height:
+                      carouselHgt, //isMobile(context) ? size.width / 3.6 : size.width / 3.2,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+    
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      //kSmallDivider(context),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: kDefaultScreenPaddingHorizontal(context),
+                            vertical: kDefaultScreenPaddingVertical(context)
+                            ),
+                        child: Text(
+                            "${slider['title']}".toUpperCase(),
+                            style: mediumLargeTextStyle(context).copyWith(
+                                letterSpacing: 0.15,
+                                fontWeight : FontWeight.bold,
+                                fontFamily: kMuktaBold),
+                          ),
+                      ),
+    
+                      ///Carousel Scrolling Content
+                      SizedBox(
+                        height: cardHeight,
+                        child: ListView.builder(
+                          itemCount: slider['content'].length,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          itemBuilder: (BuildContext context, int i) {
+                            //Card
+                            return Container(
+                              padding: EdgeInsets.only(
+                                  left: i == 0
+                                      ? kDefaultScreenPaddingHorizontal(context)
+                                      : 8.0,
+                                  right: i == 3
+                                      ? kDefaultScreenPaddingHorizontal(context)
+                                      : 0.0),
+                              width: cardWidth,
+                              margin: EdgeInsets.symmetric(
+                                  vertical: isMobile(context) ? 8 : 12,
+                                  horizontal: 5),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(7),
+                                child: Image.network(
+                                 isEmptyOrNull(slider['content'][i]['img']) 
+                                 ? "https://cdn.dribbble.com/users/2367860/screenshots/16934707/media/0ae295f6cb8a218edca4a3efa46a2a7c.png?compress=1&resize=1200x900&vertical=top"
+                                 : "${slider['content'][i]['img']}", 
+                                 fit: BoxFit.cover,
+                                  width: size.width,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      //mediumCustomSizedBox(context),
+                      //kSmallDivider(context),
+                    ],
+                  ),
+                ),
+                /*----------end carousel box --------------*/
+    
+                /*----------start Our Prokmotional Services UI Part --------------*/ 
+                if(promotiondeparts['isempty'] == false) ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: promotiondeparts['depts'].length,
+                  itemBuilder: (BuildContext context, int i){
+                    return (promotiondeparts['depts'][i]['departments'].length > 0) ? scrollContentsTitle(
+                      title: promotiondeparts['depts'][i]['title'],
+                      promotiondata: promotiondeparts['depts'][i]['departments'])
+                      : Container();
+                  },
+                ),
+               
+                  /*----------end Our Prokmotional Services UI Part --------------*/
+    
+                /*----------start second promoitons box --------------*/
+                ///Second Promotions Box
+                mediumCustomSizedBox(context),
+                Container(
+                  width: size.width,
+                  height: isMobile(context) ? size.height / 4.3 : size.height / 3.9,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: kDefaultScreenPaddingHorizontal(context),
+                      vertical: kDefaultScreenPaddingVertical(context)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                               "${lastcarousel['img']}"
+                              ))),
+                ),
+                mediumCustomSizedBox(context),
+                /*----------end second promoitons box --------------*/
+    
+                /*----------start end details box --------------*/
+                ///End Details Box
+                Container(
+                  width: size.width,
+                  decoration: const BoxDecoration(
+                    color: kSecondaryColor,
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(
+                        horizontal: kDefaultScreenPaddingHorizontal(context),
+                        vertical: kDefaultScreenPaddingVertical(context)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        mediumCustomSizedBox(context),
+                        mediumCustomSizedBox(context),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            verticialIconText(
+                                text: "${endcontent['building']}", icon: FontAwesomeIcons.hospitalAlt),
+                            verticialIconText(
+                                text: "${endcontent['doctors']}", icon: FontAwesomeIcons.userMd),
+                            verticialIconText(text: "${endcontent['patients']}", icon: Icons.person),
+                          ],
+                        ),
+                        mediumCustomSizedBox(context),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: kDefaultScreenPaddingHorizontal(context),
+                              vertical: kDefaultScreenPaddingVertical(context)),
+                          child: Text("${endcontent['content']}",
+                            softWrap: true,
+                            textAlign: TextAlign.center,
+                            style: mediumTextStyle(context)
+                                .copyWith(color: kPrimaryColor, wordSpacing: 0.5),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+                /*----------end end details box --------------*/
+    
+                /*----------start daily updates box --------------*/
+                //Daily updates
+                /*
+                Container(
+                    margin: EdgeInsets.symmetric(
+                        horizontal: kDefaultScreenPaddingHorizontal(context),
+                        vertical: kDefaultScreenPaddingVertical(context)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        titleText(
+                            context: context,
+                            text: "Daily updates",
+                            color: Colors.black.withOpacity(0.7)),
+                        mediumCustomSizedBox(context),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 3,
+                          itemBuilder: (BuildContext context, int i) {
+                            return Container(
+                              height: isMobile(context) ? 120 : 140,
+                              width: size.width,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: isMobile(context) ? 100 : 120,
+                                    height: isMobile(context) ? 100 : 120,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(2.0),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                            "https://cdn.dribbble.com/users/606683/screenshots/3978222/news_app_concept.png"),
+                                      ),
+                                    ),
+                                  ),
+                                  RotatedBox(
+                                    quarterTurns: 1,
+                                    child: mediumCustomSizedBox(context),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "News UI designs, themes, templates and downloadable I designs, themes, templates and downloadable ",
+                                          style: mediumTextStyle(context),
+                                          maxLines: 2,
+                                          softWrap: true,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        smallCustomSizedBox(context),
+                                        Text(
+                                          '''News App UI Inspirational designs, illustrations, and graphic elements from the world’s best designers. Want more inspiration? Browse our search results... View News iOS mobile app. News''',
+                                          style: smallTextStyle(context),
+                                          maxLines: 2,
+                                          softWrap: true,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        )
+                      ],
+                    )),
+                */
+                /*----------end daily updates box --------------*/
+              ],
+            );
+          }else if (snapshot.hasError) {
+                      return defaultErrordialog(
+                          context: context,
+                          errorCode: ES_0060,
+                          message: "Something went wrong.Try again Later");
+                    }
+                    return SizedBox(
+                        width: size.width,
+                        height: size.height,
+                        child: Center(child: customCircularProgress()));
+          }
+        ),
       ),
     );
   }

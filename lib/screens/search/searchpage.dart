@@ -1,3 +1,4 @@
+import 'package:patientapp/apis/searchscreenapi.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
 import 'package:patientapp/screens/search/dynamicsearchpage.dart';
@@ -11,13 +12,21 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+
+  Future? _searchFuture;
+
   bool isAllCategory = false;
-  //For TEsting
-  int categoriesLength = 16;
+
+  final SearchAPI _searchAPI = SearchAPI();
 
   @override
   void initState() {
     super.initState();
+    _searchFuture = _fetchAllCategories();
+  }
+
+  _fetchAllCategories() async {
+    return await _searchAPI.getAllCategories(context: context); 
   }
 
   @override
@@ -41,7 +50,13 @@ class _SearchPageState extends State<SearchPage> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
+          child: FutureBuilder(
+            future: _searchFuture,
+            builder: (BuildContext context, AsyncSnapshot snapshot){
+              if(snapshot.hasData){
+                Map<dynamic , dynamic > departments = snapshot.data['departments'];
+                Map<dynamic , dynamic > specialist = snapshot.data['specialist'];
+                return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -63,7 +78,7 @@ class _SearchPageState extends State<SearchPage> {
               /*-------end of search bar -------*/
 
               /*-------start of all specialisations -------*/
-              Container(
+              if(departments['isempty'] == false) Container(
                 margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),
                     vertical: kDefaultScreenPaddingVertical(context)),
@@ -73,7 +88,7 @@ class _SearchPageState extends State<SearchPage> {
                   children: [
                     mediumTitleText(
                         context: context,
-                        text: "Know your specialitist",
+                        text: "${departments['title']}",
                         color: Colors.black),
                     mediumCustomSizedBox(context),
 
@@ -98,11 +113,11 @@ class _SearchPageState extends State<SearchPage> {
                                             : 6,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10),
-                        itemCount:  categoriesLength > 8
+                        itemCount:  departments['content'].length > 8
                             ? (isAllCategory
-                                ? categoriesLength //Full length of the list
+                                ? departments['content'].length //Full length of the list
                                 : (isMobile(context) ? 8 : 12))
-                            : categoriesLength,
+                            : departments['content'].length,
                         itemBuilder: (BuildContext context, int i) {
                           return GestureDetector(
                             onTap: () {},
@@ -111,7 +126,7 @@ class _SearchPageState extends State<SearchPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.network(
-                                  "https://cdn1.iconfinder.com/data/icons/medical-specialties-2-3/380/Pediatrics-512.png",
+                                  isEmptyOrNull(departments['content'][i]['img']) ? CATEGORY_DEFAULT_IMAGE : "${departments['content'][i]['img']}",
                                   fit: BoxFit.fill,
                                   height: imgDimension,
                                   width: imgDimension,
@@ -120,7 +135,7 @@ class _SearchPageState extends State<SearchPage> {
                                   padding: EdgeInsets.only(
                                       top: isMobile(context) ? 4 : 7),
                                   child: Text(
-                                      "Child care",
+                                      isEmptyOrNull(departments['content'][i]['name']) ? "Specials" :  "${departments['content'][i]['name']}",
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
                                       overflow: TextOverflow.clip,
@@ -134,7 +149,7 @@ class _SearchPageState extends State<SearchPage> {
                     mediumCustomSizedBox(context),
                     mediumCustomSizedBox(context),
                     //See all Specialistion Button
-                    if (categoriesLength > 8)
+                    if (departments['content'].length  > 8)
                     GestureDetector(
                       onTap: () => setState(() {
                         isAllCategory = !isAllCategory;
@@ -163,7 +178,7 @@ class _SearchPageState extends State<SearchPage> {
               mediumCustomSizedBox(context),
 
               /*-------start of all specialisations -------*/
-              Container(
+              if(specialist['isempty'] == false) Container(
                 margin: EdgeInsets.symmetric(
                     horizontal: kDefaultScreenPaddingHorizontal(context),
                     vertical: kDefaultScreenPaddingVertical(context)),
@@ -173,7 +188,7 @@ class _SearchPageState extends State<SearchPage> {
                   children: [
                     mediumTitleText(
                         context: context,
-                        text: "Search by specialist",
+                        text: "${specialist['title']}",
                         color: Colors.black),
                     mediumCustomSizedBox(context),
 
@@ -198,7 +213,7 @@ class _SearchPageState extends State<SearchPage> {
                                             : 6,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10),
-                        itemCount: 10,
+                        itemCount: specialist['content'].length,
                         itemBuilder: (BuildContext context, int i) {
                           return GestureDetector(
                             onTap: () {},
@@ -207,7 +222,7 @@ class _SearchPageState extends State<SearchPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.network(
-                                  "https://img.icons8.com/external-filled-outline-satawat-anukul/344/external-medical-medical-filled-outline-filled-outline-satawat-anukul-50.png",
+                                  isEmptyOrNull(specialist['content'][i]['img']) ? DEPT_DEFAULT_IMG : "${specialist['content'][i]['img']}",
                                   fit: BoxFit.fill,
                                   height: imgDimension,
                                   width: imgDimension,
@@ -215,7 +230,8 @@ class _SearchPageState extends State<SearchPage> {
                                 Padding(
                                   padding: EdgeInsets.only(
                                       top: isMobile(context) ? 4 : 7),
-                                  child: Text("Cardiologist",
+                                  child: Text(
+                                    isEmptyOrNull(specialist['content'][i]['name']) ? DEPT_DEFAULT_IMG : "${specialist['content'][i]['name']}",
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
                                       overflow: TextOverflow.clip,
@@ -234,7 +250,19 @@ class _SearchPageState extends State<SearchPage> {
               )
               /*-------End of all specialisations -------*/
             ],
-          ),
+          );
+              } else if (snapshot.hasError) {
+                    return defaultErrordialog(
+                        context: context,
+                        errorCode: ES_0060,
+                        message: "Something went wrong.Try again Later");
+                  }
+                  return SizedBox(
+                      width: size.width,
+                      height: size.height,
+                      child: Center(child: customCircularProgress()));             
+            },
+          )
         ),
       ),
     );

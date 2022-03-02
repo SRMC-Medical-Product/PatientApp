@@ -152,7 +152,8 @@ Widget customAppointmentCard({required BuildContext context,Color? borderClr,req
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                          isEmptyOrNull(doctorImg)  ? DOCTOR_DEFAULT_IMG :  doctorImg))
+                          isEmptyOrNull(doctorImg)  ? DOCTOR_DEFAULT_IMG :  doctorImg
+                          ))
                             ),
               ),
               Expanded(

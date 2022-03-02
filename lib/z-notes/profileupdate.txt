@@ -49,6 +49,46 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     'NA'
   ];
 
+  //Initial Selected Value for Relation
+  String? relationDropDownValue;
+  var relationDropDownItems = [
+    'User',
+    'Father',
+    'Mother',
+    'Brother',
+    'Sister',
+    'Uncle',
+    'Aunt',
+    'Grandfather',
+    'Grandmother',
+    'Other'
+  ];
+
+  // String? _image;
+  // final ImagePicker _picker = ImagePicker();
+
+  // List<XFile>? _imageFileList;
+
+  // set _imageFile(XFile? value) {
+  //   _imageFileList = value == null ? null : <XFile>[value];
+  // }
+
+  // getPhotoProfile()async{
+  //   ///TODO : Add permission setup
+  //   final XFile?  _pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+  //   // if(pickedFile != null){
+  //   //   setState(() {
+  //   //     _profileFuture = _profileScreenApi.uploadProfilePicture(pickedFile.path);
+  //   //   });
+  //   // }
+  //     try {
+  //     setState(() {
+  //       _imageFile = _pickedFile;
+  //     });
+  //   } catch (e) {
+  //     print("Error raised at Image : $e ");
+  //   }
+  // }
 
  XFile? imageFile;
   //  final ImagePicker _picker = ImagePicker();
@@ -76,8 +116,8 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
       return await _profileScreenApi.getProfile(context: context);
     }
 
-    _putProfileUpdate({required String name,required String dob, required String email,String? blood,String? gender,String? relation,String? filePath,String? fileName}) async{
-      return await _profileScreenApi.putProfile(context: context, name: name, dob: dob, email: email,blood: blood,gender: gender,relation: relation,fileName: fileName,filePath:filePath);
+    _putProfileUpdate({required String name,required String dob, required String email,String? blood,String? gender,String? relation,String? profileImg }) async{
+      return await _profileScreenApi.putProfile(context: context, name: name, dob: dob, email: email,blood: blood,gender: gender,relation: relation,profileImg: profileImg);
     }
 
 
@@ -111,8 +151,15 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                       if(snapshot.data['profile']['blood'] != null){
                         bloodGroupValue = snapshot.data['profile']['blood'];
                       }
+                      if(snapshot.data['profile']['relation'] != null){
+                        relationDropDownValue = snapshot.data['profile']['relation'];
+                      }
+                      // if(snapshot.data['profile']['img'] != null){
+                      //   _image = snapshot.data['profile']['img'];
+                      // }
                       genderDropDownItems = snapshot.data['gender'].cast<String>();
                       bloodGroupDropDownItems = snapshot.data['blood'].cast<String>();
+                      relationDropDownItems = snapshot.data['relation'].cast<String>();
                }));
                 return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -135,7 +182,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                               File(imageFile!.path),
                               fit: BoxFit.cover,
                             ) : Image.network(
-                              isEmptyOrNull(snapshot.data['profile']['img']) ? PATIENT_DEFAULT_IMG : snapshot.data['profile']['img'].toString(),
+                              isEmptyOrNull(snapshot.data['profile']['profileImg']) ? PATIENT_DEFAULT_IMG : snapshot.data['profile']['profileImg'].toString(),
                               fit: BoxFit.cover,
                             ),
                           //  _imageFileList!.isNotEmpty ? Image.network(
@@ -170,10 +217,6 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                         title: "Patient Id*", initialValue: "${userData['id']}"),
                     personalInfoStaticTitle(
                         title: "Phone Number*", initialValue: "${userData['phone']}"),
- 
-                    //Relation
-                     personalInfoStaticTitle(
-                        title: "Relation*", initialValue: "${userData['relation']}"),
 
                   /*-----Not necessary till now until confirmation of the external sources-----*/       
                 /* 
@@ -328,28 +371,51 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                   
                       ],
                     ),
+ 
+                    //Relation
+                     dropDownMenu(
+                        title: "Relation",
+                        widgetChild: DropdownButtonHideUnderline(
+                          child: ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton(
+                              borderRadius: BorderRadius.circular(5),
+                              style: mediumTextStyle(context),
+                              elevation: 1,
+                                                  
+                              hint: Text("Select",
+                              overflow: TextOverflow.clip,
+                              style: mediumTextStyle(context).copyWith(color: kDarkGray),),
+                              value: relationDropDownValue,
+                              items: relationDropDownItems.map((String items) {
+                                return DropdownMenuItem(
+                                  value: items,
+                                  child: Text(items),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  relationDropDownValue = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
 
                     //Save or update Buttonxt
                     primaryBtn(context: context,  isOutline: false,
                     onTap: ()async{
-                      if(_emailController.text.isNotEmpty){
-                        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(_emailController.text.trim());
-                        if(emailValid){
-                          overlayLoader(context);
+                      overlayLoader(context);
                       _putProfileUpdate(
                         name: _nameController.text.trim(), 
                         dob: _dateController.text.trim(), 
                         email: _emailController.text.trim(),
                         blood: (bloodGroupValue != null || bloodGroupValue != "null" || bloodGroupValue != "") ? bloodGroupValue.toString(): "",
                         gender: (genderDropDownValue != null || genderDropDownValue != "null" || genderDropDownValue != "") ? genderDropDownValue.toString(): "",
-                        relation: "",
-                        fileName: imageFile!.name,
-                        filePath: imageFile!.path ,// (imageFile != null) ? imageFile!.path : "" //(_image != null || _image != "null" || _image != "") ? _image.toString(): "",
+                        relation: (relationDropDownValue != null || relationDropDownValue != "null" || relationDropDownValue != "") ? relationDropDownValue.toString(): "",
+                        profileImg: (imageFile != null) ? imageFile!.path : "" //(_image != null || _image != "null" || _image != "") ? _image.toString(): "",
                         );
-                        }else{
-                          ScaffoldMessenger.of(context).showSnackBar(customsnackErrorBar(context, "Please enter a valid email address"));
-                        }
-                      }
                     }, 
                     btnText: "Update".toUpperCase())
                   ],
