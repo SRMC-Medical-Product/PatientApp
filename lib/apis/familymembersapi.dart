@@ -1,5 +1,6 @@
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:patientapp/helpers/apiheaders.dart';
+import 'package:patientapp/screens/components/appcontroller.dart';
 import 'package:patientapp/screens/profile/familymembers.dart';
 
 class FamilyMembersApi{
@@ -43,7 +44,7 @@ class FamilyMembersApi{
   } 
 
    postFamilyMembers(
-      {required BuildContext context, required String name , required String relation , required String gender , required String blood , required String dob , required String email , required FileImage img , String? aadhar }) async {
+      {required BuildContext context,String? filePath,String? fileName,required String name,required String? relation,String? gender, String? blood,String? dob,String? email }) async {
     FormData data = FormData.fromMap({
       "name": name,
       "relation": relation,
@@ -51,9 +52,10 @@ class FamilyMembersApi{
       "blood": blood,
       "dob": dob,
       "email": email,
-      "img": img,
-      "aadhar": aadhar,
+      "img" : isEmptyOrNull(filePath) != true ? await MultipartFile.fromFile("$filePath", filename: fileName) : "",
+
     });
+
        var bearerToken = await flutterSecureStorage.read(key: "BEARERTOKEN");
     dio.options.headers["authorization"] = "Bearer $bearerToken";
     
@@ -63,10 +65,10 @@ class FamilyMembersApi{
       if (response.statusCode == 200) {
         print(response.data);
         ScaffoldMessenger.of(context).showSnackBar(
-            customSnackSuccessBar(context, "OTP was sent successfully"));
+            customSnackSuccessBar(context, "Family Members Added Successfully"));
         Loader.hide();
-        return Navigator.push(context,
-            CustomSimplePageRoute(page: const AllFamilyMembersPage(), routeName: allfamilymemberspage));
+        return Navigator.pushReplacement(context,
+            CustomSimplePageRoute(page: const AppScreenController(indexScreen: 3),routeName: appcontroller));
       }
     } on DioError catch (e) {
       if (e.response?.statusCode == 400) {

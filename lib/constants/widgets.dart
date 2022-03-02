@@ -459,7 +459,8 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
       required String title,
       required String hintTextField,
       required TextEditingController controller,
-      required TextInputType textInputType}) {
+      required TextInputType textInputType,
+      }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,

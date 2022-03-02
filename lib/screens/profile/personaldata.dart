@@ -73,7 +73,30 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
     }    
 
     _fetchUserProfile() async{
-      return await _profileScreenApi.getProfile(context: context);
+      return await _profileScreenApi.getProfileUpdate(context: context)
+      .then((res) {
+        if(res['profile']['id'].toString().isNotEmpty == true){
+          print("---------------------res---------------------");
+             SchedulerBinding.instance!
+                  .addPostFrameCallback((_) => setState(() {
+          _nameController.text = res['profile']['name'];
+          if(res['profile']['email'] != null){
+          _emailController.text = res['profile']['email'];
+          }
+           if(res['profile']['gender'] != null){
+                        genderDropDownValue = res['profile']['gender'];
+                      }
+                      if(res['profile']['blood'] != null){
+                        bloodGroupValue = res['profile']['blood'];
+                      }
+                      genderDropDownItems = res['gender'].cast<String>();
+                      bloodGroupDropDownItems = res['blood'].cast<String>();
+               }));
+
+        }
+
+      return res;
+      });
     }
 
     _putProfileUpdate({required String name,required String dob, required String email,String? blood,String? gender,String? relation,String? filePath,String? fileName}) async{
@@ -96,24 +119,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
 
               if(snapshot.hasData){
                 Map<dynamic , dynamic > userData = snapshot.data['profile'];
-                 SchedulerBinding.instance!
-                  .addPostFrameCallback((_) => setState(() {
-                      _nameController.text = snapshot.data['profile']['name'];
-                      if(snapshot.data['profile']['email'] != null) {
-                        _emailController.text = snapshot.data['profile']['email'];
-                      }
-                      if(snapshot.data['profile']['dob'] != null) {
-                        _dateController.text = snapshot.data['profile']['dob'];
-                      }
-                      if(snapshot.data['profile']['gender'] != null){
-                        genderDropDownValue = snapshot.data['profile']['gender'];
-                      }
-                      if(snapshot.data['profile']['blood'] != null){
-                        bloodGroupValue = snapshot.data['profile']['blood'];
-                      }
-                      genderDropDownItems = snapshot.data['gender'].cast<String>();
-                      bloodGroupDropDownItems = snapshot.data['blood'].cast<String>();
-               }));
+              
                 return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -183,13 +189,14 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                     personalInfoDynamicTitle(
                       context: context,
                         title: "Patient Name*",
-                        controller: _nameController,
+                        controller: _nameController, //..text = isEmptyOrNull(snapshot.data['profile']['name']) ? "" : "${snapshot.data['profile']['name']}",
                         hintTextField: "Your Name",
-                        textInputType: TextInputType.text),
+                        textInputType: TextInputType.text,
+                        ),
                     personalInfoDynamicTitle(
                       context: context,
                         title: "Email",
-                        controller: _emailController,
+                        controller: _emailController..text = isEmptyOrNull(snapshot.data['profile']['email']) ? "" : "${snapshot.data['profile']['email']}",
                         hintTextField: "Your Email",
                         textInputType: TextInputType.text),
 
@@ -211,7 +218,7 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
             borderRadius: BorderRadius.circular(9),
                               ),
                               child: TextFormField(
-                                controller: _dateController,
+                                controller: _dateController..text = isEmptyOrNull(snapshot.data['profile']['dob']) ? "" : "${snapshot.data['profile']['dob']}",
                                 style: const TextStyle(color: kBlackTextColor, fontSize: 17),
                                 keyboardType: TextInputType.datetime,
                                 cursorColor: kPrimaryColor,
@@ -338,17 +345,29 @@ class _PersonalDataPageState extends State<PersonalDataPage> {
                           overlayLoader(context);
                       _putProfileUpdate(
                         name: _nameController.text.trim(), 
-                        dob: _dateController.text.trim(), 
-                        email: _emailController.text.trim(),
+                        dob: _dateController.text.isEmpty ? "" : _dateController.text.trim(), 
+                        email: _emailController.text.isEmpty ? "" : _emailController.text.trim(),
                         blood: (bloodGroupValue != null || bloodGroupValue != "null" || bloodGroupValue != "") ? bloodGroupValue.toString(): "",
                         gender: (genderDropDownValue != null || genderDropDownValue != "null" || genderDropDownValue != "") ? genderDropDownValue.toString(): "",
                         relation: "",
-                        fileName: imageFile!.name,
-                        filePath: imageFile!.path ,// (imageFile != null) ? imageFile!.path : "" //(_image != null || _image != "null" || _image != "") ? _image.toString(): "",
+                         fileName: isEmptyOrNull(imageFile)  ? null : imageFile?.name.toString() ,
+                        filePath: isEmptyOrNull(imageFile) ? null : imageFile?.path.toString(),
                         );
                         }else{
                           ScaffoldMessenger.of(context).showSnackBar(customsnackErrorBar(context, "Please enter a valid email address"));
                         }
+                      }else{
+                          overlayLoader(context);
+                      _putProfileUpdate(
+                        name: _nameController.text.trim(), 
+                        dob: _dateController.text.isEmpty ? "" : _dateController.text.trim(), 
+                        email: _emailController.text.isEmpty ? "" : _emailController.text.trim(),
+                        blood: (bloodGroupValue != null || bloodGroupValue != "null" || bloodGroupValue != "") ? bloodGroupValue.toString(): "",
+                        gender: (genderDropDownValue != null || genderDropDownValue != "null" || genderDropDownValue != "") ? genderDropDownValue.toString(): "",
+                        relation: "",
+                         fileName: isEmptyOrNull(imageFile)  ? null : imageFile?.name.toString() ,
+                        filePath: isEmptyOrNull(imageFile) ? null : imageFile?.path.toString(),
+                        );
                       }
                     }, 
                     btnText: "Update".toUpperCase())
