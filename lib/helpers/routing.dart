@@ -30,6 +30,7 @@ const String APPOINTMENT_DETAILS_URL = "$BASE_URL/appointment-indetail/";
 
 /*------- All Categories Screen API ------- */
 const String ALL_CATEGORIES_SCREEN_URL = "$BASE_URL/all-categories/";
+const String SEARCH_DOCTORS_URL = "$BASE_URL/search-results/";
 
 /*------- Medical Records API ------- */
 const String FAMILY_MEMBERS_RECORDS_URL = "$BASE_URL/family-medical-records/";

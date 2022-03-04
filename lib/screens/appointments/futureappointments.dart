@@ -48,17 +48,15 @@ class _FutureAppointmentsState extends State<FutureAppointments> {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: liveappointments['appointments'].length,
             itemBuilder: (BuildContext context, int i){
-              return GestureDetector(
-                      onTap: () => Navigator.push(context,CustomRightPageRoute(page: AppointmentsDetailsPage(appointmentId: liveappointments['appointments'][i]['id'].toString(),), routeName: appointmentdetailspage)),
-                      child:customAppointmentCard(
-                        context: context,
-                        appointmentDate: liveappointments['appointments'][i]['date'].toString(),
-                        appointmentTime: liveappointments['appointments'][i]['time'].toString(),
-                        doctorImg: liveappointments['appointments'][i]['img'].toString(),
-                        doctorName: liveappointments['appointments'][i]['name'].toString(),
-                        doctorSpec: liveappointments['appointments'][i]['specialisation'].toString(),
-                        ),
-                    );
+              return customAppointmentCard(
+                context: context,
+                appointmentId: liveappointments['appointments'][i]['id'].toString(),
+                appointmentDate: liveappointments['appointments'][i]['date'].toString(),
+                appointmentTime: liveappointments['appointments'][i]['time'].toString(),
+                doctorImg: liveappointments['appointments'][i]['img'].toString(),
+                doctorName: liveappointments['appointments'][i]['name'].toString(),
+                doctorSpec: liveappointments['appointments'][i]['specialisation'].toString(),
+                );
             },
           ) : isNullIcon( context: context, icon: Icons.notifications_off_outlined, text: 'No appointments for today' );
               }else if (snapshot.hasError) {

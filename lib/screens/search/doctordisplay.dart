@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:patientapp/apis/searchscreenapi.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
@@ -7,7 +8,12 @@ import 'package:patientapp/screens/search/dynamicsearchpage.dart';
 
 class DoctorsDisplayPage extends StatefulWidget {
   static const routeName = doctordisplay;
-  const DoctorsDisplayPage({Key? key}) : super(key: key);
+
+  String searchType;
+  String? searchQuery;
+  
+
+  DoctorsDisplayPage({Key? key,required this.searchType,this.searchQuery}) : super(key: key);
 
   @override
   _DoctorsDisplayPageState createState() => _DoctorsDisplayPageState();
@@ -19,6 +25,27 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
   final List<dynamic> _gender = ["Male", "Female", "Other"];
   final List<dynamic> _experinceList = ['Low to High', 'High to Low'];
 
+  Future? _searchFuture;
+
+  final SearchAPI _searchAPI = SearchAPI();
+
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+    void initState() {
+      super.initState();
+      _searchFuture = _fetchSearchFirstResults();
+    }    
+
+  _fetchSearchFirstResults()  async {
+    return await _searchAPI.performSearch(
+      context: context, 
+      searchType: widget.searchType, 
+      searchQuery: widget.searchQuery ?? "",
+      );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var size = sizeMedia(context);
@@ -26,7 +53,12 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: commonNavbar(context: context, isBack: true),
-        body: SingleChildScrollView(
+        body: FutureBuilder(
+          future: _searchFuture,
+          builder: (BuildContext context, AsyncSnapshot snapshot){
+            if(snapshot.hasData){
+              List<dynamic> _doctorsList = snapshot.data['doctors'];
+              return SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +78,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                       onTap: () => Navigator.push(
                           context,
                           CustomSimplePageRoute(
-                              page: const DynamicSearchPage(),
+                              page:const DynamicSearchPage(), //TODO
                               routeName: dynamicsearch)),
                     ),
                   ],
@@ -106,7 +138,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 1,
+                itemCount: _doctorsList.length,
                 itemBuilder: (BuildContext context, int i) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,8 +161,8 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                               children: [
                                 CircleAvatar(
                                     maxRadius: isMobile(context) ? 35 : 50,
-                                    backgroundImage: const NetworkImage(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU")),
+                                    backgroundImage: NetworkImage(
+                                        isEmptyOrNull(_doctorsList[i]['img']) ? DOCTOR_DEFAULT_IMG : _doctorsList[i]['img'].toString() )),
                                 RotatedBox(
                                   quarterTurns: 1,
                                   child: mediumCustomSizedBox(context),
@@ -146,7 +178,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Testing Doctor",
+                                        "${_doctorsList[i]['name']}",
                                         style: mediumTextStyle(context)
                                             .copyWith(
                                                 fontSize: isMobile(context)
@@ -154,7 +186,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                                                     : 18.5),
                                       ),
                                       Text(
-                                        "Cardiologist",
+                                        "${_doctorsList[i]['deptname']}",
                                         maxLines: 2,
                                         softWrap: true,
                                         style: smallTextStyle(context)
@@ -170,7 +202,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                                           doctorTileContent(
                                               context: context,                                           
                                               icon: Icons.work_outline_outlined,
-                                              title: "3 yrs",
+                                              title: "${_doctorsList[i]['experience']}",
                                               bgColor: kSecondaryColor,
                                               iconColor: kPrimaryColor),
                                           RotatedBox(
@@ -186,7 +218,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                                           doctorTileContent(
                                               context: context,
                                               icon: Icons.person_rounded,
-                                              title: "Male",
+                                              title: "${_doctorsList[i]['gender']}",
                                               bgColor: kLightRedColor,
                                               iconColor: kPinkRedishColor)
                                         ],
@@ -227,7 +259,19 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
               )
             ],
           ),
-        ),
+        );
+            }else if (snapshot.hasError) {
+                        return defaultErrordialog(
+                            context: context,
+                            errorCode: ES_0060,
+                            message: "Something went wrong.Try again Later");
+                      }
+                      return SizedBox(
+                          width: size.width,
+                          height: size.height,
+                          child: Center(child: customCircularProgress()));
+          },
+        )
       ),
     );
   }

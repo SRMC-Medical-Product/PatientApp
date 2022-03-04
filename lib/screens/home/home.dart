@@ -537,8 +537,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget serviceSlider({required bool isBorder , required List servicedata}) {
     
-    print("================================");
-    print(servicedata);
 
     var size = sizeMedia(context);
 
@@ -738,7 +736,7 @@ class _HomePageState extends State<HomePage> {
               itemCount: promotiondata.length,
               itemBuilder: (BuildContext context, int i) {
                 return GestureDetector(
-                  onTap: () => Navigator.push(context, CustomRightPageRoute(page: const DoctorsDisplayPage(), routeName: doctordisplay)),
+                  onTap: () => Navigator.push(context, CustomRightPageRoute(page: DoctorsDisplayPage(searchType: "first",searchQuery: promotiondata[i]['name'].toString(),), routeName: doctordisplay)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,

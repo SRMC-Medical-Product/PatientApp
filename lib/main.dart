@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: AppointmentController(), //  const AppScreenController(indexScreen: 3,),
+      home:   const AppScreenController(indexScreen: 0,),
       routes: {
         //Auth Screens
         LoginPage.routeName: (context) => const LoginPage(), //Path : /loginpage
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         DynamicSearchPage.routeName : (context) => const DynamicSearchPage(), // Path :  /dynamicsearchpage
       
         //Doctors Display List
-        DoctorsDisplayPage.routeName : (context) => const DoctorsDisplayPage(), // Path :  /doctorsdisplaypage
+        DoctorsDisplayPage.routeName : (context) => DoctorsDisplayPage(searchType: "first",), // Path :  /doctorsdisplaypage
 
         //Appointment Booking Screen
         AppointmentBookingPage.routeName : (context) => const AppointmentBookingPage(), // Path :  /appointmentbookingpage

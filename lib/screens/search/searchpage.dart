@@ -70,7 +70,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: StaticSearch(
                   radius: 5.0,
                   searchHint: "Search doctors and specialisation",
-                  onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const DynamicSearchPage(),routeName: dynamicsearch)),
+                  onTap: () {} , //=> Navigator.push(context, CustomSimplePageRoute(page: const DynamicSearchPage(),routeName: dynamicsearch)),
                 ),
               ),
               mediumCustomSizedBox(context),

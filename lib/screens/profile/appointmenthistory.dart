@@ -71,6 +71,7 @@ class _AppointmentHistoryPageState extends State<AppointmentHistoryPage> {
                         onTap: () => Navigator.push(context,CustomRightPageRoute(page: AppointmentsDetailsPage(appointmentId: "${historyappointments[i]['id']}",), routeName: appointmentdetailspage)),
                         child: customAppointmentCard(
                           context: context,
+                          appointmentId: historyappointments[i]['id'].toString(),
                           appointmentDate: historyappointments[i]['date'].toString(),
                           appointmentTime: historyappointments[i]['time'].toString(),
                           doctorImg: historyappointments[i]['img'].toString(),
