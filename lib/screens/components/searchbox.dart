@@ -99,8 +99,8 @@ class _DynamicSearchState extends State<DynamicSearch> {
               size: isMobile(context) ? 17 : 23,
             ),
           ),
-          //onSubmitted: widget.performSearch,
-          onChanged: widget.performSearch,
+          onSubmitted: widget.performSearch,
+          //onChanged: widget.performSearch,
         ));
   }
 }

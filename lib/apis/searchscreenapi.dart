@@ -41,7 +41,7 @@ class SearchAPI{
     }
   }
 
-  Future<void> performSearch({required BuildContext context,required String searchType,String? searchQuery,String? doctorSpecialist,String? doctorExp,String? doctorGender}) async {
+  Future<dynamic> performSearch({required BuildContext context,required String searchType,String? searchQuery,String? doctorSpecialist,String? doctorExp,String? doctorGender}) async {
     var bearerToken = await flutterSecureStorage.read(key: "BEARERTOKEN");
     dio.options.headers["authorization"] = "Bearer $bearerToken";
      try {

@@ -11,9 +11,11 @@ class DoctorsDisplayPage extends StatefulWidget {
 
   String searchType;
   String? searchQuery;
-  
+  String? doctorSpecialist;
+  String? doctorExp;
+  String? doctorGender;  
 
-  DoctorsDisplayPage({Key? key,required this.searchType,this.searchQuery}) : super(key: key);
+  DoctorsDisplayPage({Key? key,required this.searchType,this.searchQuery,this.doctorSpecialist,this.doctorExp,this.doctorGender}) : super(key: key);
 
   @override
   _DoctorsDisplayPageState createState() => _DoctorsDisplayPageState();
@@ -21,9 +23,6 @@ class DoctorsDisplayPage extends StatefulWidget {
 
 class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
 
-  final List<dynamic> _specialisation = ['Cardiology', 'General Surgeon'];
-  final List<dynamic> _gender = ["Male", "Female", "Other"];
-  final List<dynamic> _experinceList = ['Low to High', 'High to Low'];
 
   Future? _searchFuture;
 
@@ -34,17 +33,41 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
   @override
     void initState() {
       super.initState();
-      _searchFuture = _fetchSearchFirstResults();
+      _searchFuture = _fetchSearchQueryResults();
     }    
 
-  _fetchSearchFirstResults()  async {
+  _fetchSearchQueryResults()  async {
     return await _searchAPI.performSearch(
       context: context, 
       searchType: widget.searchType, 
       searchQuery: widget.searchQuery ?? "",
-      );
+      doctorSpecialist: widget.doctorSpecialist ?? "",
+      doctorExp: widget.doctorExp ?? "1",
+      doctorGender: widget.doctorGender ?? "A",
+      ).then((res){
+        return res;
+      } );
   }
 
+  _fetchFilteredQueryResults({String? searchType,String? specialisationId,required String doctorGender,required String doctorExp}) async {
+    return await _searchAPI.performSearch(
+      context: context, 
+      searchType: searchType ?? widget.searchType, 
+      searchQuery: widget.searchQuery ?? "",
+      doctorSpecialist: specialisationId ?? widget.doctorSpecialist,
+      doctorExp: doctorExp,
+      doctorGender: doctorGender,
+      ).then((res){
+        Loader.hide();
+        return res;
+      });
+  }
+
+  Future<void> _changeQueryResultSet({String? searchType, String? specialisationId,required String doctorGender,required String doctorExp}) async {
+    setState(() {
+      _searchFuture = _fetchFilteredQueryResults(searchType : searchType,doctorGender: doctorGender, doctorExp: doctorExp,specialisationId: specialisationId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +81,9 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
           builder: (BuildContext context, AsyncSnapshot snapshot){
             if(snapshot.hasData){
               List<dynamic> _doctorsList = snapshot.data['doctors'];
+              List<dynamic> _specialisation = snapshot.data['specialisation'];
+              List<dynamic> _gender = snapshot.data['gender']['gender'];
+              List<dynamic> _experience = snapshot.data['experience']['experience'];
               return SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
@@ -74,11 +100,11 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                   children: [
                     StaticSearch(
                       radius: 5.0,
-                      searchHint: "Search doctors and specialisation",
+                      searchHint: widget.searchQuery ?? "Search doctors and specialisation",
                       onTap: () => Navigator.push(
                           context,
                           CustomSimplePageRoute(
-                              page:const DynamicSearchPage(), //TODO
+                              page:const DynamicSearchPage(isOneTimePop:false), //TODO
                               routeName: dynamicsearch)),
                     ),
                   ],
@@ -94,21 +120,210 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                     physics: const AlwaysScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     children: [
+
+                      /*
+                      //Specialisation Dropdown                      
+                      GestureDetector(
+                        onTap: () {
+                          bottomDialog(
+                            context: context,
+                            height: size.height / 2 ?? 200,
+                            widget: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const ScrollPhysics(),
+                                itemCount: _specialisation.length,
+                                addAutomaticKeepAlives: true,
+                                itemBuilder: (BuildContext context, int i) {
+                                  return ListTile(
+                                    onTap: () {
+                                      _changeQueryResultSet(
+                                        doctorExp:snapshot.data['experience']['selected_id'].toString(), 
+                                        doctorGender: snapshot.data['gender']['selected_id'].toString(),
+                                      );
+                                      //Navigator.pop(context);
+                                      //Navigator.push(context, CustomSimplePageRoute(page: PickUpProductsConfirm() ,routeName: '/pickupproductconfirm'));
+                                    },
+                                    leading : Icon(
+                                      _specialisation[i]['selected'] == true ? Icons.radio_button_checked_outlined : Icons.radio_button_unchecked_outlined,
+                                      color: _specialisation[i]['selected'] == true ? kPrimaryColor : kGraycolor,
+                                    ),
+                                    title: Text(_specialisation[i]['title'], style: mediumTextStyle(context)),
+                                    trailing: const Icon(Icons.arrow_right),
+                                  );
+                                }),
+                          );
+                        },
+                        child: Container(
+                          height: 35,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+                          decoration: BoxDecoration(
+                            //color: Colors.white,
+                            border: Border.all(color: kPrimaryColor),
+                            borderRadius: BorderRadius.circular(6.0),
+                          ),
+                          child: Center(
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Specialisation",
+                                  style: mediumTextStyle(context).copyWith(color: kPrimaryColor),
+                                ),
+                                Container(
+                                    margin: const EdgeInsets.only(left: 4),
+                                    child: Icon(Icons.sort, color: kPrimaryColor, size: 22)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      ///Gender Dropdown
+                      GestureDetector(
+                        onTap: () {
+                          bottomDialog(
+                            context: context,
+                            height: 250,
+                            widget: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const ScrollPhysics(),
+                                itemCount: _gender.length,
+                                addAutomaticKeepAlives: true,
+                                itemBuilder: (BuildContext context, int i) {
+                                  return ListTile(
+                                    onTap: () {
+                                      _changeQueryResultSet(
+                                        doctorExp: snapshot.data['experience']['selected_id'].toString(),   
+                                        doctorGender:_gender[i]['id'].toString(),
+                                      );
+                                      //Navigator.pop(context);
+                                      //Navigator.push(context, CustomSimplePageRoute(page: PickUpProductsConfirm() ,routeName: '/pickupproductconfirm'));
+                                    },
+                                    leading : Icon(
+                                      _gender[i]['selected'] == true ? Icons.radio_button_checked_outlined : Icons.radio_button_unchecked_outlined,
+                                      color: _gender[i]['selected'] == true ? kPrimaryColor : kGraycolor,
+                                    ),
+                                    title: Text(_gender[i]['title'], style: mediumTextStyle(context)),
+                                    trailing: const Icon(Icons.arrow_right),
+                                  );
+                                }),
+                          );
+                        },
+                        child: Container(
+                          height: 35,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+                          decoration: BoxDecoration(
+                            //color: Colors.white,
+                            border: Border.all(color: kPrimaryColor),
+                            borderRadius: BorderRadius.circular(6.0),
+                          ),
+                          child: Center(
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Gender",
+                                  style: mediumTextStyle(context).copyWith(color: kPrimaryColor),
+                                ),
+                                Container(
+                                    margin: const EdgeInsets.only(left: 4),
+                                    child:const Icon(Icons.arrow_drop_down, color: kPrimaryColor, size: 22)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      ///Experience Dropdown
+                      GestureDetector(
+                        onTap: () {
+                          bottomDialog(
+                            context: context,
+                            height: 250,
+                            widget: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const ScrollPhysics(),
+                                itemCount: _experience.length,
+                                addAutomaticKeepAlives: true,
+                                itemBuilder: (BuildContext context, int i) {
+                                  return ListTile(
+                                    onTap: () {
+                                      _changeQueryResultSet(
+                                        doctorExp: _experience[i]['id'].toString(),
+                                        doctorGender: snapshot.data['gender']['selected_id'].toString(), 
+                                      );
+                                      //Navigator.pop(context);
+                                      //Navigator.push(context, CustomSimplePageRoute(page: PickUpProductsConfirm() ,routeName: '/pickupproductconfirm'));
+                                    },
+                                    leading : Icon(
+                                      _experience[i]['selected'] == true ? Icons.radio_button_checked_outlined : Icons.radio_button_unchecked_outlined,
+                                      color: _experience[i]['selected'] == true ? kPrimaryColor : kGraycolor,
+                                    ),
+                                    title: Text(_experience[i]['title'], style: mediumTextStyle(context)),
+                                    trailing: const Icon(Icons.arrow_right),
+                                  );
+                                }),
+                          );
+                        },
+                        child: Container(
+                          height: 35,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+                          decoration: BoxDecoration(
+                            //color: Colors.white,
+                            border: Border.all(color: kPrimaryColor),
+                            borderRadius: BorderRadius.circular(6.0),
+                          ),
+                          child: Center(
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Experience",
+                                  style: mediumTextStyle(context).copyWith(color: kPrimaryColor),
+                                ),
+                                Container(
+                                    margin: const EdgeInsets.only(left: 4),
+                                    child:const Icon(Icons.arrow_drop_down, color: kPrimaryColor, size: 22)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      
+                      */
+                      
                       bottomDisplaybox(
                         name: "Specialisation",
                         icon: Icons.sort,
                         listItem: _specialisation,
                         hgt: size.height / 2,
+                        isExperience: false,
+                        isGender: false,
+                        isSpecialisation: true,
+                        selectedExperience: snapshot.data['experience']['selected_id'].toString(),
+                        selectedGender: snapshot.data['gender']['selected_id'].toString(),
                       ),
                       bottomDisplaybox(
-                          name: "Gender",
-                          icon: Icons.arrow_drop_down,
-                          listItem: _gender,
-                          hgt: 250),
+                        name: "Gender",
+                        icon: Icons.arrow_drop_down,
+                        listItem: _gender,
+                        hgt: 250,
+                        isExperience: false,
+                        isGender: true,
+                        isSpecialisation: false,
+                        selectedExperience: snapshot.data['experience']['selected_id'].toString(),
+                        selectedGender: snapshot.data['gender']['selected_id'].toString(),                          
+                          ),
                       bottomDisplaybox(
                         name: "Exp",
+                        hgt: 250,
                         icon: Icons.arrow_drop_down,
-                        listItem: _experinceList,
+                        listItem: _experience,
+                        isExperience: true,
+                        isGender: false,
+                        isSpecialisation: false,
+                        selectedExperience: snapshot.data['experience']['selected_id'].toString(),
+                        selectedGender: snapshot.data['gender']['selected_id'].toString(),
                       ),
                     ],
                   )),
@@ -280,6 +495,11 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
       {required String name,
       required IconData icon,
       required List<dynamic> listItem,
+      required String selectedGender,
+      required String selectedExperience,
+      required bool isGender,
+      required bool isExperience,
+      required bool isSpecialisation,
       double? hgt}) {
     return GestureDetector(
       onTap: () {
@@ -294,10 +514,64 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
               itemBuilder: (BuildContext context, int i) {
                 return ListTile(
                   onTap: () {
-                    //Navigator.pop(context);
-                    //Navigator.push(context, CustomSimplePageRoute(page: PickUpProductsConfirm() ,routeName: '/pickupproductconfirm'));
-                  },
-                  title: Text(listItem[i], style: mediumTextStyle(context)),
+                    overlayLoader(context);
+                    if(isGender) {
+                       if(widget.searchQuery.toString().isNotEmpty){
+                        _changeQueryResultSet(
+                        doctorGender: listItem[i]['id'].toString(),
+                        doctorExp: selectedExperience,
+                        searchType: "default",
+                        specialisationId: ""
+                      );
+                      }else{
+                     _changeQueryResultSet(
+                        doctorGender: listItem[i]['id'].toString(),
+                        doctorExp: selectedExperience,
+                      );
+                      }
+                      
+                      Navigator.pop(context);
+                    }
+                    if(isExperience) {
+                      if(widget.searchQuery.toString().isNotEmpty){
+                       _changeQueryResultSet(
+                        doctorExp: listItem[i]['id'].toString(),
+                        doctorGender: selectedGender,
+                        searchType: "default",
+                        specialisationId: ""
+                      );
+                      }else{
+                     _changeQueryResultSet(
+                        doctorExp: listItem[i]['id'].toString(),
+                        doctorGender: selectedGender,
+                      );
+                      }
+                      
+                      Navigator.pop(context);
+                    }
+                    if(isSpecialisation){
+                      if(widget.searchQuery.toString().isNotEmpty){
+                        _changeQueryResultSet(
+                          searchType: "default",
+                        doctorExp: selectedExperience,
+                        doctorGender: selectedGender,
+                        specialisationId: listItem[i]['id'].toString(),
+                      );
+                      }else{
+                      _changeQueryResultSet(
+                        doctorExp: selectedExperience,
+                        doctorGender: selectedGender,
+                        specialisationId: listItem[i]['id'].toString(),
+                      );
+                      }
+                      Navigator.pop(context);
+                    }  
+                    },
+                  leading : Icon(
+                    listItem[i]['selected'] == true ? Icons.radio_button_checked_outlined : Icons.radio_button_unchecked_outlined,
+                    color: listItem[i]['selected'] == true ? kPrimaryColor : kGraycolor,
+                  ),
+                  title: Text(listItem[i]['title'], style: mediumTextStyle(context)),
                   trailing: const Icon(Icons.arrow_right),
                 );
               }),

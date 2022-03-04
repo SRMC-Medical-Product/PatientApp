@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: StaticSearch(
                         radius: 5.0,
-                        onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const DynamicSearchPage(),routeName: dynamicsearch)),
+                        onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const DynamicSearchPage(isOneTimePop: true,),routeName: dynamicsearch)),
                         searchHint: "Search doctors and specialisation",
                       ),
                     ),
@@ -736,7 +736,11 @@ class _HomePageState extends State<HomePage> {
               itemCount: promotiondata.length,
               itemBuilder: (BuildContext context, int i) {
                 return GestureDetector(
-                  onTap: () => Navigator.push(context, CustomRightPageRoute(page: DoctorsDisplayPage(searchType: "first",searchQuery: promotiondata[i]['name'].toString(),), routeName: doctordisplay)),
+                  onTap: () => Navigator.push(context, CustomRightPageRoute(page: DoctorsDisplayPage(
+                    searchType: "default",
+                    searchQuery: promotiondata[i]['name'].toString(),
+                    doctorSpecialist: promotiondata[i]['id'].toString(),
+                    ), routeName: doctordisplay)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,

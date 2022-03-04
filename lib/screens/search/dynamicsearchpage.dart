@@ -1,11 +1,13 @@
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 import 'package:patientapp/screens/components/searchbox.dart';
+import 'package:patientapp/screens/search/doctordisplay.dart';
 
 class DynamicSearchPage extends StatefulWidget {
   static const routeName = dynamicsearch;
+  final bool isOneTimePop;
 
-  const DynamicSearchPage({Key? key}) : super(key: key);
+  const DynamicSearchPage({Key? key,required this.isOneTimePop}) : super(key: key);
 
   @override
   _DynamicSearchPageState createState() => _DynamicSearchPageState();
@@ -51,7 +53,18 @@ class _DynamicSearchPageState extends State<DynamicSearchPage> {
               ),
               mediumCustomSizedBox(context),
               smallCustomSizedBox(context),
-              DynamicSearch(controller: _searchController, performSearch: (value){}),
+              DynamicSearch(controller: _searchController, performSearch: (value){
+                if(widget.isOneTimePop){
+                  Navigator.of(context).pop();
+                }else{
+                 int count = 0;
+                  Navigator.of(context).popUntil((_) => count++ >= 2); 
+                }
+              Navigator.push(context, CustomRightPageRoute(page: DoctorsDisplayPage(
+                    searchType: "first",
+                    searchQuery: _searchController.text.trim(),
+                    ), routeName: doctordisplay));
+              }),
             ],
           ),
         ),

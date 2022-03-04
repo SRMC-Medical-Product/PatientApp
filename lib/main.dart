@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         PersonalDataPage.routeName : (context) => const PersonalDataPage(patientId: "",), // Path :  /personaldata
 
         //Search Page
-        DynamicSearchPage.routeName : (context) => const DynamicSearchPage(), // Path :  /dynamicsearchpage
+        DynamicSearchPage.routeName : (context) => const DynamicSearchPage(isOneTimePop: true,), // Path :  /dynamicsearchpage
       
         //Doctors Display List
         DoctorsDisplayPage.routeName : (context) => DoctorsDisplayPage(searchType: "first",), // Path :  /doctorsdisplaypage
