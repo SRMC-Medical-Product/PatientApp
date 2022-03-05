@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:patientapp/apis/appointmentsapi.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/navbar.dart';
 
 class AppointmentBookingPage extends StatefulWidget {
   static const routeName = appointmentbookingpage;
-  const AppointmentBookingPage({ Key? key }) : super(key: key);
+  
+  final String doctorId;
+
+  const AppointmentBookingPage({ Key? key, required this.doctorId }) : super(key: key);
 
   @override
   _AppointmentBookingPageState createState() => _AppointmentBookingPageState();
@@ -13,7 +17,54 @@ class AppointmentBookingPage extends StatefulWidget {
 
 class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
 
-  final List<dynamic> _memberItem = ["Loga Subramani","Karthikeyan"];
+  final int _morningChoiceIndex= 0;
+  int _currentIndex = 0;
+
+
+  final  AppointmentsAPI _appointmentsAPI = AppointmentsAPI();
+  Future? _doctorSlotFuture;
+
+  @override
+    void initState() {
+      super.initState();
+      _doctorSlotFuture = _fetchInitialSlotDetails();
+    }    
+
+    _fetchInitialSlotDetails() async{
+      return await _appointmentsAPI.getDoctorSlotDetails(context: context, doctorId: widget.doctorId, queryDate: "").then((res){
+        return res;
+      });
+    }
+
+   _fetchChangedDateSlots(String date) async{
+     return await _appointmentsAPI.getDoctorSlotDetails(context: context, doctorId: widget.doctorId, queryDate: date).then((res){
+           Loader.hide();
+       return res;
+     });
+   }
+
+  //This is invoked when user taps on names in bar 
+  Future<void> onChangedDate({required int value,required String date}) async {
+    setState(() {
+      _currentIndex = value;
+    _doctorSlotFuture = _fetchChangedDateSlots(date);
+    });
+  }
+
+  changeBookingMember({required String memberID}) async {
+    return await _appointmentsAPI.postChangeMemberBookings(context: context, memberID: memberID).then((res){
+      setState(() {
+        _currentIndex = 0;
+        _doctorSlotFuture = _fetchInitialSlotDetails().then((res){
+          Loader.hide();
+          return res;
+        });
+      });
+      Navigator.pop(context);
+      return res;
+    });
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +75,18 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
         appBar: commonNavbar(context: context, isBack: true),
         body: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
+          child: FutureBuilder(
+            future: _doctorSlotFuture,
+            builder: (BuildContext context, AsyncSnapshot snapshot){
+              if(snapshot.hasData){
+                Map<dynamic , dynamic > _doctorInfo = snapshot.data['doctor'];
+                List<dynamic > _familyMembers = snapshot.data['familymembers'];
+                List<dynamic> _dateSlots = snapshot.data['availabledates'];
+                List<dynamic> _mrngSlotList = snapshot.data['morning']['slots'];
+                List<dynamic> _aftSlotList = snapshot.data['afternoon']['slots'];
+                List<dynamic> _evenSlotList = snapshot.data['evening']['slots'];
+                List<dynamic> _memberItem = snapshot.data['familymembers'];
+                return  Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -48,8 +110,9 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                               children: [
                                 CircleAvatar(
                                     maxRadius: isMobile(context) ? 35 : 50,
-                                    backgroundImage: const NetworkImage(
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AQrFVJDFGFolarST3oupglsAsvAMbEwxbQ&usqp=CAU")),
+                                    backgroundImage: NetworkImage(
+                                      isEmptyOrNull(_doctorInfo['img']) ? DOCTOR_DEFAULT_IMG : _doctorInfo['img'].toString(),
+                                    )),
                                 RotatedBox(
                                   quarterTurns: 1,
                                   child: mediumCustomSizedBox(context),
@@ -65,7 +128,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Testing Doctor",
+                                        "${_doctorInfo['name']}",
                                         style: mediumTextStyle(context)
                                             .copyWith(
                                                 fontSize: isMobile(context)
@@ -73,14 +136,14 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                                                   : 18.5),
                                       ),
                                       Text(
-                                        "MBBS - MD",
+                                        "${_doctorInfo['qualification']}",
                                         maxLines: 2,
                                         softWrap: true,
                                         style: smallTextStyle(context)
                                             .copyWith(height: 1.7),
                                       ),
                                       Text(
-                                        "Cardiologist",
+                                        "${_doctorInfo['specialisation']}",
                                         maxLines: 2,
                                         softWrap: true,
                                         style: smallTextStyle(context)
@@ -96,7 +159,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                                           doctorTileContent(
                                               context: context,
                                               icon: Icons.work_outline_outlined,
-                                              title: "3 yrs",
+                                              title: "${_doctorInfo['experience']} yrs",
                                               bgColor: kSecondaryColor,
                                               iconColor: kPrimaryColor),
                                           RotatedBox(
@@ -112,7 +175,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                                           doctorTileContent(
                                              context: context,
                                               icon: Icons.person_rounded,
-                                              title: "Male",
+                                              title: "${_doctorInfo['gender']}",
                                               bgColor: kLightRedColor,
                                               iconColor: kPinkRedishColor)
                                         ],
@@ -128,7 +191,12 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                         ),
                       ),
                       kMediumDivider(context, dividerClr: kWhiteSmoke),  
-                      Container(
+                      ListView.builder(
+                        shrinkWrap:  true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _familyMembers.length,
+                        itemBuilder: (BuildContext context, int i){
+                          return _familyMembers[i]['selected'] == true ? Container(
                   width: size.width,
                   padding: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),),
                   child: Column(
@@ -155,7 +223,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                                     ),
                                   ),
                                   Text(
-                                    "Loga Subramani",
+                                    "${_familyMembers[i]['name']}",
                                     maxLines: 2,
                                     overflow: TextOverflow.clip,
                                     style: mediumTextStyle(context).copyWith(
@@ -202,19 +270,29 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                                                 ),
                                               ),
                                             ),
-                                            ListView.builder(
-                                                shrinkWrap: true,
-                                                physics: const ScrollPhysics(),
-                                                itemCount: _memberItem.length,
-                                                addAutomaticKeepAlives: true,
-                                                itemBuilder: (BuildContext context, int i) {
-                                                  return ListTile(
-                                                    onTap: () {
-                                                      },
-                                                    title: Text(_memberItem[i], style: mediumTextStyle(context)),
-                                                    trailing: const Icon(Icons.arrow_right),
-                                                  );
-                                                }),
+                                            Expanded(
+                                              child: ListView.builder(
+                                                  shrinkWrap: true,
+                                                  physics: const AlwaysScrollableScrollPhysics(),
+                                                  itemCount: _memberItem.length,
+                                                  addAutomaticKeepAlives: true,
+                                                  itemBuilder: (BuildContext context, int i) {
+                                                    return ListTile(
+                                                      onTap: () {
+                                                        overlayLoader(context);
+                                                        print("-----------------------");
+                                                        print(_memberItem[i]['id'].toString());
+                                                         changeBookingMember(memberID: _memberItem[i]['id'].toString());
+                                                        },
+                                                      leading : Icon(
+                                                          _memberItem[i]['selected'] == true ? Icons.radio_button_checked_outlined : Icons.radio_button_unchecked_outlined,
+                                                          color: _memberItem[i]['selected'] == true ? kPrimaryColor : kGraycolor,
+                                                        ),
+                                                      title: Text("${_memberItem[i]['name']}", style: mediumTextStyle(context)),
+                                                      trailing: const Icon(Icons.arrow_right),
+                                                    );
+                                                  }),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -230,7 +308,9 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
 
                     ],
                   ),
-                ),
+                ) : Container(); 
+                        },
+                      ),
                       kLargeDivider(context, dividerClr: kWhiteSmoke),                
                     ],
                   ),
@@ -241,7 +321,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+               _dateSlots.isNotEmpty ? Container(
                   width: size.width,
                   color: kWhiteSmoke,
                   padding: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),),
@@ -259,19 +339,121 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                   smallCustomSizedBox(context),
                     ],
                   ),
-                ),
-                  const FixedTabSwitcher(
-                    isExpanded: true,
-                    dateSlots: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                ) : Container(
+                  width: size.width,
+                  color: kWhiteSmoke,
+                  padding: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),),
+                  child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                       smallCustomSizedBox(context),
+                      Text(
+                        "No Slots are available",
+                        style: mediumTextStyle(context).copyWith(
+                          color : kPrimaryColor,
+                        ),
+                      ),
+                  smallCustomSizedBox(context),
+                    ],
+                  ),
+                ), 
+                  fixedTabSwitcher(
+                    dateSlots:_dateSlots , 
+                    mrngSlots: _mrngSlotList,
+                    noonSlots: _aftSlotList,
+                    eveningSlots: _evenSlotList,
+                    // ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                ),
                mediumCustomSizedBox(context),
               ],
             ),
           )
             ],
-          ),
+          );
+              } else if (snapshot.hasError) {
+                    return defaultErrordialog(
+                        context: context,
+                        errorCode: ES_0060,
+                        message: "Something went wrong.Try again Later");
+                  }
+                  return SizedBox(
+                      width: size.width,
+                      height: size.height,
+                      child: Center(child: customCircularProgress()));  
+            },
+          )
         ),
       ),
     );
   }
+
+
+  Widget fixedTabSwitcher({
+    required List<dynamic> dateSlots,
+    required List<dynamic> mrngSlots,
+    required List<dynamic> noonSlots,
+    required List<dynamic> eveningSlots,
+  }){
+        var size = sizeMedia(context);
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [ 
+          Container(
+            height: 80.0,
+            width: size.width,
+             color: kWhiteSmoke,
+            padding: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),),
+            child: ListView.builder(
+              addAutomaticKeepAlives: true,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+              itemCount: dateSlots.length,
+              itemBuilder: (BuildContext context, int i){
+                  return   GestureDetector(
+                   onTap:  () {
+                     overlayLoader(context);
+                    onChangedDate(
+                      value: i,
+                      date:  dateSlots[i]['date'].toString());
+                   },
+                   child: Container(
+                     width: 40,
+                     margin: const EdgeInsets.all(7.0),
+                     child: Column(
+                       crossAxisAlignment: CrossAxisAlignment.center,
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         Text("${dateSlots[i]['day']}".substring(0,3),style: mediumTextStyle(context).copyWith(
+                           color: _currentIndex == i ? kPrimaryColor : kPrimaryColor),),
+                         Container(
+                           height: 35,
+                           width: 35,
+                           decoration: BoxDecoration(
+                             color: _currentIndex == i ? kPrimaryColor : Colors.white,
+                       borderRadius: BorderRadius.circular(6),
+                       border: Border.all(color:_currentIndex == i ? kPrimaryColor : kSlateGray),
+                     ),
+                           child: Center(child: Text("${dateSlots[i]['date_num']}",style: mediumTextStyle(context).copyWith(
+                             color : _currentIndex == i ? Colors.white : kPrimaryColor,
+                             fontFamily : kMuktaBold)))),
+                       ],
+                     ) 
+                   ));
+              }),
+          ),
+          kLargeDivider(context, dividerClr: kWhiteSmoke), 
+          if(mrngSlots.isNotEmpty) SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: mrngSlots, title: "Morning"),
+          if(noonSlots.isNotEmpty) SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: noonSlots, title: "Afternoon"),
+          if(eveningSlots.isNotEmpty) SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: eveningSlots, title: "Night"),
+          mediumCustomSizedBox(context),
+          smallCustomSizedBox(context),
+
+        ],
+      );
+  }
+
+
 }

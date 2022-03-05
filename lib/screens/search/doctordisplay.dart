@@ -440,7 +440,7 @@ class _DoctorsDisplayPageState extends State<DoctorsDisplayPage> {
                                       ),
                                       mediumCustomSizedBox(context),
                                       GestureDetector(
-                                        onTap: () => Navigator.push(context, CustomSimplePageRoute(page: const AppointmentBookingPage(), routeName: appointmentbookingpage)),
+                                        onTap: () => Navigator.push(context, CustomSimplePageRoute(page: AppointmentBookingPage(doctorId: _doctorsList[i]['id'].toString(),), routeName: appointmentbookingpage)),
                                         child: Container(
                                           height: 40,
                                           decoration: BoxDecoration(

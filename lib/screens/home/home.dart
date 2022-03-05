@@ -422,82 +422,6 @@ class _HomePageState extends State<HomePage> {
                 )
                 /*----------end end details box --------------*/
     
-                /*----------start daily updates box --------------*/
-                //Daily updates
-                /*
-                Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: kDefaultScreenPaddingHorizontal(context),
-                        vertical: kDefaultScreenPaddingVertical(context)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        titleText(
-                            context: context,
-                            text: "Daily updates",
-                            color: Colors.black.withOpacity(0.7)),
-                        mediumCustomSizedBox(context),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: 3,
-                          itemBuilder: (BuildContext context, int i) {
-                            return Container(
-                              height: isMobile(context) ? 120 : 140,
-                              width: size.width,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: isMobile(context) ? 100 : 120,
-                                    height: isMobile(context) ? 100 : 120,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2.0),
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            "https://cdn.dribbble.com/users/606683/screenshots/3978222/news_app_concept.png"),
-                                      ),
-                                    ),
-                                  ),
-                                  RotatedBox(
-                                    quarterTurns: 1,
-                                    child: mediumCustomSizedBox(context),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "News UI designs, themes, templates and downloadable I designs, themes, templates and downloadable ",
-                                          style: mediumTextStyle(context),
-                                          maxLines: 2,
-                                          softWrap: true,
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        smallCustomSizedBox(context),
-                                        Text(
-                                          '''News App UI Inspirational designs, illustrations, and graphic elements from the world’s best designers. Want more inspiration? Browse our search results... View News iOS mobile app. News''',
-                                          style: smallTextStyle(context),
-                                          maxLines: 2,
-                                          softWrap: true,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        )
-                      ],
-                    )),
-                */
-                /*----------end daily updates box --------------*/
               ],
             );
           }else if (snapshot.hasError) {
@@ -588,25 +512,33 @@ class _HomePageState extends State<HomePage> {
               addAutomaticKeepAlives: true,
               itemBuilder: (BuildContext context, int i) {
                 //Card
-                return Container(
-                  width: 90,
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: isBorder ? kSecondaryColor : Colors.white,
-                        width: 1),
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  margin: EdgeInsets.symmetric(
-                      vertical: isMobile(context) ? 8 : 12, horizontal: 8),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(13),
-                    child: Image.network(
-                      isEmptyOrNull(servicedata[i]['img']) ?
-                      "https://img.icons8.com/external-flatart-icons-flat-flatarticons/344/external-medical-biochemistry-and-medicine-healthcare-flatart-icons-flat-flatarticons-1.png"
-                      : servicedata[i]['img'],
-                      fit: BoxFit.contain,
-                      width: size.width,
+                return GestureDetector(
+                   onTap: () => Navigator.push(context, CustomRightPageRoute(page: DoctorsDisplayPage(
+                                searchType: "first",
+                                searchQuery: servicedata[i]['name'].toString(),
+                                ), routeName: doctordisplay)),
+                  child: Container(
+                    width: 90,
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: isBorder ? kSecondaryColor : Colors.white,
+                          width: 1),
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    margin: EdgeInsets.symmetric(
+                        vertical: isMobile(context) ? 8 : 12, horizontal: 8),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(13),
+                      child: isEmptyOrNull(servicedata[i]['img']) ? Image.network(
+                        DEPT_DEFAULT_IMG,
+                        fit: BoxFit.contain,
+                        width: size.width,
+                      ) : Image.network(
+                        servicedata[i]['img'],
+                        fit: BoxFit.contain,
+                        width: size.width,
+                      )
                     ),
                   ),
                 );

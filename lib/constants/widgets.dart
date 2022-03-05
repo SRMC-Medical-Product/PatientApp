@@ -299,95 +299,6 @@ Future bottomDialog({required context,double? height,required Widget widget}){
   }
 
 
-/* -------------- Horizontal Scroll -----------------------*/
-class FixedTabSwitcher extends StatefulWidget {
-
-final List<dynamic> dateSlots;
-
-///Expanded Necessary or Not
-final bool isExpanded;
-
-  const FixedTabSwitcher({Key? key,required this.isExpanded,required this.dateSlots}) : super(key: key);
-
-  @override
-  _FixedTabSwitcherState createState() => _FixedTabSwitcherState();
-}
-
-class _FixedTabSwitcherState extends State<FixedTabSwitcher> {
-
-  int _currentIndex = 0;
-
-//This is invoked when user taps on names in bar 
-void onTappedBar(int value) {
-   setState(() {
-     _currentIndex = value;
-   });
- }
-
-    final int _morningChoiceIndex= 0;
-    List<String> morningList = ['01:00 A.M','02:00 A.M','03:00 A.M','09:00 A.M','10:00 A.M'];
-
-  @override
-  Widget build(BuildContext context) {
-    var size = sizeMedia(context);
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [ 
-          Container(
-            height: 80.0,
-            width: size.width,
-             color: kWhiteSmoke,
-            padding: EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context),),
-            child: ListView.builder(
-              addAutomaticKeepAlives: true,
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-              itemCount: widget.dateSlots.length,
-              itemBuilder: (BuildContext context, int i){
-                  return   GestureDetector(
-                   onTap:  () {
-                    onTappedBar(i);
-                   },
-                   child: Container(
-                     width: 40,
-                     margin: const EdgeInsets.all(7.0),
-                     child: Column(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Text(widget.dateSlots[i],style: mediumTextStyle(context).copyWith(
-                           color: _currentIndex == i ? kPrimaryColor : kPrimaryColor),),
-                         Container(
-                           height: 35,
-                           width: 35,
-                           decoration: BoxDecoration(
-                             color: _currentIndex == i ? kPrimaryColor : Colors.white,
-                       borderRadius: BorderRadius.circular(6),
-                       border: Border.all(color:_currentIndex == i ? kPrimaryColor : kSlateGray),
-                     ),
-                           child: Center(child: Text("24",style: mediumTextStyle(context).copyWith(
-                             color : _currentIndex == i ? Colors.white : kPrimaryColor,
-                             fontFamily : kMuktaBold)))),
-                       ],
-                     ) 
-                   ));
-              }),
-          ),
-          kLargeDivider(context, dividerClr: kWhiteSmoke), 
-          SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Morning"),
-          SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Afternoon"),
-          SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: morningList, title: "Night"),
-          mediumCustomSizedBox(context),
-          smallCustomSizedBox(context),
-
-        ],
-      );
-    
-  }
-}
-
 /* ------------------ Choice Chips ------------------ */
 // ignore: must_be_immutable
 class SlotChoiceChips extends StatefulWidget {
@@ -425,7 +336,7 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
           ),
           pressElevation: 0,
           label: Text(
-            widget.choicesList[index],
+            widget.choicesList[index]['date'],
             style: smallTextStyle(context).copyWith(color : kDimGray, fontFamily: kMuktaRegular)
           ),
           selected: widget.defaultChoiceIndex == index,
