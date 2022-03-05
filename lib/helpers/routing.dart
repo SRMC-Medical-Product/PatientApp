@@ -29,7 +29,8 @@ const String APPOINTMENT_HISTORY_URL = "$BASE_URL/appointment-history/";
 const String APPOINTMENT_DETAILS_URL = "$BASE_URL/appointment-indetail/";
 const String DOCTOR_SLOT_URL = "$BASE_URL/doctors-slots/";
 const String CHANGE_BOOKING_MEMBER_URL = "$BASE_URL/change-member-booking/";
-
+const String CONFIRM_BOOKING_URL = "$BASE_URL/appointment-confirm/";
+const String MAKE_APPOINTMENT_URL = "$BASE_URL/book-appointment/";
 
 /*------- All Categories Screen API ------- */
 const String ALL_CATEGORIES_SCREEN_URL = "$BASE_URL/all-categories/";

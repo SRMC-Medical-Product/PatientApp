@@ -20,7 +20,6 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
   final int _morningChoiceIndex= 0;
   int _currentIndex = 0;
 
-
   final  AppointmentsAPI _appointmentsAPI = AppointmentsAPI();
   Future? _doctorSlotFuture;
 
@@ -86,6 +85,7 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                 List<dynamic> _aftSlotList = snapshot.data['afternoon']['slots'];
                 List<dynamic> _evenSlotList = snapshot.data['evening']['slots'];
                 List<dynamic> _memberItem = snapshot.data['familymembers'];
+                Map<dynamic, dynamic> _selectedFamilyMember = snapshot.data['selectedfamilymember'];
                 return  Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -363,6 +363,9 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                     mrngSlots: _mrngSlotList,
                     noonSlots: _aftSlotList,
                     eveningSlots: _evenSlotList,
+                    doctorId: widget.doctorId,
+                    patientId: _selectedFamilyMember['id'],
+                    selectedDate: snapshot.data['selecteddate'],
                     // ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
                ),
                mediumCustomSizedBox(context),
@@ -394,6 +397,9 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
     required List<dynamic> mrngSlots,
     required List<dynamic> noonSlots,
     required List<dynamic> eveningSlots,
+    required String patientId,
+    required String doctorId,
+    required String selectedDate,
   }){
         var size = sizeMedia(context);
     return Column(
@@ -445,9 +451,30 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
               }),
           ),
           kLargeDivider(context, dividerClr: kWhiteSmoke), 
-          if(mrngSlots.isNotEmpty) SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: mrngSlots, title: "Morning"),
-          if(noonSlots.isNotEmpty) SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: noonSlots, title: "Afternoon"),
-          if(eveningSlots.isNotEmpty) SlotChoiceChips(defaultChoiceIndex: _morningChoiceIndex, choicesList: eveningSlots, title: "Night"),
+          if(mrngSlots.isNotEmpty) SlotChoiceChips(
+            defaultChoiceIndex: _morningChoiceIndex, 
+            choicesList: mrngSlots, 
+            title: "Morning",
+            date: selectedDate,
+            doctorId: doctorId,
+            patientId: patientId, 
+            ),
+          if(noonSlots.isNotEmpty) SlotChoiceChips(
+            defaultChoiceIndex: _morningChoiceIndex, 
+            choicesList: noonSlots, 
+            title: "Afternoon",
+            date: selectedDate,
+            doctorId: doctorId,
+            patientId: patientId,   
+            ),
+          if(eveningSlots.isNotEmpty) SlotChoiceChips(
+            defaultChoiceIndex: _morningChoiceIndex, 
+            choicesList: eveningSlots, 
+            title: "Night",
+            date: selectedDate,
+            doctorId: doctorId,
+            patientId: patientId,             
+            ),
           mediumCustomSizedBox(context),
           smallCustomSizedBox(context),
 

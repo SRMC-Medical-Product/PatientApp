@@ -305,7 +305,12 @@ class SlotChoiceChips extends StatefulWidget {
   int defaultChoiceIndex;
   final List<dynamic> choicesList;
   final String title;
-  SlotChoiceChips({ Key? key ,required this.defaultChoiceIndex,required this.choicesList,required this.title}) : super(key: key);
+
+  final String date;
+  final String doctorId;
+  final String patientId;
+
+  SlotChoiceChips({ Key? key ,required this.defaultChoiceIndex,required this.choicesList,required this.title,required this.date,required this.doctorId,required this.patientId}) : super(key: key);
 
   @override
   _SlotChoiceChipsState createState() => _SlotChoiceChipsState();
@@ -341,7 +346,12 @@ class _SlotChoiceChipsState extends State<SlotChoiceChips> {
           ),
           selected: widget.defaultChoiceIndex == index,
           selectedColor:Colors.white,
-          onSelected: (val) => Navigator.push(context, CustomRightPageRoute(page: const AppointmentConfirmationPage(), routeName: appointmentconfirmationpage)),
+          onSelected: (val) => Navigator.push(context, CustomRightPageRoute(page: AppointmentConfirmationPage(
+            date: widget.date,
+            time: widget.choicesList[index]['date'].toString(),
+            doctorId: widget.doctorId,
+            patientId: widget.patientId,
+          ), routeName: appointmentconfirmationpage)),
 
           //   print(widget.choicesList[index]);
           //   setState(() {

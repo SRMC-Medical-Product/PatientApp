@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
 
         //Appointment Booking Screen
         AppointmentBookingPage.routeName : (context) => const AppointmentBookingPage(doctorId: "",), // Path :  /appointmentbookingpage
-        AppointmentConfirmationPage.routeName : (context) => const AppointmentConfirmationPage(), // Path :  /appointmentconfirmationpage
+        AppointmentConfirmationPage.routeName : (context) => const AppointmentConfirmationPage(date: "",doctorId: "",patientId: "",time: "",), // Path :  /appointmentconfirmationpage
         AppointmentController.routeName : (context) => const AppointmentController(), // Path :  /upcomingappointments
         AppointmentsDetailsPage.routeName : (context) => const AppointmentsDetailsPage(appointmentId: "",), // Path :  /appointmentdetailspage
 
