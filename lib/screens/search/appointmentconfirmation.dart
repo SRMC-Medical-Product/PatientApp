@@ -281,7 +281,7 @@ class _AppointmentConfirmationPageState
                                     .copyWith(color: Colors.black.withOpacity(0.9),fontFamily:kMuktaBold),
                               ),
                               Text(
-                                "${_patientInfo['name']}",
+                                "${_patientInfo['mobile']}",
                                 maxLines: 1,
                                 overflow: TextOverflow.clip,
                                 softWrap: true,

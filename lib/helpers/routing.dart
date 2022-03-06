@@ -1,7 +1,7 @@
 
 const String PROTOCOL = "http";
 const String PORT = "8000";
-const String DOMAIN =  "192.168.1.3"; // acer
+const String DOMAIN =  "192.168.1.5"; // acer
 // const String DOMAIN = "192.168.1.7";  // lenovo
 //const String BASE_URL = "https://srmcapi.loca.lt/api/main/pat";
 const String BASE_URL =  "$PROTOCOL://$DOMAIN:$PORT/api/main/pat"; 
@@ -31,6 +31,7 @@ const String DOCTOR_SLOT_URL = "$BASE_URL/doctors-slots/";
 const String CHANGE_BOOKING_MEMBER_URL = "$BASE_URL/change-member-booking/";
 const String CONFIRM_BOOKING_URL = "$BASE_URL/appointment-confirm/";
 const String MAKE_APPOINTMENT_URL = "$BASE_URL/book-appointment/";
+const String CANCEL_APPOINTMENT_URL = "$BASE_URL/appointment-cancel/";
 
 /*------- All Categories Screen API ------- */
 const String ALL_CATEGORIES_SCREEN_URL = "$BASE_URL/all-categories/";
@@ -38,9 +39,12 @@ const String SEARCH_DOCTORS_URL = "$BASE_URL/search-results/";
 
 /*------- Medical Records API ------- */
 const String FAMILY_MEMBERS_RECORDS_URL = "$BASE_URL/family-medical-records/";
+const String PROCEDURAL_RECORDS_URL = "$BASE_URL/procedural-records/";
+const String DISPLAY_RECORDS_URL = "$BASE_URL/display-medical-records/";
+const String APPOINTMENT_RECORDS_URL = "$BASE_URL/display-appointment-records/";
+
 
 /*------Raise Issues API ------- */
 const String PATIENT_TICKETS = "$BASE_URL/patient-tickets/";
-
 
 

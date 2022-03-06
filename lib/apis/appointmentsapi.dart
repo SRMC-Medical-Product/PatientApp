@@ -288,5 +288,52 @@ class AppointmentsAPI{
     }
   }
 
+  putCancelAppointmentBooking({required BuildContext context,required String appointmentId,required String reason}) async{
+     var bearerToken = await flutterSecureStorage.read(key: "BEARERTOKEN");
+    dio.options.headers["authorization"] = "Bearer $bearerToken";
+
+    Map<dynamic , dynamic > data = {
+      "appointmentid" : appointmentId,
+      "reason" : reason,
+    };
+
+     try {
+      Response response = await dio.put(CANCEL_APPOINTMENT_URL,data:data,options : dioOptions);
+      if(response.statusCode == 200) {
+        print(response.data);
+        Loader.hide();
+        ScaffoldMessenger.of(context).showSnackBar(customSnackSuccessBar(context, "Your appointments have been cancelled"));
+        return Navigator.push(context, CustomSimplePageRoute(page: const AppScreenController(indexScreen: 0), routeName: appcontroller));
+      }
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.sendTimeout) {
+        //Send Timeout
+        return defaultErrordialog(context: context, errorCode: ES_0052,onTapBtn: () => Navigator.of(context).pushReplacement(CustomSimplePageRoute(page: AppScreenController(indexScreen: 0),routeName: appcontroller)));
+      } else if (e.type == DioErrorType.receiveTimeout) {
+        //Receive timeout
+        return defaultErrordialog(context: context, errorCode: ES_0054,onTapBtn: () => Navigator.of(context).pushReplacement(CustomSimplePageRoute(page: AppScreenController(indexScreen: 0),routeName: appcontroller)));
+      } else if (e.type == DioErrorType.connectTimeout) {
+        //When connection is taking too long or not connecting at all
+        return defaultErrordialog(context: context, errorCode: ES_0051,onTapBtn: () => Navigator.of(context).pushReplacement(CustomSimplePageRoute(page: AppScreenController(indexScreen: 0),routeName: appcontroller)));  
+      } else if(e.response?.statusCode == 401){
+        //When anonymous user is requesting for data
+        AuthenticationAPI().performLogOut(context: context,userLogout: false);
+        return defaultErrordialog(context: context, errorCode: ES_0041);
+      } else if(e.response?.statusCode == 500){
+        //Internal server error
+        return defaultErrordialog(context: context, errorCode: ES_0050,onTapBtn: () => Navigator.of(context).pushReplacement(CustomSimplePageRoute(page: AppScreenController(indexScreen: 0),routeName: appcontroller)));
+      } else if(e.response?.statusCode == 503){
+        //When server is under maintenance
+        //TODO : redirect to Maintenance page
+        return null;
+      }else {
+        print("${e.message} + ${e.type} in appointments indetail api");
+        print(e.response?.data);
+        //Logout
+        return defaultErrordialog(context: context, errorCode: ES_0040,);
+      } 
+    }
+  }
+
 
 }

@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home:   const AppScreenController(indexScreen: 1,),
+      home: const AppScreenController(indexScreen: 1,),
       routes: {
         //Auth Screens
         LoginPage.routeName: (context) => const LoginPage(), //Path : /loginpage
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
 
         //Main Nav screens
         HomePage.routeName : (context) => const HomePage(), // Path :  /homepage
-        MedicalRecordsPage.routeName : (context) => const MedicalRecordsPage(), // Path :  /medicalrecords
+        MedicalRecordsPage.routeName : (context) => const MedicalRecordsPage(deptId: "",recordId: "",), // Path :  /medicalrecords
         ProfilePage.routeName : (context) => const ProfilePage(), // Path :  /profilepage
         SearchPage.routeName : (context) => const SearchPage(), // Path :  /searchpage
 
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
         AllFamilyMembersPage.routeName : (context) => const AllFamilyMembersPage(), // Path :  /allfamilymemberspage
 
         //Medical Records
-        MedicalFilesPage.routeName : (context) => const MedicalFilesPage(), // Path :  /medicalfilespage
+        MedicalFilesPage.routeName : (context) => const MedicalFilesPage(appointmentId: "",deptId: "",recordId: "",), // Path :  /medicalfilespage
 
       },
     );

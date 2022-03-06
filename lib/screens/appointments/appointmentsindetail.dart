@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:patientapp/apis/appointmentsapi.dart';
+import 'package:patientapp/apis/raisedissuesapi.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/contenttile.dart';
 import 'package:patientapp/screens/components/navbar.dart';
@@ -18,6 +19,12 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
   
   Future? _indetailFuture;
   final AppointmentsAPI _appointmentsAPI = AppointmentsAPI();
+  final RaisedIssuesAPI _raiseticketsAPI = RaisedIssuesAPI();
+
+  final TextEditingController _reasonController = TextEditingController();
+
+  final TextEditingController _subjectController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
     void initState() {
@@ -35,9 +42,23 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
       _indetailFuture = _getAppointmentDetails();
     });
   }
-
-  bool isCancelled = true;
   
+  putCancelAppointmentBooking({required String reason}) async {
+    return await _appointmentsAPI.putCancelAppointmentBooking(context: context, appointmentId: widget.appointmentId, reason: reason);
+  }
+
+  postSubmitQuery({required String title, required String description}) async {
+    return await _raiseticketsAPI.postRaiseIssue(context: context, appointmentId: widget.appointmentId, title: title, description: description).then((res){
+      if(res==true){
+        Loader.hide();
+        Navigator.of(context).pop();
+      }else{
+        Loader.hide();
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var size = sizeMedia(context);
@@ -71,7 +92,89 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                Text("#${_appointments['appointmentid']}",style : mediumLargeTextStyle(context).copyWith(fontFamily : kMuktaBold)),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("#${_appointments['appointmentid']}",style : mediumLargeTextStyle(context).copyWith(fontFamily : kMuktaBold)),
+                    if(snapshot.data['enablecancel'] == true) GestureDetector(
+                      onTap: () => bottomDialog(
+                                        context: context,
+                                        height: 300,
+                                        widget: Container(
+                                          margin: screenPads(context),
+                                          child: ListView(
+                                            // crossAxisAlignment: CrossAxisAlignment.start,
+                                            // mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                               Text("Please enter a reason to cancel this appointment",
+                                softWrap: true,
+                                style: mediumTextStyle(context).copyWith(fontFamily: kMuktaRegular,height:1.1)),
+                                mediumCustomSizedBox(context),
+                                Container(
+                        //height: 50,
+                        decoration: BoxDecoration(
+                          color: kLightLavengerGrayColor,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child:TextFormField(
+                controller: _reasonController,
+               keyboardType: TextInputType.text,
+                minLines: 5,
+                maxLines: 7,
+                enableSuggestions: true,
+                enableInteractiveSelection: true,
+                decoration: InputDecoration(
+                  enabled: true,
+                  hintText: 'Your reason',
+                  hintStyle: const TextStyle(
+                    color: kGraycolor,
+                    fontSize: 13.0,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: kGraycolor),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: const BorderSide(color: kGraycolor),
+                  ),
+                ),
+                // maxLength: 10,
+                ),  
+                        ),
+                      mediumCustomSizedBox(context),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  if(_reasonController.text.isNotEmpty){
+                                                    overlayLoader(context);
+                                                    putCancelAppointmentBooking(reason: _reasonController.text.trim());
+                                                    
+                                                  }else{
+                                                    ScaffoldMessenger.of(context).showSnackBar(customsnackErrorBar(context, "Please enter a valid reason to cancel this appointment"));
+                                                  }
+                                                },
+                                                child: Container(
+                                                  height: 35, 
+                                                  margin:EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context) * 2,vertical: 5),
+                                                  decoration: BoxDecoration(
+                                                    color : kPinkRedishColor,
+                                                    borderRadius: BorderRadius.circular(3),
+                                                  ),
+                                                  child: Center(
+                                                    child:  Text("Cancel Appointment".toUpperCase(),style: mediumTextStyle(context).copyWith(color:Colors.white))
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                      child: Text("CANCEL",style : mediumLargeTextStyle(context).copyWith(fontFamily : kMuktaBold,color:kPinkRedishColor))),
+                 ],
+                ),
                 smallCustomSizedBox(context),
                 lineDivider(context),
                 mediumCustomSizedBox(context),
@@ -99,10 +202,10 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
                       ),
                   ],
                 ),
-                              mediumCustomSizedBox(context),
-                              ListView.builder(
+                mediumCustomSizedBox(context),
+                ListView.builder(
                                 shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics:const NeverScrollableScrollPhysics(),
                                 itemCount: _appointments['details'].length,
                                 itemBuilder: (BuildContext context,int i){
                                     return Column(
@@ -131,18 +234,128 @@ class _AppointmentsDetailsPageState extends State<AppointmentsDetailsPage> {
                                                   ),
                                                 ],
                                               ),
-                                        
                                       mediumCustomSizedBox(context),
                                       ],
                                     );
                                 }
                               ),
-                      
+                smallCustomSizedBox(context),  
+                    GestureDetector(
+                      onTap: () =>  bottomDialog(
+                                        context: context,
+                                        height: 380,
+                                        widget: Container(
+                                          margin: screenPads(context),
+                                          child: ListView(
+                                            children: [
+                                               Text("Submit your query to get help from us",
+                                softWrap: true,
+                                style: mediumTextStyle(context).copyWith(fontFamily: kMuktaRegular,height:1.1)),
+                                mediumCustomSizedBox(context),
+                                Container(
+                        //height: 50,
+                        decoration: BoxDecoration(
+                          color: kLightLavengerGrayColor,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child:TextFormField(
+                controller: _subjectController,
+               keyboardType: TextInputType.text,
+                minLines: 1,
+                maxLines: 2,
+                enableSuggestions: true,
+                enableInteractiveSelection: true,
+                decoration: InputDecoration(
+                  enabled: true,
+                  hintText: 'Subject',
+                  hintStyle: const TextStyle(
+                    color: kGraycolor,
+                    fontSize: 13.0,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: kGraycolor),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: const BorderSide(color: kGraycolor),
+                  ),
+                ),
+                // maxLength: 10,
+                ),  
+                        ),
+                                mediumCustomSizedBox(context),
+                                Container(
+                        //height: 50,
+                        decoration: BoxDecoration(
+                          color: kLightLavengerGrayColor,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child:TextFormField(
+                controller: _descriptionController,
+               keyboardType: TextInputType.text,
+                minLines: 5,
+                maxLines: 7,
+                enableSuggestions: true,
+                enableInteractiveSelection: true,
+                decoration: InputDecoration(
+                  enabled: true,
+                  hintText: 'Your query',
+                  hintStyle: const TextStyle(
+                    color: kGraycolor,
+                    fontSize: 13.0,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: kGraycolor),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                    borderSide: const BorderSide(color: kGraycolor),
+                  ),
+                ),
+                // maxLength: 10,
+                ),  
+                        ),
+                                
+                                 mediumCustomSizedBox(context),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  if(_subjectController.text.isEmpty){
+                                                    ScaffoldMessenger.of(context).showSnackBar(customsnackErrorBar(context, "Please enter the subject"));
+                                                  }else if(_descriptionController.text.isEmpty){
+                                                    ScaffoldMessenger.of(context).showSnackBar(customsnackErrorBar(context, "Please enter the description"));
+                                                  }else{
+                                                    overlayLoader(context);
+                                                    postSubmitQuery(title: _subjectController.text.trim(), description: _descriptionController.text.trim());
+                                                  }
+                                                },
+                                                child: Container(
+                                                  height: 35, 
+                                                  margin:EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context) * 2,vertical: 5),
+                                                  decoration: BoxDecoration(
+                                                    color : kPinkRedishColor,
+                                                    borderRadius: BorderRadius.circular(3),
+                                                  ),
+                                                  child: Center(
+                                                    child:  Text("Submit Query".toUpperCase(),style: mediumTextStyle(context).copyWith(color:Colors.white))
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                      child: Text("Help?",style : mediumLargeTextStyle(context).copyWith(fontFamily : kMuktaBold,color:kSteelBlue))),  
                 lineDivider(context),
-                mediumCustomSizedBox(context),
-                //  Text(" *Please report before 20 mins of your consultation time and take necessary measures before arriving at the hospital",
-                //                 softWrap: true,
-                //                 style: smallTextStyle(context).copyWith(fontFamily: kMuktaRegular,color:kIndigocolor,height:1.1))
+                smallCustomSizedBox(context),
+                 Text(" *Tap on Help to get support from us",
+                                softWrap: true,
+                                style: smallTextStyle(context).copyWith(fontFamily: kMuktaRegular,color:kIndigocolor,height:1.1))
                     ],
                   ),
                 ),  

@@ -1,6 +1,6 @@
 import 'package:patientapp/apis/medicalrecordsapi.dart';
 import 'package:patientapp/helpers/headers.dart'; 
-import 'package:patientapp/screens/medical/specialisationpage.dart';
+import 'package:patientapp/screens/medical/proceduralpage.dart';
 
 class FamilyMembers extends StatefulWidget {
   static const routeName = familmembers;
@@ -99,7 +99,9 @@ class _FamilyMembersState extends State<FamilyMembers> {
                                  ), 
                                   child: ListTile(
                                     onTap: () => Navigator.push(context, 
-                                    CustomRightPageRoute(page: SpecialisationPage(), routeName: specialisationpage)
+                                    CustomRightPageRoute(page: ProceduralPage(
+                                      patientId: familyMembers[i]['patientid'].toString(),
+                                    ), routeName: specialisationpage)
                                     ), 
                                     title: Text(
                                       isEmptyOrNull(familyMembers[i]['name']) ? "Member" : "${familyMembers[i]['name']}",
