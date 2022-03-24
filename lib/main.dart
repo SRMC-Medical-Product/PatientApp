@@ -1,3 +1,4 @@
+import 'package:patientapp/helpers/apiheaders.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/appointments/appointmentsindetail.dart';
 import 'package:patientapp/screens/auth/info.dart';
@@ -24,13 +25,69 @@ import 'package:patientapp/screens/search/searchpage.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    //This screen is used when it causes red screen error
+  //   ErrorWidget.builder = (FlutterErrorDetails details) {
+  //     //TODO:To change the UI
+  //   return Material(
+  //     child: Container(
+  //       color: Colors.white,
+  //       alignment: Alignment.center,
+  //       padding: EdgeInsets.all(30),
+  //       child: Column(
+  //         children: [
+  //           Expanded(
+  //             flex: 2,
+  //             child: Image.asset("assets/images/error.png",fit: BoxFit.contain,height: double.infinity,width: double.infinity,)),
+  //           Expanded(
+  //             flex: 1,
+  //             child: RichText(
+  //                       textAlign: TextAlign.center,
+  //                       text: TextSpan(children: <TextSpan>[
+  //                         TextSpan(
+  //                             text: 'This page caused an unexpected ',
+  //                             style: TextStyle(color: kPrimaryColor)),
+  //                         TextSpan(
+  //                             text: ' ERROR. ',
+  //                             style: TextStyle(
+  //                                 color: kRedColor,
+  //                                 fontWeight: FontWeight.bold)),
+  //                         TextSpan(
+  //                             text: ' Try again...',
+  //                             style: TextStyle(color: kPrimaryColor)),
+  //                       ]),
+  //                     ),
+  //           )
+  //         ],
+  //       )
+  //     ),
+  //   );
+  // };
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+    final _flutterSecureStorage = const FlutterSecureStorage();
+  
+  @override
+    void initState() {
+      super.initState();
+      getStoredAccessTokenOrEmpty;
+    }   
+
+  Future<String> get getStoredAccessTokenOrEmpty async {
+    var _userBearerToken = await _flutterSecureStorage.read(key: "BEARERTOKEN");
+    if(_userBearerToken == null) return "";
+    return _userBearerToken;
+  }
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,7 +96,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      home: const AppScreenController(indexScreen: 1,),
+      home:FutureBuilder(
+        future: getStoredAccessTokenOrEmpty,
+        builder: (context,snapshot) {
+           if(!snapshot.hasData) return customCircularProgress() ;
+          if(snapshot.data != ""){
+            return const AppScreenController(indexScreen: 1,) ;
+          }else{
+          return LoginPage();
+          }
+        },
+      ),
       routes: {
         //Auth Screens
         LoginPage.routeName: (context) => const LoginPage(), //Path : /loginpage
