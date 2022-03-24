@@ -58,7 +58,7 @@ class _FutureAppointmentsState extends State<FutureAppointments> {
                 doctorSpec: liveappointments['appointments'][i]['specialisation'].toString(),
                 );
             },
-          ) : isNullIcon( context: context, icon: Icons.notifications_off_outlined, text: 'No appointments for today' );
+          ) : isNullIcon( context: context, icon: Icons.notifications_off_outlined, text: 'No Upcoming appointments' );
               }else if (snapshot.hasError) {
                     return defaultErrordialog(
                         context: context,
