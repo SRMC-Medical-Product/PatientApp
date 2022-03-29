@@ -28,7 +28,11 @@ class _OtpPageState extends State<OtpPage> {
     }    
 
   _otpVerificationMethod({required String otp})async{
-    return await _authapi.postOtpVerification(context: context, otp: otp, code: widget.secretCode);
+    return await _authapi.postOtpVerification(context: context, otp: otp, code: widget.secretCode).then((res){
+      if(res==false){
+       Loader.hide(); 
+      }
+    });
   }
 
   _postResendOtp() async {

@@ -172,10 +172,12 @@ class _AddNewMemberPageState extends State<AddNewMemberPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    titleText(
-                        context: context,
-                        text: "Add New Member",
-                        color: Colors.black),
+                    GestureDetector(
+                      child: titleText(
+                          context: context,
+                          text: "Add New Member",
+                          color: Colors.black),
+                    ),
                     smallCustomSizedBox(context),
                   /*-----Not necessary till now until confirmation of the external sources-----*/       
                 /* 

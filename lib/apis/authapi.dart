@@ -63,7 +63,7 @@ class AuthenticationAPI {
     } on DioError catch (e) {
       if (e.response?.statusCode == 400) {
         ScaffoldMessenger.of(context).showSnackBar(
-            customsnackErrorBar(context, "OTP expired.Try again"));
+            customsnackErrorBar(context, "OTP expired or incorrect.Try again"));
         return false;
       } else if (e.response?.statusCode == 409) {
         ScaffoldMessenger.of(context).showSnackBar(customsnackErrorBar(

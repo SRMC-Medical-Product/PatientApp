@@ -1,6 +1,5 @@
 import 'package:patientapp/apis/appointmentsapi.dart';
 import 'package:patientapp/helpers/headers.dart';
-import 'package:patientapp/screens/appointments/appointmentsindetail.dart';
 import 'package:patientapp/screens/components/customcards.dart';
 
 class FutureAppointments extends StatefulWidget {

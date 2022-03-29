@@ -3,6 +3,7 @@
 import 'package:patientapp/apis/appointmentsapi.dart';
 import 'package:patientapp/helpers/headers.dart';
 import 'package:patientapp/screens/components/navbar.dart';
+import 'package:patientapp/screens/profile/familymembers.dart';
 
 class AppointmentBookingPage extends StatefulWidget {
   static const routeName = appointmentbookingpage;
@@ -247,9 +248,11 @@ class _AppointmentBookingPageState extends State<AppointmentBookingPage> {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             GestureDetector(
-                                              onTap: () {
-                                                
-                                              },
+                                              onTap: () => Navigator.push(
+                                                context,
+                                                CustomSimplePageRoute(
+                                                    page: const AllFamilyMembersPage(),
+                                                    routeName: allfamilymemberspage)),
                                               child: Container(
                                                 height: 35, 
                                                 margin:EdgeInsets.symmetric(horizontal: kDefaultScreenPaddingHorizontal(context) * 2,vertical: 5),
